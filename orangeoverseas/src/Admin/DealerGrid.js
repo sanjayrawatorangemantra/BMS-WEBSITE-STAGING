@@ -17,7 +17,7 @@ var DataTable = require('react-data-components').DataTable;
 
 const renderMapUrl =
     (val, row) =>
-    <a class="btn01" href='/Dashboard/DealerView'>
+    <a class="btn01" href='/DealerView'>
         View
       </a>;
  
@@ -62,6 +62,10 @@ class DealerGrid extends Component {
         }
     }
 
+    componentDidMount(){
+      document.title = "Dealers List || Orange Overseas || DOPS (Dealer Order Processing System)"
+    }
+
 render() {
  
     
@@ -79,13 +83,13 @@ render() {
          <div class="container">
            <div class="row">
              <div class="col-lg-6">
-               <h5 class="breadcrumbs-title mt-0 mb-0">Dealer Details</h5>
+               <h5 class="breadcrumbs-title mt-0 mb-0">Dealer Management</h5>
                <ol class="breadcrumbs mb-0">
                  <li class="breadcrumb-item"><a href="index.html">Home</a>
                  </li>
-                 {/* <li class="breadcrumb-item"><a href="#">Dealer Management</a>
-                 </li> */}
-                 <li class="breadcrumb-item active">Dealer Management
+                 <li class="breadcrumb-item"><a href="#">Dealer Management</a>
+                 </li> 
+                 <li class="breadcrumb-item active">Dealer List
                  </li>
                </ol>
              </div>
@@ -105,7 +109,7 @@ render() {
           <div className="col-lg-12 col-md-12">
       <div class="card">
     <div class="card-content">
-      <p class="caption mb-0">Dealer Details</p>
+      <p class="caption mb-0" style={{color: '#fff'}}>Dealer Details</p>
     </div>
   </div>
   </div>
@@ -119,7 +123,7 @@ render() {
                 this.props.history.push('./Dealer')
           
               }} 
-            >Add Dealer</Button>
+            >Add New Dealer</Button>
           </div>
       </div>
 

@@ -41,8 +41,11 @@ class Dispatch extends Component {
             category: e.target.value
         })
     }
-    
 
+    componentDidMount(){
+      document.title = "Dispatch Details || Orange Overseas || DOPS (Dealer Order Processing System)"
+    }
+    
 render() {
   return (
     <div className="App">
@@ -59,19 +62,22 @@ render() {
          <div class="container">
            <div class="row">
              <div class="col-lg-6">
-               <h5 class="breadcrumbs-title mt-0 mb-0">Dispatch</h5>
+               <h5 class="breadcrumbs-title mt-0 mb-0">Dispatch Details</h5>
                <ol class="breadcrumbs mb-0">
                  <li class="breadcrumb-item"><a href="index.html">Home</a>
                  </li>
-                 {/* <li class="breadcrumb-item"><a href="#">Dealer Management</a>
-                 </li> */}
+                 <li class="breadcrumb-item"><a href="#">Dispatch Management</a>
+                 </li> 
                  <li class="breadcrumb-item active">Dispatch
                  </li>
                </ol>
              </div>
-             <div class="col-lg-6">
-                 
-               
+             <div class="col-lg-6 col-sm-6">
+               <div className="dop">
+                <h5 class="">DOPS</h5>
+                <p>Dealer Order Processing System</p>
+               </div>
+             
              </div>
            </div>
          </div>
@@ -81,7 +87,7 @@ render() {
       <div className="col-lg-12 col-md-12">
       <div class="card">
     <div class="card-content">
-      <p class="caption mb-0">Dispatch</p>
+      <p class="caption mb-0" style={{color: '#fff'}}>Dispatch</p>
     </div>
   </div>
   </div>

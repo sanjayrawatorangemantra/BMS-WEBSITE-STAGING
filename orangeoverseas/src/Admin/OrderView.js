@@ -36,6 +36,9 @@ class OrderView extends Component {
         })
     }
     
+    componentDidMount(){
+      document.title = "View Order Details || Orange Overseas || DOPS (Dealer Order Processing System)"
+    }
 
 render() {
   return (
@@ -53,19 +56,22 @@ render() {
          <div class="container">
            <div class="row">
              <div class="col-lg-6">
-               <h5 class="breadcrumbs-title mt-0 mb-0">View Order</h5>
+               <h5 class="breadcrumbs-title mt-0 mb-0">View Order Details</h5>
                <ol class="breadcrumbs mb-0">
                  <li class="breadcrumb-item"><a href="index.html">Home</a>
                  </li>
-                 {/* <li class="breadcrumb-item"><a href="#">Dealer Management</a>
-                 </li> */}
-                 <li class="breadcrumb-item active">View Order
+                  <li class="breadcrumb-item"><a href="#">Order Management</a>
+                 </li> 
+                 <li class="breadcrumb-item active">Order Details
                  </li>
                </ol>
              </div>
-             <div class="col-lg-6">
-                 
-               
+             <div class="col-lg-6 col-sm-6">
+               <div className="dop">
+                <h5 class="">DOPS</h5>
+                <p>Dealer Order Processing System</p>
+               </div>
+             
              </div>
            </div>
          </div>
@@ -75,7 +81,7 @@ render() {
       <div className="col-lg-12 col-md-12">
       <div class="card">
     <div class="card-content">
-      <p class="caption mb-0">View Order</p>
+      <p class="caption mb-0" style={{color: '#fff'}}>View Order</p>
     </div>
   </div>
   </div>

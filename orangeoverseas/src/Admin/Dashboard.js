@@ -125,6 +125,10 @@ class Dashboard extends Component {
   }
 }
 
+componentDidMount(){
+  document.title = "Dashboard || Orange Overseas || DOPS (Dealer Order Processing System)"
+}
+
 
 
 render () {
@@ -168,8 +172,8 @@ render () {
                 <h4 class="card-title mb-0">Product Wise Order Statistics <i class="fa fa-ellipsis-v" aria-hidden="true"></i></h4>
                   <p class="medium-small">Year : 2018 - 19</p>
                   {/* <DonutChart data={dataPie} /> */}
-                  <div style={{height: '305px', width: '500px', backgroundColor: 'white', position: 'relative'}}>
-        <Pie data={dataP} height={350} width={325} options={options}/>
+                  <div className="pieChart">
+        <Pie data={dataP} height={340} width={315} options={options}/>
       </div>
                   {/* <div class="ct-fill-donut-label" data-fill-index="fdid-0" style={{position: 'absolute', top: '161px', left: '143px'}}>
                     <p class="small">Balance</p><h5 class="mt-0 mb-0">$ 10k</h5>
@@ -245,7 +249,7 @@ render () {
                </div>
                <div class="col-lg-6 col-sm-6 right-align">
                   <h5 class="mb-0 white-text">Dealers</h5>
-                  <p class="no-margin new">690</p>
+                  <p class="no-margin new">Dealers : 690</p>
                   {/* <p className="new">6,00,00</p> */}
                </div>
                </div>
@@ -277,11 +281,11 @@ render () {
                       <div class="card gradient-45deg-red-pink gradient-shadow min-height-100 white-text animate fadeLeft">
             <div class="padding-4">
             <div className="row">
-               <div class="col-lg-4 col-sm-6">
-                  <i class="fa fa-user dicon background-round mt-5"></i>
+               <div class="col-lg-3 col-sm-6">
+                  <i class="fa fa-clipboard dicon background-round mt-5"></i>
                   {/* <p>Clients</p> */}
                </div>
-               <div class="col-lg-8 col-sm-6 right-align">
+               <div class="col-lg-9 col-sm-6 right-align">
                   <h5 class="mb-0 white-text">Orders</h5>
                   <p class="no-margin new">Total Orders : 288</p>
                   <p class="no-margin new">Orders this month : 188</p>
@@ -295,11 +299,11 @@ render () {
                       <div class="card gradient-45deg-amber-amber gradient-shadow min-height-100 white-text animate fadeRight">
             <div class="padding-4">
             <div className="row">
-               <div class="col-lg-4 col-sm-6">
+               <div class="col-lg-3 col-sm-6">
                   <i class="fa fa-line-chart dicon background-round mt-5"></i>
                   {/* <p>Sales</p> */}
                </div>
-               <div class="col-lg-8 col-sm-6 right-align">
+               <div class="col-lg-9 col-sm-6 right-align">
                   <h5 class="mb-0 white-text">Sales</h5>
                   <p class="no-margin new">Total Sales : 822</p>
                   <p class="no-margin new">Sales this month : 422</p>

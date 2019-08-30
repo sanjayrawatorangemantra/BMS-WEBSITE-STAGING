@@ -90,6 +90,10 @@ class StockReadymadeView  extends Component {
         })
     }
 
+    componentDidMount(){
+      document.title = "View Stock (Readymade Garments) Details || Orange Overseas || DOPS (Dealer Order Processing System)"
+    }
+
 render() {
   return (
     <div className="App">
@@ -105,13 +109,13 @@ render() {
          <div class="container">
            <div class="row">
              <div class="col-lg-6">
-               <h5 class="breadcrumbs-title mt-0 mb-0">View Stock(Readymade Garments)</h5>
+               <h5 class="breadcrumbs-title mt-0 mb-0">View Stock(Readymade Garments) Details</h5>
                <ol class="breadcrumbs mb-0">
                  <li class="breadcrumb-item"><a href="index.html">Home</a>
                  </li>
                  <li class="breadcrumb-item"><a href="#">Stock Management</a>
                  </li>
-                 <li class="breadcrumb-item active">View Stock(Readymade Garments)
+                 <li class="breadcrumb-item active">Stock(Readymade Garments) Details
                  </li>
                </ol>
              </div>
@@ -126,7 +130,7 @@ render() {
       <div className="col-lg-12 col-md-12">
       <div class="card">
     <div class="card-content">
-      <p class="caption mb-0">View Stock(Readymade Garments)</p>
+      <p class="caption mb-0" style={{color: '#fff'}}>View Stock(Readymade Garments)</p>
     </div>
   </div>
   </div>

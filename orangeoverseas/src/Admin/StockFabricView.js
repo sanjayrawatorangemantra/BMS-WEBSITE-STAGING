@@ -66,6 +66,10 @@ class StockFabricView extends Component {
         }
     }
 
+    componentDidMount(){
+      document.title = "View Stock (Fabric) Details || Orange Overseas || DOPS (Dealer Order Processing System)"
+    }
+
 render() {
   return (
     <div className="App">
@@ -81,13 +85,13 @@ render() {
          <div class="container">
            <div class="row">
              <div class="col-lg-6">
-               <h5 class="breadcrumbs-title mt-0 mb-0">View Stock (Fabric)</h5>
+               <h5 class="breadcrumbs-title mt-0 mb-0">View Stock (Fabric) Details</h5>
                <ol class="breadcrumbs mb-0">
                  <li class="breadcrumb-item"><a href="index.html">Home</a>
                  </li>
                  <li class="breadcrumb-item"><a href="#">Stock Management</a>
                  </li>
-                 <li class="breadcrumb-item active">View Stock (Fabric)
+                 <li class="breadcrumb-item active">Stock (Fabric) Details
                  </li>
                </ol>
              </div>
@@ -102,7 +106,7 @@ render() {
       <div className="col-lg-12 col-md-12">
       <div class="card">
     <div class="card-content">
-      <p class="caption mb-0">View Stock (Fabric)</p>
+      <p class="caption mb-0" style={{color: '#fff'}}>View Stock (Fabric)</p>
     </div>
   </div>
   </div>
@@ -154,15 +158,6 @@ render() {
 
         <div className="container mgbt">
 
-<DataTable
-className="container"
-keys="id"
-columns={columns}
-initialData={data}
-initialPageLength={50}
-initialSortBy={{ prop: 'city', order: 'descending' }}
-pageLengthOptions={[ 50, 100, 200]}
-/>
 </div>
 
 

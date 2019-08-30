@@ -75,7 +75,9 @@ class StaffGrid extends Component {
         }
     }
 
-   
+    componentDidMount(){
+      document.title = "Staff List || Orange Overseas || DOPS (Dealer Order Processing System)"
+    }
 
 render() {
      
@@ -93,13 +95,13 @@ render() {
          <div class="container">
            <div class="row">
              <div class="col-lg-6">
-               <h5 class="breadcrumbs-title mt-0 mb-0">Staff Management</h5>
+               <h5 class="breadcrumbs-title mt-0 mb-0">Staff List</h5>
                <ol class="breadcrumbs mb-0">
                  <li class="breadcrumb-item"><a href="index.html">Home</a>
                  </li>
-                 {/* <li class="breadcrumb-item"><a href="#">Product Management</a>
-                  </li>  */}
-                 <li class="breadcrumb-item active">Staff Management
+                 <li class="breadcrumb-item"><a href="#">Staff Management</a>
+                  </li>
+                 <li class="breadcrumb-item active">Staff
                  </li>
                </ol>
              </div>
@@ -119,7 +121,7 @@ render() {
           <div className="col-lg-12 col-md-12">
       <div class="card">
     <div class="card-content">
-      <p class="caption mb-0">Staff Management</p>
+      <p class="caption mb-0" style={{color: '#fff'}}>Staff Management</p>
     </div>
   </div>
   </div>

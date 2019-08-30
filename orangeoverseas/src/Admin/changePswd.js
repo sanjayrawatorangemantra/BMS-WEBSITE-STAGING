@@ -26,8 +26,11 @@ class changePswd extends Component {
             category: e.target.value
         })
     }
-    
 
+    componentDidMount(){
+      document.title = "Change Password || Orange Overseas || DOPS (Dealer Order Processing System)"
+    }
+    
 render() {
   return (
     <div className="App">
@@ -66,7 +69,7 @@ render() {
       <div className="col-lg-12 col-md-12">
       <div class="card">
     <div class="card-content">
-      <p class="caption mb-0">Change Password</p>
+      <p class="caption mb-0" style={{color: '#fff'}}>Change Password</p>
     </div>
   </div>
   </div>

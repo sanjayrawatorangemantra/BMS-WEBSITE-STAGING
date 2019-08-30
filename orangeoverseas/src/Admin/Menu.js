@@ -156,41 +156,41 @@ class Menu extends Component {
 
       <Route exact path='/Staff' component={Staff} />
       <Route exact path='/StaffGrid' component={StaffGrid} />
-      <Route exact path='/Dashboard/StaffView' component={StaffView} />
+      <Route exact path='/StaffView' component={StaffView} />
 
       <Route path='/ProductFabricGrid' component={ProductFabricGrid} />
       <Route exact path='/AddFabric' component={Fabric} />
-      <Route exact path='/Dashboard/ProductViewFabric' component={ProductViewFabric} />
+      <Route exact path='/ProductViewFabric' component={ProductViewFabric} />
 
       <Route exact path='/ProductAccessoriesGrid' component={ProductAccessoriesGrid} />
       <Route exact path='/AddAccessories' component={Accessories} />
-      <Route exact path='/Dashboard/ProductViewAccessories' component={ProductViewAccessories} />
+      <Route exact path='/ProductViewAccessories' component={ProductViewAccessories} />
 
       <Route exact path='/ProductReadymadeGrid' component={ProductReadymadeGrid} />
       <Route exact path='/AddReadyMade' component={Readymade} />
-      <Route exact path='/Dashboard/ProductViewReadymade' component={ProductViewReadymade} />
+      <Route exact path='/ProductViewReadymade' component={ProductViewReadymade} />
 
       <Route exact path='/StockFabricGrid' component={StockFabricGrid} />
       <Route exact path='/StockAddFabric' component={StockAddFabric} />
-      <Route exact path='/Dashboard/StockFabricView' component={StockFabricView} />
+      <Route exact path='/StockFabricView' component={StockFabricView} />
 
       <Route exact path='/StockAccessoriesGrid' component={StockAccessoriesGrid} />
       <Route exact path='/StockAddAccessories' component={StockAddAccessories} />
-      <Route exact path='/Dashboard/StockAccessoriesView' component={StockAccessoriesView} />
+      <Route exact path='/StockAccessoriesView' component={StockAccessoriesView} />
 
       <Route exact path='/StockReadymadeGrid' component={StockReadymadeGrid} />
       <Route exact path='/StockAddReadymade' component={StockAddReadymade} />
-      <Route exact path='/Dashboard/StockReadymadeView' component={StockReadymadeView} />
+      <Route exact path='/StockReadymadeView' component={StockReadymadeView} />
 
       <Route path='/DealerGrid' component={DealerGrid} />
       <Route exact path='/Dealer' component={Dealer} />
-      <Route exact path='/Dashboard/DealerView' component={DealerView} />
+      <Route exact path='/DealerView' component={DealerView} />
 
       <Route exact path='/OrderGrid' component={OrderGrid} />
-      <Route exact path='/Dashboard/OrderView' component={OrderView} />
+      <Route exact path='/OrderView' component={OrderView} />
 
       <Route exact path='/DispatchGrid' component={DispatchGrid} />
-      <Route exact path='/Dashboard/Dispatch' component={Dispatch} />
+      <Route exact path='/Dispatch' component={Dispatch} />
 
       <Route exact path='/changePswd' component={changePswd} />
 

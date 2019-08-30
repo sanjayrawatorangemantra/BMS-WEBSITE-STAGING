@@ -58,6 +58,10 @@ class StaffView extends Component {
       })
       }
 
+      componentDidMount(){
+        document.title = "View Staff Details || Orange Overseas || DOPS (Dealer Order Processing System)"
+      }
+
 render() {
   return (
     <div className="App">
@@ -79,13 +83,16 @@ render() {
                  </li>
                  <li class="breadcrumb-item"><a href="#">Staff Management</a>
                  </li>
-                 <li class="breadcrumb-item active">View Staff Details
+                 <li class="breadcrumb-item active">Staff Details
                  </li>
                </ol>
              </div>
-             <div class="col-lg-6">
-                 
-               
+             <div class="col-lg-6 col-sm-6">
+               <div className="dop">
+                <h5 class="">DOPS</h5>
+                <p>Dealer Order Processing System</p>
+               </div>
+             
              </div>
            </div>
          </div>
@@ -94,7 +101,7 @@ render() {
       <div className="col-lg-12 col-md-12">
       <div class="card">
     <div class="card-content">
-      <p class="caption mb-0">View Staff Details</p>
+      <p class="caption mb-0" style={{color: '#fff'}}>View Staff Details</p>
     </div>
   </div>
   </div>

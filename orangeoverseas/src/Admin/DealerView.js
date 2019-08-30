@@ -48,7 +48,9 @@ class DealerView extends Component {
             category: e.target.value
         })
     }
-    
+    componentDidMount(){
+      document.title = "View Dealer Details || Orange Overseas || DOPS (Dealer Order Processing System)"
+    }
 
 render() {
   return (
@@ -70,9 +72,9 @@ render() {
                <ol class="breadcrumbs mb-0">
                  <li class="breadcrumb-item"><a href="index.html">Home</a>
                  </li>
-                 {/* <li class="breadcrumb-item"><a href="#">Dealer Management</a>
-                 </li> */}
-                 <li class="breadcrumb-item active">View Dealer Details
+                 <li class="breadcrumb-item"><a href="#">Dealer Management</a>
+                 </li> 
+                 <li class="breadcrumb-item active">Dealer Details
                  </li>
                </ol>
              </div>
@@ -88,7 +90,7 @@ render() {
       <div className="col-lg-12 col-md-12">
       <div class="card">
     <div class="card-content">
-      <p class="caption mb-0">View Dealer Details</p>
+      <p class="caption mb-0" style={{color: '#fff'}}>View Dealer Details</p>
     </div>
   </div>
   </div>

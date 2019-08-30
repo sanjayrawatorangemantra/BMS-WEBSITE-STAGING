@@ -348,7 +348,46 @@ select {
   word-wrap: normal;
   background: #fff!important;
 }
-
 .mgtp {
   margin-top: 45px;
+}
+
+.table thead {
+  background: linear-gradient(45deg,#f8b006, #d14b07)!important;
+}
+.table thead th {
+  vertical-align: bottom;
+  color: #fff;
+  border-bottom: 2px solid #dee2e6;
+}
+
+@media only screen and (max-width: 1441px) and (min-width: 1025px) {
+  .login-img {
+  /* width: 101%!important; */
+  margin-top: 0px!important;
+  }
+  .box02 p {
+    color: #999;
+    font-size: 12px;
+    margin-right: 0px;
+    margin-bottom: 11px!important;
+}
+.login-btn {
+  margin: 1rem!important;
+}
+.forgot {
+  margin-top: 0px!important;
+}
+.dicon {
+  float: left;
+  font-size: 32px;
+  margin-left: -6px;
+  margin-bottom: 1rem;
+}
+.pieChart {
+  height: 283px;
+  width: 500px;
+  background-color: white;
+  position: relative;
+}
 }

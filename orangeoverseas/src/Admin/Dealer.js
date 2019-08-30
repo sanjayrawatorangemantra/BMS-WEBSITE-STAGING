@@ -49,6 +49,9 @@ class Dealer extends Component {
         })
     }
     
+    componentDidMount(){
+      document.title = "Add New Dealer || Orange Overseas || DOPS (Dealer Order Processing System)"
+    }
 
 render() {
   return (
@@ -66,13 +69,13 @@ render() {
          <div class="container">
            <div class="row">
              <div class="col-lg-6">
-               <h5 class="breadcrumbs-title mt-0 mb-0">Add Dealer</h5>
+               <h5 class="breadcrumbs-title mt-0 mb-0">Add New Dealer</h5>
                <ol class="breadcrumbs mb-0">
                  <li class="breadcrumb-item"><a href="index.html">Home</a>
                  </li>
-                 {/* <li class="breadcrumb-item"><a href="#">Dealer Management</a>
-                 </li> */}
-                 <li class="breadcrumb-item active">Dealer Management
+                  <li class="breadcrumb-item"><a href="#">Dealer Management</a>
+                 </li> 
+                 <li class="breadcrumb-item active">Dealer
                  </li>
                </ol>
              </div>
@@ -88,7 +91,7 @@ render() {
       <div className="col-lg-12 col-md-12">
       <div class="card">
     <div class="card-content">
-      <p class="caption mb-0">Add Dealer Details</p>
+      <p class="caption mb-0" style={{color: '#fff'}}>Add Dealer Details</p>
     </div>
   </div>
   </div>

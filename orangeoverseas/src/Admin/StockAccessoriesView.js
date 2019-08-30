@@ -90,6 +90,10 @@ class StockAccessoriesView  extends Component {
         })
     }
 
+    componentDidMount(){
+      document.title = "View Stock (Accessories) Details || Orange Overseas || DOPS (Dealer Order Processing System)"
+    }
+
 render() {
   return (
     <div className="App">
@@ -105,13 +109,13 @@ render() {
          <div class="container">
            <div class="row">
              <div class="col-lg-6">
-               <h5 class="breadcrumbs-title mt-0 mb-0">View Stock(Accessories)</h5>
+               <h5 class="breadcrumbs-title mt-0 mb-0">View Stock(Accessories) Details</h5>
                <ol class="breadcrumbs mb-0">
                  <li class="breadcrumb-item"><a href="index.html">Home</a>
                  </li>
                  <li class="breadcrumb-item"><a href="#">Stock Management</a>
                  </li>
-                 <li class="breadcrumb-item active">View Stock(Accessories)
+                 <li class="breadcrumb-item active">Stock(Accessories) Details
                  </li>
                </ol>
              </div>
@@ -126,12 +130,12 @@ render() {
       <div className="col-lg-12 col-md-12">
       <div class="card">
     <div class="card-content">
-      <p class="caption mb-0">View Stock(Accessories)</p>
+      <p class="caption mb-0" style={{color: '#fff'}}>View Stock(Accessories)</p>
     </div>
   </div>
   </div>
 
-        <div className="col-lg-12 col-md-12">
+        <div className="col-lg-12 col-md-12 mgbt">
         <div id="prefixes" class="card card card-default scrollspy">
         <div class="card-content">
           <h4 class="card-title">Stock Details</h4>
@@ -176,18 +180,7 @@ render() {
         </div>
         </div>
 
-        <div className="container mgbt">
-
-<DataTable
-className="container"
-keys="id"
-columns={columns}
-initialData={data}
-initialPageLength={50}
-initialSortBy={{ prop: 'city', order: 'descending' }}
-pageLengthOptions={[ 50, 100, 200]}
-/>
-</div>
+        
 
       </div>
       </div>

@@ -12,6 +12,9 @@ const Routes = () => {
     <div>
       <Route exact path="/" component={login} />
       <Route path="/Dashboard" component={Menu} />
+
+      {window.location.pathname != '/' && window.location.pathname != '/Dashboard' ? <Menu></Menu> : <Route exact path="/" component={login} /> }
+      {/* <Route component={NotFound} /> */}
       {/* <Route component={NotFound} /> */}
    
     </div>

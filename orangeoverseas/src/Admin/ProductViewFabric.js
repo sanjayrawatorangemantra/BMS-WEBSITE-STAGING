@@ -58,6 +58,10 @@ class ProductViewFabric extends Component {
         })
     }
 
+    componentDidMount(){
+      document.title = "View Fabric Details || Orange Overseas || DOPS (Dealer Order Processing System)"
+    }
+
 render() {
   return (
     <div className="App">
@@ -97,7 +101,7 @@ render() {
       <div className="col-lg-12 col-md-12">
       <div class="card">
     <div class="card-content">
-      <p class="caption mb-0">View Fabric Details</p>
+      <p class="caption mb-0" style={{color: '#fff'}}>View Fabric Details</p>
     </div>
   </div>
   </div>

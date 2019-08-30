@@ -61,6 +61,10 @@ class ProductViewAccessories extends Component {
         })
     }
 
+    componentDidMount(){
+      document.title = "View Accessories Details || Orange Overseas || DOPS (Dealer Order Processing System)"
+    }
+
 render() {
   return (
     <div className="App">
@@ -82,7 +86,7 @@ render() {
                  </li>
                  <li class="breadcrumb-item"><a href="#">Product Management</a>
                  </li>
-                 <li class="breadcrumb-item active">View Accessories Details
+                 <li class="breadcrumb-item active">Accessories Details
                  </li>
                </ol>
              </div>
@@ -100,7 +104,7 @@ render() {
       <div className="col-lg-12 col-md-12">
       <div class="card">
     <div class="card-content">
-      <p class="caption mb-0">View Accessories Details</p>
+      <p class="caption mb-0" style={{color: '#fff'}}>View Accessories Details</p>
     </div>
   </div>
   </div>
