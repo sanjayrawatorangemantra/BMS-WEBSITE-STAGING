@@ -1356,6 +1356,12 @@ class Menu extends React.Component {
                         Dietitians
                       </a>
                     </li>
+                    {/* ........Education Module Menu .......... */}
+                    <li class="hvr-overline-from-left">
+                      <a href="/education" class="">
+                        Education
+                      </a>
+                    </li>
                  
 
                     {/* <li class="hvr-overline-from-left"><a 
