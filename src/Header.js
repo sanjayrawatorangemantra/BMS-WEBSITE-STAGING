@@ -1250,7 +1250,7 @@ class Menu extends React.Component {
                        </span>
                       </a>
                       <ul>
-                        {this.state.CovidCategory.map((cat, index) => (
+                        {Array.isArray(this.state.CovidCategory) && this.state.CovidCategory.map((cat, index) => (
                           <li>
                             <a
                               onClick={() => {
@@ -1279,7 +1279,7 @@ class Menu extends React.Component {
                        </span>
                       </a>
                       <ul>
-                        {this.state.AccessoriesCategory.map((cat, index) => (
+                        { Array.isArray(this.state.AccessoriesCategory) && this.state.AccessoriesCategory.map((cat, index) => (
                           <li>
                             <a
                               onClick={() => {
@@ -1792,7 +1792,7 @@ class Menu extends React.Component {
                     style={{ padding: "0px" }}
                   >
                     <div style={{ padding: "7px 0 9px 20px" }}>
-                      {this.state.CovidCategory.map((cat, index) => (
+                      {Array.isArray(this.state.CovidCategory) && this.state.CovidCategory.map((cat, index) => (
                         <li>
                           <a
                             onClick={() => {
@@ -1872,7 +1872,7 @@ class Menu extends React.Component {
                     style={{ padding: "0px" }}
                   >
                     <div style={{ padding: "7px 0 9px 20px" }}>
-                      {this.state.AccessoriesCategory.map((cat, index) => (
+                      { Array.isArray(this.state.AccessoriesCategory) && this.state.AccessoriesCategory.map((cat, index) => (
                         <li>
                           <a
                             onClick={() => {
