@@ -23,7 +23,7 @@ class Feedback extends React.Component {
     }
 
     SubmitFeedback =()=>{
-        if( this.state.rating != '' && this.state.comments !=''){
+        if( this.state.rating != '' ){
             var log = localStorage.getItem("CustomerLoginDetails");
             var login = JSON.parse(log);
             if(login != null && login != ""){

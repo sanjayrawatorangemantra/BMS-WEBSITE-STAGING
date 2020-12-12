@@ -3,7 +3,7 @@ import Menu from "../Header";
 import Footer from "../Footer";
 import GetApiCall from "../GetApi";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import PostApiCall from "../Api";
 import Notiflix from "notiflix-react";
 import HeaderCourseProgress from '../Education/HeaderCourseProgress';
@@ -15,6 +15,7 @@ import CourseQuestionsAns from '../Education/CourseQuestionAns';
 import CourseQuestionsAnsList from '../Education/CorrectQestionAnsList';
 import UserFeedBackView from '../Education/UserFeedback';
 import CongratulationView from '../Education/Congratulation';
+import Loader from 'react-loader-spinner';
 
 import courseImage from '../images/course.jpg';
 class CourseContentMain extends React.Component {
@@ -321,6 +322,7 @@ class CourseContentMain extends React.Component {
                 <div class="container" style={{background:"none"}}>
                     <div class="row mt-2">
                         <div class="col-lg-8 order-lg-first ">
+                        {this.state.ChapterData.length>0?
                             <div class="dashboard-content">
                                 <HeaderCourseProgress login={login} ShowTimer={false}/>
                                 <div class="panel-group" id="accordion">
@@ -345,7 +347,23 @@ class CourseContentMain extends React.Component {
                                     })}
                               </div>
                             </div>
-                        </div>
+                          :
+                          <div class="dashboard-content">
+
+                               <div
+                                style={{
+                                  width: "100%",
+                                  height: "100",
+                                  display: "flex",
+                                  justifyContent: "center",
+                                  alignItems: "center"
+                                }}
+                              >
+                                <Loader type="ThreeDots" color="#00BFFF" height="50" width="50" />
+                              </div>
+                            </div>
+                        }
+                       </div>
                         <div class="col-lg-4">
                             <div class="course-side-bar">
                                 { login != null && login != "" ? 
@@ -369,7 +387,10 @@ class CourseContentMain extends React.Component {
                                     :
                                         <div class="login-box">
                                             <h3>Want to start your free course?</h3>
-                                            <a href="/Login" className="loginbutton">Login Now</a>
+                                            <Link
+                                          to={  { pathname :"/login", state: { pre_page_url: '/education' }}} className="loginbutton"  >
+                                           Login Now
+                                          </Link>
                                         </div>
                                 }
                               <div class="benefits">

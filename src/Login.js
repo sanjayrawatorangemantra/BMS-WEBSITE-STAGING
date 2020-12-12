@@ -34,6 +34,7 @@ class Login extends React.Component {
       CustomerData: [],
       ResendCount: 0,
       MobileOtp: "",
+      pre_page_url : ""
     };
   }
   componentDidMount() {
@@ -41,6 +42,8 @@ class Login extends React.Component {
       svgColor: "#507dc0",
       //  #507dc0'
     });
+    if( this.props.location && this.props.location.state)
+    this.setState({ pre_page_url : this.props.location.state.pre_page_url })
   }
 
   onLogin() {
@@ -143,10 +146,12 @@ class Login extends React.Component {
 
               var path = JSON.parse(localStorage.getItem("PathCame"));
           
-
+                debugger;
               if (path != null && path != "") {
                 localStorage.removeItem('PathCame')
                 window.location.href = "/cart";
+              }else if(this.state.pre_page_url !=''){
+                window.location.href = this.state.pre_page_url;
               }else{
                 window.location.href = "/";
               }
@@ -533,6 +538,7 @@ class Login extends React.Component {
   }
 
   render() {
+
     if(this.state.OtpVisible){
       return (
         <div>

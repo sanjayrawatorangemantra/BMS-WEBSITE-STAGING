@@ -59,6 +59,7 @@ class Answers extends React.Component {
         topic.fld_isunlocked = 0;
         let current_topic_index = 0;
         let current_chapter_index = this.state.current_chapter_index+1;
+        debugger;
         this.props.dispatch(setChapterTimerEnable( current_chapter_data.fld_isQuestionTestCompleted === 1 ? true : false));
             this.props.history.push({
                 pathname : '/education-topic',
@@ -83,6 +84,7 @@ class Answers extends React.Component {
         const {  } = this.state;
 
                 const { questionData, chaptersList, correct_ans_count, is_finel_chapter } = this.state;
+                debugger;
 
         return (
             <div>
@@ -168,11 +170,18 @@ class Answers extends React.Component {
                                                         <p class="lead question">{index+1}. {questionData.fld_questiontext}</p>
                                                         {
                                                             questionData.options && questionData.options.length>0 && questionData.options.map((option,index)=>(
-                                                                option.fld_iscorrect === 1 ? 
+                                                                option.fld_iscorrect === 1 && option.fld_id === questionData.user_ans ? 
                                                                 <div class="form-check my-4 text-white-50">
-                                                                    <p class={ "answers "+ (option.fld_id != questionData.user_ans ? "wrong" : "correct")}>{option.fld_optiontext} <span class={  option.fld_id != questionData.user_ans ? "wrongcomment" : "correctcomment"}>Answer</span></p>
+                                                                    <p class={ "answers "+ ("correct")}>{option.fld_optiontext} <span class={ "correctcomment"}>Right Answer</span></p>
                                                                 </div>
-                                                                :''
+                                                                :option.fld_iscorrect != 1 && option.fld_id === questionData.user_ans ?
+                                                                <div class="form-check my-4 text-white-50">
+                                                                    <p class={ "answers "+ ( "wrong")}>{option.fld_optiontext} <span class={  "wrongcomment"}>Answer</span></p>
+                                                                </div>
+                                                                :option.fld_iscorrect === 1 && option.fld_id !== questionData.user_ans ?
+                                                                <div class="form-check my-4 text-white-50">
+                                                                    <p class={ "answers "+ ("correct")}>{option.fld_optiontext} <span class={ "correctcomment"}>Right Answer</span></p>
+                                                                </div>:''
                                                             )
                                                         )}
                                                         </div>
