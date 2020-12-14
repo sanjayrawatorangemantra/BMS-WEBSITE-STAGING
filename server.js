@@ -11,11 +11,13 @@ const axios = require('axios')
 
 
 // const urlString = "https://api.beatmysugar.com/BackofficeApi/";
-const urlString = "http://65.0.239.177:8080/BackofficeApi/";
+// const urlString = "http://65.0.239.177:8080/BackofficeApi/";
 
 // const urlString = "http://localhost:7000/BackofficeApi/";
 
-const ImgUrl = 'https://beatmysugar.com/assets/images/BMS-OG.png'
+// const ImgUrl = 'https://beatmysugar.com/assets/images/BMS-OG.png'
+
+const urlString = "https://stagapi.beatmysugar.com/BackofficeApi/";
 
 app.get('/', function(request, response) {
 //   console.log('Home page visited!');

@@ -20,4 +20,3 @@ yarn-error.log*
 
 node_modules/
 .history/
-build/
