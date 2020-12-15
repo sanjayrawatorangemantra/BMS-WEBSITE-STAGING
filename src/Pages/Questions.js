@@ -109,7 +109,7 @@ class Questions extends React.Component {
                   {
                     customerid : login.fld_userid,
                     topicid : topic_data.fld_id,
-                    chapterid : data.chapterid,
+                    chapterid : topic_data.fld_chapterid,
                     isunlocked : 1,
                     createdon :  moment().format('lll'),
                     status : 1
