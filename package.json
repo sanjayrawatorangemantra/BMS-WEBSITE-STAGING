@@ -1,6 +1,7 @@
 {
   "name": "beatmysugar",
   "version": "0.1.0",
+  "homepage": ".",
   "private": true,
   "dependencies": {
     "@kunukn/react-collapse": "^1.2.7",
