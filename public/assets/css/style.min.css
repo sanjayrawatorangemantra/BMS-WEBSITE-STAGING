@@ -125,7 +125,7 @@ img.new-option{width:15px;display:inline-block}
 }
 .login-box .loginbutton:hover{
   background-color:#fff;
-  color:#eb4b64;
+  color:#eb4b64 !important;
 }
 .course-side-bar h3 {
   color: #fff;
