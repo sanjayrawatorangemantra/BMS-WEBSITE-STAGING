@@ -175,14 +175,14 @@ class Answers extends React.Component {
                                                                 questionData.is_right_ans === true ? questionData.options && questionData.options.length>0 && questionData.options.map((option,index)=>{
                                                                     if(option.fld_iscorrect === 1 && option.fld_id === questionData.user_ans){
                                                                         return <div class="form-check my-4 text-white-50">
-                                                                                <p class={ "answers "+ ("correct")}>{option.fld_optiontext} <span class={ "correctcomment"}>Right </span></p>
+                                                                                <p class={ "answers "+ ("correct")}>{option.fld_optiontext} <span class={ "correctcomment"}><i class="fa fa-check"></i> </span></p>
                                                                                 </div>
                                                                         }
                                                                 }) : questionData.is_right_ans === false ? <>
                                                             {  questionData.options && questionData.options.length>0 && questionData.options.map((option,index)=>{
                                                                     if(option.fld_id === questionData.user_ans){
                                                                         return <div class="form-check my-4 text-white-50">
-                                                                                <p class={ "answers "+ ("correct")}>{option.fld_optiontext} <span class={ "correctcomment"}>User Ans </span></p>
+                                                                                <p class={ "answers "+ ("wrong")}>{option.fld_optiontext} <span class={ "wrongcomment"}><i class="fa fa-times"></i></span></p>
                                                                                 </div>
                                                                         }
                                                                 })
@@ -190,7 +190,7 @@ class Answers extends React.Component {
                                                                     questionData.options && questionData.options.length>0 && questionData.options.map((option,index)=>{
                                                                         if(option.fld_iscorrect === 1){
                                                                             return <div class="form-check my-4 text-white-50">
-                                                                                    <p class={ "answers "+ ("correct")}>{option.fld_optiontext} <span class={ "correctcomment"}>Correct Ans </span></p>
+                                                                                    <p class={ "answers "+ ("correct")}>{option.fld_optiontext} <span class={ "correctcomment"}><i class="fa fa-check"></i> </span></p>
                                                                                     </div>
                                                                             }
                                                                     })

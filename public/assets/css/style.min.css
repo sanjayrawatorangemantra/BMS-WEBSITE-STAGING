@@ -607,35 +607,44 @@ align-items: center;
   font-size: 20px;
   padding: 10px;
 }
-.answers.correct {
-  background: #cfe3d1;
+.answers.correct .correctcomment {
+  background: #6da773;
 }
 button:focus{
   outline:none;
 }
 .correctcomment {
-  padding: 5px;
+  padding: 0;
   background-color: rgba(0, 0, 0, 0.2);
   color: white;
   white-space: nowrap;
   position: absolute;
   right: 10px;
   top: 5px;
-  font-size: 16px;
+  font-size: 14px;
+  width: 30px;
+  text-align: center;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 100%;
 }
-.answers.wrong {
-  background: #e9c3cd;
+.answers.wrong .wrongcomment {
+  background: #d86b66;
 }
 
 .wrongcomment {
-  padding: 5px;
-  background-color: rgba(0, 0, 0, 0.2);
+  padding: 0;
   color: white;
   white-space: nowrap;
   position: absolute;
   right: 10px;
   top: 5px;
-  font-size: 16px;
+  font-size: 14px;
+  width: 30px;
+  text-align: center;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 100%;
 }
 .feedback-rating {
 	direction: rtl;
