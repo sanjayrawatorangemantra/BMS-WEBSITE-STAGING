@@ -50,7 +50,7 @@ class CourseContentMain extends React.Component {
       svgColor: "#507dc0",
       //  #507dc0'
     }); 
-    Notiflix.Loading.Dots()
+    //Notiflix.Loading.Dots()
 
     var log = localStorage.getItem("CustomerLoginDetails");
     var login = JSON.parse(log);
@@ -134,12 +134,11 @@ class CourseContentMain extends React.Component {
   }
 
   gotoStartLearning=()=>{
-    debugger;
     var log = localStorage.getItem("CustomerLoginDetails");
     var login = JSON.parse(log);
     if(login != null && login != ""){
       let chapterData = this.state.ChapterData;
-      Notiflix.Loading.Dots();
+      //Notiflix.Loading.Dots();
       PostApiCall.postRequest(
         {
           customerid : login.fld_userid,
@@ -175,14 +174,15 @@ class CourseContentMain extends React.Component {
         status: results.status
       })
     ).then(res => {
-        let feedback = res.data ? res.data.is_feedback : false 
+        let feedback = res.data && res.data.length>0 ? true : false 
         localStorage.setItem( 'education_feedback', feedback)
-        Notiflix.Loading.Remove();
+        //Notiflix.Loading.Remove();
         });
     });
   }
 
   getChapterContentByUser=(current_user_id)=>{
+    Notiflix.Loading.Dots()
     PostApiCall.postRequest({ customerid : current_user_id},"ListCustomerEducationDetails").then((results) => {
       results.json().then(data => ({
         data: data,
@@ -202,10 +202,11 @@ class CourseContentMain extends React.Component {
           // if(chapterData[0].topics[0].fld_isunlocked === 0){
           //   this.unlockTopic( current_user_id, chapterData[0].topics[0]);
           // }
+          this.setState({ ChapterData : chapterData });
           this.props.dispatch(setChapterListFullDetails(chapterData));
           this.setEducationProgressBar( chapterData );
-          this.setState({ ChapterData : chapterData });
-        Notiflix.Loading.Remove();
+          
+          Notiflix.Loading.Remove();
         });
     });
   }
@@ -230,7 +231,7 @@ class CourseContentMain extends React.Component {
 
   unlockTopic=(current_user_id, topic_data)=>{
     
-    Notiflix.Loading.Dots();
+    //Notiflix.Loading.Dots();
     PostApiCall.postRequest(
       {
         customerid : current_user_id,
@@ -269,7 +270,7 @@ class CourseContentMain extends React.Component {
           return o;
         });
       this.setState({ ChapterData : chapterData });
-      Notiflix.Loading.Remove();
+      //Notiflix.Loading.Remove();
       });
   });
   }
@@ -286,7 +287,7 @@ class CourseContentMain extends React.Component {
   goToTopic =( current_chapter, currect_topic )=>{
     var log = localStorage.getItem("CustomerLoginDetails");
     var login = JSON.parse(log);
-    
+    debugger;
     if(login != null && login != "" && currect_topic.fld_isunlocked===1){
       this.props.history.push({
         pathname : '/education-topic',

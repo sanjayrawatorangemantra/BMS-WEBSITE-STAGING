@@ -41,6 +41,7 @@ class CourseTopicContentMain extends React.Component {
   componentDidMount() {
     if(this.props.location.state){
       const data = this.props.location.state;
+      this.getContentByTopic( data.currect_topic);
       let current_chapter_index = (data.chaptersList.findIndex(x => x.fld_chapterid ==data.current_chapter.fld_chapterid));
       let current_topic_index = (data.current_chapter.topics.findIndex(x => x.fld_id ==data.currect_topic.fld_id));
       // sessionStorage.setItem('chapter_module_time', data.current_chapter.fld_duration );
@@ -51,11 +52,31 @@ class CourseTopicContentMain extends React.Component {
       if(current_topic_index < data.current_chapter.topics.length-1){
         this.setState({ next_topic_title : data.current_chapter.topics[current_topic_index+1].fld_title})
       }
-      this.setState({ is_completed_time : data.current_chapter.fld_isQuestionTestCompleted === 1 ? true : false, current_chapter_total_Topics : data.current_chapter.topics.length, current_chapter_data : data.current_chapter, current_chapter_index : current_chapter_index, current_topic_index : current_topic_index, Topic_Details : data.currect_topic})
+      this.setState({ is_completed_time : data.current_chapter.fld_isQuestionTestCompleted === 1 ? true : false, 
+        current_chapter_total_Topics : data.current_chapter.topics.length, current_chapter_data : data.current_chapter,
+         current_chapter_index : current_chapter_index, current_topic_index : current_topic_index
+         })
     }else{
       this.props.history.push('/education')
     }
     
+  }
+
+  getContentByTopic=( currect_topic)=>{
+    Notiflix.Loading.Dots();
+    GetApiCall.getRequest("ListContentsByTopic/?topicid="+currect_topic.fld_id).then((results) => {
+      results.json().then((obj1) => {
+        if (results.status == 200 || results.status == 201) {
+            currect_topic.contents = obj1.data;
+            this.setState({Topic_Details : currect_topic})
+        
+          Notiflix.Loading.Remove()
+        }else{
+          Notiflix.Loading.Remove()
+          Notiflix.Notify.Failure(obj1.data);
+        }
+      });
+    });
   }
 
   componentWillReceiveProps(nextProps){
@@ -92,7 +113,7 @@ class CourseTopicContentMain extends React.Component {
                 current_chapter_data_obj.topics[current_topic_index].fld_isunlocked = 1;
 
                 this.setState({ current_chapter_data : current_chapter_data_obj });
-
+                this.getContentByTopic(this.state.current_chapter_data.topics[current_topic_index]);
                 this.props.history.replace({ pathname : '/education-topic',
                   state : {
                       current_chapter : current_chapter_data_obj,
@@ -109,7 +130,7 @@ class CourseTopicContentMain extends React.Component {
             }));
           }
       }else{
-        
+        this.getContentByTopic(this.state.current_chapter_data.topics[current_topic_index]);
         this.setState({ contentIndex :0, next_topic_title : next_topic_title, Topic_Details : this.state.current_chapter_data.topics[current_topic_index], current_topic_index: current_topic_index });
       }
     }
@@ -138,7 +159,7 @@ goToNextChapterTopic=()=>{
   let topic =  current_chapter_data.topics.length > 0 ? current_chapter_data.topics[0] : '';
   let current_topic_index = 0;
   let current_chapter_index = this.state.current_chapter_index+1;
-      
+      this.getContentByTopic(topic);
       this.props.history.push({
           pathname : '/education-topic',
           state : {
