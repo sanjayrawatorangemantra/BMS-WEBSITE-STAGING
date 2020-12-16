@@ -1,7 +1,6 @@
 {
   "name": "beatmysugar",
   "version": "0.1.0",
-  "homepage": "https://stag.beatmysugar.com/",
   "private": true,
   "dependencies": {
     "@kunukn/react-collapse": "^1.2.7",
