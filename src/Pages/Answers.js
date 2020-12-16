@@ -38,7 +38,7 @@ class Answers extends React.Component {
                 let questionData = questionlistData[i];
                 let options = questionlistData[i].options.filter(item => item.fld_iscorrect==1);
                 if(options.length>0 && options[0].fld_id === questionData.user_ans){
-                    // count++;
+                    count++;
                     questionlistData[i].is_right_ans = true;
                 }else{
                     questionlistData[i].is_right_ans = false;
@@ -158,12 +158,12 @@ class Answers extends React.Component {
                                         </div>
                                         {/* <div class="prevquestion"><a class="prev" href="#"><span><img src="/assets/images/arrow.png" /></span> <span>Previous</span></a></div> */}
                                         <div class="question-course-details">
-                                            <div class="homelink">
+                                            <div style={{ top : '10px'}} class="homelink">
                                                 <a href="/education"><i class="fa fa-home" aria-hidden="true"></i></a>
                                             </div>
                                             <div class="questions">
                                                 <div class="questions-count">
-                                                    {/* <p>Question {correct_ans_count} / {questionData.length}</p> */}
+                                                    <p>Question {correct_ans_count} / {questionData.length}</p>
                                                 </div>
                                                 <div class="quiz-form text-light">
                                                     <div class="my-5 qusestp">
@@ -190,7 +190,7 @@ class Answers extends React.Component {
                                                                     questionData.options && questionData.options.length>0 && questionData.options.map((option,index)=>{
                                                                         if(option.fld_iscorrect === 1){
                                                                             return <div class="form-check my-4 text-white-50">
-                                                                                    <p class={ "answers "+ ("correct")}>{option.fld_optiontext} <span class={ "correctcomment"}><i class="fa fa-check"></i> </span></p>
+                                                                                     <p class={ "answers "+ ("correct")}><b>{'Correct Answer : '+ option.fld_optiontext}</b> </p>
                                                                                     </div>
                                                                             }
                                                                     })

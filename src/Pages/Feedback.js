@@ -13,7 +13,8 @@ class Feedback extends React.Component {
             rating:'',
             comments:'',
             show_congratulation : false,
-            congratulaion: ''
+            congratulaion: '',
+            address :''
         };
     }
 
@@ -24,38 +25,45 @@ class Feedback extends React.Component {
 
     SubmitFeedback =()=>{
         if( this.state.rating != '' ){
-            var log = localStorage.getItem("CustomerLoginDetails");
-            var login = JSON.parse(log);
-            if(login != null && login != ""){
-                let data={};
-                data.customerid= login.fld_userid;
-                data.feedbacktext = this.state.comments;
-                data.createdon = moment().format('lll');
-                data.rating = this.state.rating;
-                data.status = 1;
-                Notiflix.Loading.Dots();
+            if(this.state.address != ''){
+                var log = localStorage.getItem("CustomerLoginDetails");
+                var login = JSON.parse(log);
+                if(login != null && login != ""){
+                    let data={};
+                    data.customerid= login.fld_userid;
+                    data.feedbacktext = this.state.comments;
+                    data.createdon = moment().format('lll');
+                    data.rating = this.state.rating;
+                    data.delivery_address = this.state.address
+                    data.status = 1;
+                    Notiflix.Loading.Dots();
 
-                PostApiCall.postRequest(
-                {
-                    data
-                },
-                "AddCustomerEducationFeedback"
-                ).then((results1) =>
-                // const objs = JSON.parse(result._bodyText)
-                
-                results1.json().then((obj1) => {
-                    if (results1.status == 200 || results1.status == 201) {
-                    // Notiflix.Loading.Remove();
-                    this.getCongratulation();
-                        this.setState({ show_congratulation : true})
-                        //get congratulaion
-                    }else{
-                        Notiflix.Loading.Remove()
-                        Notiflix.Notify.Failure( obj1.data );
-                
-                    }
-                }));
+                    PostApiCall.postRequest(
+                    {
+                        data
+                    },
+                    "AddCustomerEducationFeedback",
+                    ).then((results1) =>
+                    // const objs = JSON.parse(result._bodyText)
+                    
+                    results1.json().then((obj1) => {
+                        if (results1.status == 200 || results1.status == 201) {
+                        // Notiflix.Loading.Remove();
+                        this.getCongratulation();
+                            this.setState({ show_congratulation : true})
+                            //get congratulaion
+                        }else{
+                            Notiflix.Loading.Remove()
+                            Notiflix.Notify.Failure( obj1.data );
+                    
+                        }
+                    }));
+                }
+            }else{
+                Notiflix.Notify.Failure( "Please enter yours's address !"  );
             }
+        }else{
+            Notiflix.Notify.Failure( ' Please give rating first !' );
         }
     }
 
@@ -158,8 +166,13 @@ class Feedback extends React.Component {
                                                     </div>
                                                     <p>Any additional comments or suggestion?</p>
                                                     <div class="textbox">
-                                                    <textarea maxlength="300" onChange={(e)=>{ this.setState({ comments : e.target.value })}} id="w3review" name="w3review" rows="4" cols="50" > </textarea>
+                                                    <textarea maxlength="300" onChange={(e)=>{ this.setState({ comments : e.target.value })}} id="w3review" name="w3review" rows="2" cols="50" > </textarea>
                                                     </div>
+                                                    <p> Your's address ?</p>
+                                                    <div class="textbox">
+                                                    <textarea maxlength="300" onChange={(e)=>{ this.setState({ address : e.target.value })}} id="w3review" name="w3review" rows="2" cols="50" > </textarea>
+                                                    </div>
+                                                    
                                                     <div class="submitbtn">
                                                         <button class="activelinksubmit" onClick={this.SubmitFeedback.bind(this)} ><span>Submit Feedback </span><span><img src="/assets/images/next.png" /></span></button>
                                                     </div>

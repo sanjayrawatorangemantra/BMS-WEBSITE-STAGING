@@ -11,6 +11,7 @@ import moment from "moment";
 import Select from "react-select";
 import { connect } from "react-redux";
 import DatePicker from "react-date-picker";
+import imageConfig from './Api/imageApi';
 
 import "react-datepicker/dist/react-datepicker.css";
 import {
@@ -80,7 +81,7 @@ class Editprofile extends React.Component {
       imagePreviewUrl:
         "https://talentview.asia/wp-content/uploads/Wait-Staff-Icon-2.png",
       ImageData: [],
-      ImageApiUrl: "https://images.beatmysugar.com/api/Image/SaveImage",
+      ImageApiUrl :imageConfig.ImageApiUrl,
       Data: [],
       ProfileData: [],
 
@@ -282,11 +283,12 @@ class Editprofile extends React.Component {
                                   PostApiCall.postRequest(
                                     {
                                       id: this.state.ProfileData.fld_userid,
-                                      photo:
-                                        "https://images.beatmysugar.com/images/Customer/" +
-                                        res.data.Message.split(",")[2]
-                                          .split("=")[1]
-                                          .trim(),
+                                      photo: res.data.Message.img_url,
+                                      // photo:
+                                      //   "https://images.beatmysugar.com/images/Customer/" +
+                                      //   res.data.Message.split(",")[2]
+                                      //     .split("=")[1]
+                                      //     .trim(),
                                       updatedby: this.state.ProfileData
                                         .fld_userid,
                                       updatedon: moment().format("lll"),

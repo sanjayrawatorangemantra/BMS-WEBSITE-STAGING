@@ -1189,6 +1189,16 @@ class Menu extends React.Component {
                       </a>{" "}
                     </li>
 
+                     {/* ........Education Module Menu .......... */}
+                     <li class="hvr-overline-from-left">
+                      <a href="/education" class="">
+                        Education
+                        <span class="new-option" >
+                       *New
+                       </span>
+                      </a>
+                    </li>
+
                     <li class="hvr-overline-from-left">
                       <a href="javascript: void(0);" class="">
                         Food & Supplements{" "}
@@ -1356,12 +1366,7 @@ class Menu extends React.Component {
                         Dietitians
                       </a>
                     </li>
-                    {/* ........Education Module Menu .......... */}
-                    <li class="hvr-overline-from-left">
-                      <a href="/education" class="">
-                        Education
-                      </a>
-                    </li>
+                   
                  
 
                     {/* <li class="hvr-overline-from-left"><a 
@@ -1556,6 +1561,16 @@ class Menu extends React.Component {
                     Health Knowledge
                   </a>{" "}
                 </li>
+
+                 {/* ........Education Module Menu .......... */}
+                 <li class="hvr-overline-from-left">
+                      <a href="/education" class="">
+                        Education
+                        <span class="new-option" >
+                       *New
+                       </span>
+                      </a>
+                    </li>
 
                 {/* <li><a href="/allopathy">Allopathy</a></li> */}
 

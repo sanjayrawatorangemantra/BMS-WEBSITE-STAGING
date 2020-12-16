@@ -174,7 +174,7 @@ class CourseContentMain extends React.Component {
         status: results.status
       })
     ).then(res => {
-        let feedback = res.data && res.data.length>0 ? true : false 
+        let feedback = res.data && res.data.data && res.data.data.length>0 ? true : false 
         localStorage.setItem( 'education_feedback', feedback)
         //Notiflix.Loading.Remove();
         });
