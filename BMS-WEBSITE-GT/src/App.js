@@ -27,6 +27,8 @@ import HealthHP from "./HomePage/HealthHP";
 import CovidHP from "./HomePage/CovidHP";
 import AccessoriesHP from "./HomePage/AccessoriesHP";
 
+var  testimonialSlider = {}
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -47,13 +49,147 @@ class App extends React.Component {
 
       bannerHome: [],
       images: [],
+      Testimonials : [],
+      TestimonialsRef : [],
     };
   }
 
   changeActiveItem = (activeItemIndex) => this.setState({ activeItemIndex });
 
+  componentDidMount(){
+    GetApiCall.getRequest("Get_TestimonialWebsite").then(resultdes =>
+      resultdes.json().then(obj => {
+     
+      
+      var dt = obj.data.filter(val=> val.fld_id != 1)
+      
+      console.log(dt)
+
+        this.setState({
+         TestimonialsRef : obj.data,
+         Testimonials : dt
+        })
+    
+      }))
+  }
  
-  render() {
+  render()
+  {
+
+    if(this.state.Testimonials.length == 1){
+
+     testimonialSlider = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        autoplay: true,
+        slidesToScroll: 1,
+        arrows: false,
+        autoplaySpeed: 5000,
+        responsive: [
+          {
+            breakpoint: 990,
+            settings: {
+              arrows: false,
+              centerMode: false,
+              centerPadding: "40px",
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              infinite: true,
+              dots: false,
+            },
+          },
+      
+          {
+            breakpoint: 740,
+            settings: {
+              arrows: false,
+              centerMode: false,
+              centerPadding: "40px",
+              slidesToShow: 1,
+              slidesToScroll: 1,
+            },
+          },
+        ],
+      }
+
+    }else if(this.state.Testimonials.length == 2){
+       testimonialSlider = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 2,
+        autoplay: true,
+        slidesToScroll: 1,
+        arrows: false,
+        autoplaySpeed: 5000,
+        responsive: [
+          {
+            breakpoint: 990,
+            settings: {
+              arrows: false,
+              centerMode: false,
+              centerPadding: "40px",
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              infinite: true,
+              dots: false,
+            },
+          },
+      
+          {
+            breakpoint: 740,
+            settings: {
+              arrows: false,
+              centerMode: false,
+              centerPadding: "40px",
+              slidesToShow: 1,
+              slidesToScroll: 1,
+            },
+          },
+        ],
+      }
+    }else
+    {
+        testimonialSlider = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 2,
+        autoplay: true,
+        slidesToScroll: 1,
+        arrows: false,
+        autoplaySpeed: 5000,
+        responsive: [
+          {
+            breakpoint: 990,
+            settings: {
+              arrows: false,
+              centerMode: false,
+              centerPadding: "40px",
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              infinite: true,
+              dots: false,
+            },
+          },
+      
+          {
+            breakpoint: 740,
+            settings: {
+              arrows: false,
+              centerMode: false,
+              centerPadding: "40px",
+              slidesToShow: 1,
+              slidesToScroll: 1,
+            },
+          },
+        ],
+      }
+    }
+   
+
    
     return (
       <div className="App">
@@ -72,6 +208,81 @@ class App extends React.Component {
           <CovidHP />
           <AccessoriesHP />
         <HealthHP />
+        
+<div class="container" style={{display : this.state.TestimonialsRef[0]!= undefined && this.state.TestimonialsRef[0].fld_showOnWebsite == 'Yes' ? '' : 'none'}}>
+<div class="app-section margin-top margin-bottom">
+  <div class="app-section-bg">
+    <div class="row ">
+      <div class="col-md-6">
+      <h3 class="app-title testimonial-title">
+          Testimonials
+        </h3>
+      </div>
+      <div class="col-md-6">
+      <a href="/testimonials" class="view-all-btn" style={{marginTop:"0px"}}>View All</a>
+        </div>
+      <div class="col-md-12">
+      
+        <Slider {...testimonialSlider}>
+          {this.state.Testimonials.map((data,index)=>(
+
+                <div class="testimonial center-block" >
+                <img src={data.fld_imageurl == null || data.fld_imageurl == '' ? "assets/images/user.png" : data.fld_imageurl} class="testimonial-img"></img>
+                <p class="user-text">
+                
+                  {data.fld_feedback.length > 200 ?
+                   [`${data.fld_feedback.substring(0, 200)}...`, <a href="/testimonials">Read More</a>]: data.fld_feedback
+                  } 
+                </p>
+                <p class="user-name"> {data.fld_name}</p>
+                <p class="testimonial-city">
+                 
+                 {data.fld_rating == 1 ? 
+                   <p class="testimonial-city">
+                  <i class="fa fa-star" aria-hidden="true" style={{color:'#FF9529'}}></i>
+                  </p>
+                  :data.fld_rating == 2 ? 
+                  <p class="testimonial-city">
+                  <i class="fa fa-star" aria-hidden="true" style={{color:'#FF9529'}}></i>
+                  <i class="fa fa-star" aria-hidden="true" style={{color:'#FF9529'}}></i>
+                  </p> :
+                  data.fld_rating == 3 ? 
+                  <p class="testimonial-city">
+                  <i class="fa fa-star" aria-hidden="true" style={{color:'#FF9529'}}></i>
+                  <i class="fa fa-star" aria-hidden="true" style={{color:'#FF9529'}}></i>
+                  <i class="fa fa-star" aria-hidden="true" style={{color:'#FF9529'}}></i>
+                  </p> :
+                      data.fld_rating == 4 ? 
+                      <p class="testimonial-city">
+                      <i class="fa fa-star" aria-hidden="true" style={{color:'#FF9529'}}></i>
+                      <i class="fa fa-star" aria-hidden="true" style={{color:'#FF9529'}}></i>
+                      <i class="fa fa-star" aria-hidden="true" style={{color:'#FF9529'}}></i>
+                      <i class="fa fa-star" aria-hidden="true" style={{color:'#FF9529'}}></i>
+                      </p> :
+                         <p class="testimonial-city">
+                         <i class="fa fa-star" aria-hidden="true" style={{color:'#FF9529'}}></i>
+                         <i class="fa fa-star" aria-hidden="true" style={{color:'#FF9529'}}></i>
+                         <i class="fa fa-star" aria-hidden="true" style={{color:'#FF9529'}}></i>
+                         <i class="fa fa-star" aria-hidden="true" style={{color:'#FF9529'}}></i>
+                         <i class="fa fa-star" aria-hidden="true" style={{color:'#FF9529'}}></i>
+                         </p>
+                 }
+             
+                
+               
+
+                </p>
+                </div>
+
+          ))}
+        
+    
+        </Slider>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
             {/* <div class="container">
               <div class="app-section margin-top margin-bottom">
                 <div class="app-section-bg">

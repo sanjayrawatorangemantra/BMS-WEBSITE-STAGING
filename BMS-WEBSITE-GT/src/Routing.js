@@ -91,6 +91,8 @@ import AccessoriesDetails from "./AccessoriesDetails";
 import CovidListing from "./CovidListing";
 import CovidDetails from "./CovidDetails";
 
+import Testimonials from "./Testimonials";
+
 class Routing extends Component {
   render() {
     return (
@@ -391,6 +393,11 @@ class Routing extends Component {
             path={"/ContributorDetails"}
             component={ContributorDetails}
           /> */}
+          <Route
+            exact
+            path={"/testimonials"}
+            component={Testimonials}
+          />
         </div>
         <Route
             exact
