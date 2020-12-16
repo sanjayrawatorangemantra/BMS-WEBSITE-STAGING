@@ -38,7 +38,10 @@ class Answers extends React.Component {
                 let questionData = questionlistData[i];
                 let options = questionlistData[i].options.filter(item => item.fld_iscorrect==1);
                 if(options.length>0 && options[0].fld_id === questionData.user_ans){
-                    count++;
+                    // count++;
+                    questionlistData[i].is_right_ans = true;
+                }else{
+                    questionlistData[i].is_right_ans = false;
                 }
             }
             if(current_chapter_index === chaptersList.length-1 ){
@@ -141,10 +144,10 @@ class Answers extends React.Component {
                                     <div class="dashboard-content">
                                         <div class="progessandtime">
                                             <div class="question-progress-bar">
-                                            { questionData && questionData.length>0 && questionData.map(( item, index)=>{
+                                            {/* { questionData && questionData.length>0 && questionData.map(( item, index)=>{
                                                 return  item.user_ans ? <div class="progress-section attend"></div> : <div class="progress-section"></div> 
                                               })
-                                            }
+                                            } */}
                                             </div>
                                             {/* <div class="time-section">
                                                 <div class="time-coures-box">
@@ -160,32 +163,46 @@ class Answers extends React.Component {
                                             </div>
                                             <div class="questions">
                                                 <div class="questions-count">
-                                                    <p>Question {correct_ans_count} / {questionData.length}</p>
+                                                    {/* <p>Question {correct_ans_count} / {questionData.length}</p> */}
                                                 </div>
                                                 <div class="quiz-form text-light">
                                                     <div class="my-5 qusestp">
                                                     { questionData && questionData.length>0 && questionData.map( (questionData, index)=>{
 
                                                         return<div class="answers">
-                                                        <p class="lead question">{index+1}. {questionData.fld_questiontext}</p>
-                                                        {
-                                                            questionData.options && questionData.options.length>0 && questionData.options.map((option,index)=>(
-                                                                option.fld_iscorrect === 1 && option.fld_id === questionData.user_ans ? 
-                                                                <div class="form-check my-4 text-white-50">
-                                                                    <p class={ "answers "+ ("correct")}>{option.fld_optiontext} <span class={ "correctcomment"}>Right Answer</span></p>
-                                                                </div>
-                                                                :option.fld_iscorrect != 1 && option.fld_id === questionData.user_ans ?
-                                                                <div class="form-check my-4 text-white-50">
-                                                                    <p class={ "answers "+ ( "wrong")}>{option.fld_optiontext} <span class={  "wrongcomment"}>Answer</span></p>
-                                                                </div>
-                                                                :option.fld_iscorrect === 1 && option.fld_id !== questionData.user_ans ?
-                                                                <div class="form-check my-4 text-white-50">
-                                                                    <p class={ "answers "+ ("correct")}>{option.fld_optiontext} <span class={ "correctcomment"}>Right Answer</span></p>
-                                                                </div>:''
-                                                            )
-                                                        )}
-                                                        </div>
-                                                    })
+                                                            <p class="lead question">{index+1}. {questionData.fld_questiontext}</p>
+                                                            {   
+                                                                questionData.is_right_ans === true ? questionData.options && questionData.options.length>0 && questionData.options.map((option,index)=>{
+                                                                    if(option.fld_iscorrect === 1 && option.fld_id === questionData.user_ans){
+                                                                        return <div class="form-check my-4 text-white-50">
+                                                                                <p class={ "answers "+ ("correct")}>{option.fld_optiontext} <span class={ "correctcomment"}>Right </span></p>
+                                                                                </div>
+                                                                        }
+                                                                }) : questionData.is_right_ans === false ? <>
+                                                            {  questionData.options && questionData.options.length>0 && questionData.options.map((option,index)=>{
+                                                                    if(option.fld_id === questionData.user_ans){
+                                                                        return <div class="form-check my-4 text-white-50">
+                                                                                <p class={ "answers "+ ("correct")}>{option.fld_optiontext} <span class={ "correctcomment"}>User Ans </span></p>
+                                                                                </div>
+                                                                        }
+                                                                })
+                                                                }{  
+                                                                    questionData.options && questionData.options.length>0 && questionData.options.map((option,index)=>{
+                                                                        if(option.fld_iscorrect === 1){
+                                                                            return <div class="form-check my-4 text-white-50">
+                                                                                    <p class={ "answers "+ ("correct")}>{option.fld_optiontext} <span class={ "correctcomment"}>Correct Ans </span></p>
+                                                                                    </div>
+                                                                            }
+                                                                    })
+
+                                                                }
+                                                                
+                                                                </>
+                                                                :''
+
+                                                            }
+                                                            </div>
+                                                        })
                                                     }
                                                         <div class="submitbtn">
                                                             <button onClick={()=>{this.goToNextChapterTopic()}} class="activelinksubmit"><span>{ is_finel_chapter === true ? 

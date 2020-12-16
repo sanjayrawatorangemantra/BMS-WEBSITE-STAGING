@@ -4,11 +4,11 @@
 
 // var urlString = "http://192.168.43.146:7000/BackofficeApi/";
 
-// var urlString = "http://localhost:8080/BackofficeApi/";
+var urlString = "http://localhost:8080/BackofficeApi/";
 
 // const urlString = "http://65.0.239.177:8080/BackofficeApi/";
 
-const urlString = "https://stagapi.beatmysugar.com/BackofficeApi/";
+// const urlString = "https://stagapi.beatmysugar.com/BackofficeApi/";
 
 
 
