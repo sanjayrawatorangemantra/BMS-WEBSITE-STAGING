@@ -98,6 +98,7 @@ import Questions from './Pages/Questions';
 import Answers from "./Pages/Answers";
 import Feedback from "./Pages/Feedback";
 import CourseTopicContentMain from './Pages/CourseTopicContent';
+import VerifyEducationEmailSuccess from "./VerifyEducationEmailSuccess";
 
 class Routing extends Component {
   render() {
@@ -378,7 +379,7 @@ class Routing extends Component {
 
 <Route exact path={"/search/:key"} component={Tabs} />
 
-<Route exact path={"/verifyemail/:email"} component={VerifyEmailSuccess} />
+<Route exact path={"/verifyemail/:email"} component={VerifyEmailSuccess} /> 
 
 <Route
             exact
@@ -422,7 +423,7 @@ class Routing extends Component {
         <Route exact path={"/questions"} component={Questions} />
         <Route exact path={"/answers"} component={Answers} />
         <Route exact path={"/feedback"} component={Feedback} />
-
+        <Route exact path={"/verifyeducationemail/:email/:otp"} component={VerifyEducationEmailSuccess} />
       </BrowserRouter>
     );
   }

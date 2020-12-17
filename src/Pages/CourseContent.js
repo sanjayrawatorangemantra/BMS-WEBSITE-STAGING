@@ -41,7 +41,8 @@ class CourseContentMain extends React.Component {
       Show_Congratulation_Page : false,
       resume_learning : {isCompleted: false, fld_currentchapter : 0, fld_currenttopic : 0, start : true},
       rating:0,
-      rating_per:0
+      rating_per:0,
+      is_block_user : false,
     };
   }
 
@@ -108,19 +109,54 @@ class CourseContentMain extends React.Component {
 
       })
     ).then(res => {
+      debugger;
       if(res.data && res.data.data){
         let data= {};
         data.isCompleted = res.data.data.fld_iscompleted === 1? true : false;
         data.fld_currentchapter = res.data.data.fld_currentchapter;
         data.fld_currenttopic = res.data.data.fld_currenttopic;
         data.start= (res.data.data.fld_currentchapter ===0 && res.data.data.fld_currenttopic === 0) ? true : false;
-        this.setState({resume_learning : data});
+        let is_block_user = false;
+        if( res.data.data.fld_is_email_verified === 0 && res.data.data.fld_is_trial_period === 0){
+          is_block_user = true;
+        }else if( res.data.data.fld_is_trial_period === 0 ){
+          is_block_user = true;
+        }
+        this.setState({resume_learning : data, is_block_user : is_block_user});
       }else{
         this.addUserEducationModule(customerid);
+        this.verifyEducationEmail();
       }
         
       })
     });
+  }
+
+  verifyEducationEmail=()=>{
+    var log = localStorage.getItem("CustomerLoginDetails");
+    var login = JSON.parse(log);
+    if(login != null && login != ""){
+      var random = Math.floor(100000 + Math.random() * 900000);
+      localStorage.setItem("OTPEducation", random );
+      PostApiCall.postRequest(
+        {
+          email : login.fld_email,
+          otp : random,
+          name : login.fld_name,
+          customerid : login.fld_userid
+        },
+        "VerifyEducationEmail"
+      ).then((results1) =>
+        // const objs = JSON.parse(result._bodyText)
+        results1.json().then((obj1) => {
+          if (results1.status == 200 || results1.status == 201) {
+
+          }else{
+            Notiflix.Loading.Remove()
+            Notiflix.Notify.Failure(obj1.data);
+          }
+        }))
+    }
   }
 
   gotoResumeLearning=()=>{
@@ -287,7 +323,6 @@ class CourseContentMain extends React.Component {
   goToTopic =( current_chapter, currect_topic )=>{
     var log = localStorage.getItem("CustomerLoginDetails");
     var login = JSON.parse(log);
-    debugger;
     if(login != null && login != "" && currect_topic.fld_isunlocked===1){
       this.props.history.push({
         pathname : '/education-topic',
@@ -303,7 +338,7 @@ class CourseContentMain extends React.Component {
 
 
   render() {
-    const { resume_learning, rating, rating_per, Topic_Details, Show_Topics, current_topic_index , current_chapter_index, Show_Questions_Module, ChapterQuestionList,
+    const { resume_learning, rating, rating_per, is_block_user, Show_Topics, current_topic_index , current_chapter_index, Show_Questions_Module, ChapterQuestionList,
       current_chapter_data, Show_Correct_Question_Ans, is_finel_chapter, Show_User_Feedback, Show_Congratulation_Page} = this.state;
 
       var log = localStorage.getItem(
@@ -368,6 +403,7 @@ class CourseContentMain extends React.Component {
                             <div class="dashboard-content">
                                 <HeaderCourseProgress login={login} ShowTimer={false}/>
                                 <div class="panel-group" id="accordion">
+                                <div class="row mt-2"><button style={{marginLeft:'5%'}} onClick={()=>{ alert('View Demo working..')}}>View Demo</button></div>
                                 {this.state.ChapterData.map(( Item, chapterIndex)=>{
                                  return <div class={"panel panel-default " + (Item.activeClass == true ? 'active' : 'deactive')}>
                                         <div class={"panel-heading "+( Item.chapter_unLock == true ? 'unlockedlockedtitle' : 'lockedtitle')} onClick={()=> this.handleActiveClass( Item.fld_chapterid ) } >
@@ -454,6 +490,21 @@ class CourseContentMain extends React.Component {
                 </div>
             </div>
        </div>
+       <div class={"modal fade  "+ (is_block_user ===true ? 'show':'')} tabindex="1" role="dialog" style={{ backgroundColor:'rgb(191 189 204 / 40%)'}} >
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title"> User Blocked !</h5>
+              </div>
+              <div class="modal-body">
+                <p> Please verify your email to access Education Program.</p>
+              </div>
+              <div class="modal-footer">
+                <button onClick={ ()=>{ this.verifyEducationEmail() }} class="btn btn-secondary" data-dismiss="modal">Resend mail</button>
+              </div>
+            </div>
+          </div>
+        </div>
         <Footer></Footer>
       </div>
     );
