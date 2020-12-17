@@ -10,14 +10,14 @@ const axios = require('axios')
 // const Parser = require('html-react-parser')
 
 
-// const urlString = "https://api.beatmysugar.com/BackofficeApi/";
+const urlString = "https://api.beatmysugar.com/BackofficeApi/";
 // const urlString = "http://65.0.239.177:8080/BackofficeApi/";
 
 // const urlString = "http://localhost:7000/BackofficeApi/";
 
 // const ImgUrl = 'https://beatmysugar.com/assets/images/BMS-OG.png'
 
-const urlString = "https://stagapi.beatmysugar.com/BackofficeApi/";
+// const urlString = "https://stagapi.beatmysugar.com/BackofficeApi/";
 
 // var urlString = "http://localhost:8080/BackofficeApi/";
 
