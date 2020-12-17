@@ -1563,14 +1563,14 @@ class Menu extends React.Component {
                 </li>
 
                  {/* ........Education Module Menu .......... */}
-                 <li class="hvr-overline-from-left">
+                 {/* <li class="hvr-overline-from-left">
                       <a href="/education" class="">
                         Education
                         <span class="new-option" >
                        *New
                        </span>
                       </a>
-                    </li>
+                    </li> */}
 
                 {/* <li><a href="/allopathy">Allopathy</a></li> */}
 
