@@ -682,7 +682,63 @@ button:focus{
 .login-box .loginbutton:not([href]):not([tabindex]){
   color:#fff;
 }
+.modal.fade.teasermodal {
+  background: rgb(0 0 0 / 66%);
+  z-index: 9999;
+}
+
+.teasermodal .modal-footer button {
+  background: #eb4b64;
+  border-radius: 30px !important;
+  border-color: #eb4b64;
+}
+
+.teasermodal .close {
+  font-size: 30px;
+}
+.teaser-content {
+  text-align: center;
+}
+
+.teaser-content img {
+  display: inline;
+}
+.viewdemobtn {
+  padding: 5px 30px;
+  color: #eb4b64;
+  border: 1px solid #eb4b64;
+  font-size: 20px;
+  margin-top: 0px;
+  display: inline-block;
+  font-weight: 600;
+  border-radius: 30px !important;
+  transition: .5s linear;
+}
+.viewdemobtn:hover{
+ background: #eb4b64;
+ color:#fff;
+}
+.btn-sec {
+  text-align: left;
+  width: 100%;
+  padding-left: 30px;
+}
+@media (min-width: 576px){
+  .teasermodal .modal-dialog {
+    max-width: 600px;
+    margin: 1.75rem auto;
+}
+.teasermodal .modal-dialog .modal-content{
+  height: 400px;
+}
+}
 @media only screen and (max-width:768px){
+  .teasermodal .modal-dialog .modal-content{
+    height: 300px;
+  }
+  .teasermodal .modal-body {
+    overflow-y: auto;
+}
   .head-text {
     padding-right: 0;
 }
@@ -823,4 +879,5 @@ button:focus{
   top: 10px;
   right: 20px;
 }
+
 }

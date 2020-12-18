@@ -313,7 +313,7 @@ class CourseContentMain extends React.Component {
   });
   }
 
-  handleActiveClass=( fld_chapterid)=>{
+  handleActiveclassName=( fld_chapterid)=>{
       var chapterData = this.state.ChapterData.map(function(el ) {
         var o = Object.assign({}, el);
         o.activeClass = (el.fld_chapterid == fld_chapterid ? true:false);
@@ -352,15 +352,15 @@ class CourseContentMain extends React.Component {
     return (
       <div>
         <Menu></Menu>
-        <div class="account-section"> 
-            <div class="co">
-              <div class="banner-sec">
-                <div class="container">
-                  <div class="row">
-                    <div class="col-md-8">
-                      <div class="head-text">
-                        <h1 class="main-head">Diabetes Learning Program</h1>
-                        <p class="sub-head">A brief about the course and what is expected to be delivered and many more</p>
+        <div className="account-section"> 
+            <div className="co">
+              <div className="banner-sec">
+                <div className="container">
+                  <div className="row">
+                    <div className="col-md-8">
+                      <div className="head-text">
+                        <h1 className="main-head">Diabetes Learning Program</h1>
+                        <p className="sub-head">A brief about the course and what is expected to be delivered and many more</p>
                         <div className="rating-box">
                         <span className="ratingtext">{rating} Rating</span>
                         <span className="ratingsse">
@@ -384,13 +384,13 @@ class CourseContentMain extends React.Component {
                         </span>
                       </div>
                       </div>
-                      <div class="tag-section">
-                        <div class="tag-box"><img src="/assets/images/free.png" /><span class="tagtext">On Demand</span></div>
+                      <div className="tag-section">
+                        <div className="tag-box"><img src="/assets/images/free.png" /><span className="tagtext">On Demand</span></div>
 
                       </div>
                     </div>
-                    <div class="col-md-4">
-                      <div class="courseimage">
+                    <div className="col-md-4">
+                      <div className="courseimage">
                            <img src="/assets/images/course.jpg" alt="course image"/>
                       </div>
                     </div>
@@ -398,27 +398,29 @@ class CourseContentMain extends React.Component {
                 </div>
 
               </div>
-                <div class="container" style={{background:"none"}}>
-                    <div class="row mt-2">
-                        <div class="col-lg-8 order-lg-first ">
+                <div className="container" style={{background:"none"}}>
+                    <div className="row mt-2">
+                        <div className="col-lg-8 order-lg-first ">
                         {this.state.ChapterData.length>0?
-                            <div class="dashboard-content">
+                            <div className="dashboard-content">
                                 <HeaderCourseProgress login={login} ShowTimer={false}/>
-                                <div class="panel-group" id="accordion">
-                                <div class="row mt-2"><button style={{marginLeft:'5%'}} onClick={()=>{ this.setState({is_show_teaser_model : true})}}>View Demo</button></div>
+                                <div className="panel-group" id="accordion">
+                                <div className="row mt-2">
+                                  <div className="btn-sec"> <button className="viewdemobtn" onClick={()=>{ this.setState({is_show_teaser_model : true})}}>View Demo</button></div>
+                                 </div>
                                 {this.state.ChapterData.map(( Item, chapterIndex)=>{
-                                 return <div class={"panel panel-default " + (Item.activeClass == true ? 'active' : 'deactive')}>
-                                        <div class={"panel-heading "+( Item.chapter_unLock == true ? 'unlockedlockedtitle' : 'lockedtitle')} onClick={()=> this.handleActiveClass( Item.fld_chapterid ) } >
-                                            <h4 class="panel-title">                            
+                                 return <div className={"panel panel-default " + (Item.activeClass == true ? 'active' : 'deactive')}>
+                                        <div className={"panel-heading "+( Item.chapter_unLock == true ? 'unlockedlockedtitle' : 'lockedtitle')} onClick={()=> this.handleActiveClass( Item.fld_chapterid ) } >
+                                            <h4 className="panel-title">                            
                                                 Chapter Number {chapterIndex+1} : {Item.fld_title}
                                             </h4>
-                                            <p><span class="topic">{Item.topics ? Item.topics.length :0 } Topics</span> . <span class="length">{ Item.fld_duration.includes(':') ? (Item.fld_duration.split(':')[0]+'m '+Item.fld_duration.split(':')[1]+'s') : Item.fld_duration } total length</span></p>
+                                            <p><span className="topic">{Item.topics ? Item.topics.length :0 } Topics</span> . <span className="length">{ Item.fld_duration.includes(':') ? (Item.fld_duration.split(':')[0]+'m '+Item.fld_duration.split(':')[1]+'s') : Item.fld_duration } total length</span></p>
                                         </div>
-                                        <div id="collapseOne" class={"panel-collapse " + (Item.activeClass == true ? 'active' : 'deactive')}>
-                                            <div class="panel-body">
-                                                <ul class="topiclist">
+                                        <div id="collapseOne" className={"panel-collapse " + (Item.activeClass == true ? 'active' : 'deactive')}>
+                                            <div className="panel-body">
+                                                <ul className="topiclist">
                                                     {Item.topics && Item.topics.length > 0 ? Item.topics.map(( TopicItem, index)=>{
-                                                        return <li class={TopicItem.fld_isunlocked === 1 ?"unlocked":"locked"} onClick={()=>{ this.goToTopic( Item, TopicItem ) }} ><a class="card-edit">Topic { index+1 } - {TopicItem.fld_title}</a></li>
+                                                        return <li className={TopicItem.fld_isunlocked === 1 ?"unlocked":"locked"} onClick={()=>{ this.goToTopic( Item, TopicItem ) }} ><a className="card-edit">Topic { index+1 } - {TopicItem.fld_title}</a></li>
                                                     }) : ''}
                                                 </ul>
                                             </div>
@@ -428,7 +430,7 @@ class CourseContentMain extends React.Component {
                               </div>
                             </div>
                           :
-                          <div class="dashboard-content">
+                          <div className="dashboard-content">
 
                                <div
                                 style={{
@@ -444,10 +446,10 @@ class CourseContentMain extends React.Component {
                             </div>
                         }
                        </div>
-                        <div class="col-lg-4">
-                            <div class="course-side-bar">
+                        <div className="col-lg-4">
+                            <div className="course-side-bar">
                                 { login != null && login != "" ? 
-                                    <div class="login-box">
+                                    <div className="login-box">
                                       {resume_learning.start == true ? 
                                       <>
                                        <h3>Want to start your free course?</h3>
@@ -465,7 +467,7 @@ class CourseContentMain extends React.Component {
                                     }
                                     </div>
                                     :
-                                        <div class="login-box">
+                                        <div className="login-box">
                                             <h3>Want to start your free course?</h3>
                                             <Link
                                           to={  { pathname :"/login", state: { pre_page_url: '/education' }}} className="loginbutton"  >
@@ -473,7 +475,7 @@ class CourseContentMain extends React.Component {
                                           </Link>
                                         </div>
                                 }
-                              <div class="benefits">
+                              <div className="benefits">
                                  <h4>Course Benefits</h4>
                                  <ul>
                                    <li><strong>Flexible</strong> You pick the schedule</li>
@@ -482,7 +484,7 @@ class CourseContentMain extends React.Component {
                                    <li><strong>Goodies</strong> Free gifts on completion</li>
                                  </ul>
                               </div>
-                              <div class="gift-hemper">
+                              <div className="gift-hemper">
                                 <h5>Gift Hamper</h5>
                                 <img src="/assets/images/gifts.jpg" />
                               </div>
@@ -492,17 +494,17 @@ class CourseContentMain extends React.Component {
                 </div>
             </div>
        </div>
-       <div class={"modal fade  "+ (is_block_user ===true ? 'show':'')} tabindex="1" role="dialog" style={{ backgroundColor:'rgb(191 189 204 / 40%)'}} >
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title"> User Blocked !</h5>
+       <div className={"modal fade  "+ (is_block_user ===true ? 'show':'')} tabindex="1" role="dialog" style={{ backgroundColor:'rgb(191 189 204 / 40%)'}} >
+          <div className="modal-dialog modal-dialog-centered" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title"> User Blocked !</h5>
               </div>
-              <div class="modal-body">
+              <div className="modal-body">
                 <p> Please verify your email to access Education Program.</p>
               </div>
-              <div class="modal-footer">
-                <button onClick={ ()=>{ this.verifyEducationEmail() }} class="btn btn-secondary" data-dismiss="modal">Resend mail</button>
+              <div className="modal-footer">
+                <button onClick={ ()=>{ this.verifyEducationEmail() }} className="btn btn-secondary" data-dismiss="modal">Resend mail</button>
               </div>
             </div>
           </div>

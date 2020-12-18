@@ -71,23 +71,23 @@ const TeaserModel =(props)=>{
 
       return (
         <>
-            <div class={"modal fade "+(props.is_show_teaser_model === true ? 'show':'hide')}  role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Teaser</h5>
-                            <button onClick={ ()=> props.closeTeaserModel()} class="close" data-dismiss="modal" aria-label="Close">
+            <div className={"modal fade teasermodal "+(props.is_show_teaser_model === true ? 'show':'hide')}  role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div className="modal-dialog modal-dialog-centered " role="document">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLongTitle">Teaser</h5>
+                            <button onClick={ ()=> props.closeTeaserModel()} className="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body" >
-                            <div class="col-md-12">
-                                <div  dangerouslySetInnerHTML= {{__html: content !='' ? content.fld_content  : '' }}></div> 
+                        <div className="modal-body" >
+                            <div className="col-md-12">
+                                <div className="teaser-content" dangerouslySetInnerHTML= {{__html: content !='' ? content.fld_content  : '' }}></div> 
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" disabled={ current_index===0? true : false } onClick={ ()=>gottoPrev()} class="btn btn-secondary" data-dismiss="modal">PREV {'<'}</button>
-                            <button type="button" disabled={ current_index === (totalCollection-1 )? true :false} onClick={ ()=>gottoNext()} class="btn btn-primary">NEXT {'>'}</button>
+                        <div className="modal-footer">
+                            <button type="button" disabled={ current_index===0? true : false } onClick={ ()=>gottoPrev()} className="btn btn-secondary" data-dismiss="modal">PREV {'<'}</button>
+                            <button type="button" disabled={ current_index === (totalCollection-1 )? true :false} onClick={ ()=>gottoNext()} className="btn btn-primary">NEXT {'>'}</button>
                         </div>
                     </div>
                 </div>
