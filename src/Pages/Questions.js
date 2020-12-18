@@ -6,13 +6,6 @@ import PostApiCall from "../Api";
 import Notiflix from "notiflix-react";
 import { connect } from 'react-redux';
 import moment from 'moment';
-import HeaderCourseProgress from '../Education/HeaderCourseProgress';
-import CourseContentList from '../Education/CourseContentList';
-import CourseContentDetails from '../Education/CourseContentDetails';
-import CourseQuestionsAns from '../Education/CourseQuestionAns';
-import CourseQuestionsAnsList from '../Education/CorrectQestionAnsList';
-import UserFeedBackView from '../Education/UserFeedback';
-import CongratulationView from '../Education/Congratulation';
 
 import courseImage from '../images/course.jpg'
 class Questions extends React.Component {

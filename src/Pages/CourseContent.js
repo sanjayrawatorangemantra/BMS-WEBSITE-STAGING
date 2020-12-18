@@ -16,6 +16,7 @@ import CourseQuestionsAnsList from '../Education/CorrectQestionAnsList';
 import UserFeedBackView from '../Education/UserFeedback';
 import CongratulationView from '../Education/Congratulation';
 import Loader from 'react-loader-spinner';
+import TeaserModel from './TeaserModel';
 
 import courseImage from '../images/course.jpg';
 class CourseContentMain extends React.Component {
@@ -43,6 +44,7 @@ class CourseContentMain extends React.Component {
       rating:0,
       rating_per:0,
       is_block_user : false,
+      is_show_teaser_model : false,
     };
   }
 
@@ -403,7 +405,7 @@ class CourseContentMain extends React.Component {
                             <div class="dashboard-content">
                                 <HeaderCourseProgress login={login} ShowTimer={false}/>
                                 <div class="panel-group" id="accordion">
-                                <div class="row mt-2"><button style={{marginLeft:'5%'}} onClick={()=>{ alert('View Demo working..')}}>View Demo</button></div>
+                                <div class="row mt-2"><button style={{marginLeft:'5%'}} onClick={()=>{ this.setState({is_show_teaser_model : true})}}>View Demo</button></div>
                                 {this.state.ChapterData.map(( Item, chapterIndex)=>{
                                  return <div class={"panel panel-default " + (Item.activeClass == true ? 'active' : 'deactive')}>
                                         <div class={"panel-heading "+( Item.chapter_unLock == true ? 'unlockedlockedtitle' : 'lockedtitle')} onClick={()=> this.handleActiveClass( Item.fld_chapterid ) } >
@@ -505,6 +507,10 @@ class CourseContentMain extends React.Component {
             </div>
           </div>
         </div>
+        <TeaserModel 
+          is_show_teaser_model={this.state.is_show_teaser_model}
+          closeTeaserModel={()=>{ this.setState({ is_show_teaser_model : false }) }}
+          />
         <Footer></Footer>
       </div>
     );
