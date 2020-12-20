@@ -313,7 +313,7 @@ class CourseContentMain extends React.Component {
   });
   }
 
-  handleActiveclassName=( fld_chapterid)=>{
+  handleActiveclassName=( fld_chapterid)=>{ 
       var chapterData = this.state.ChapterData.map(function(el ) {
         var o = Object.assign({}, el);
         o.activeClass = (el.fld_chapterid == fld_chapterid ? true:false);
