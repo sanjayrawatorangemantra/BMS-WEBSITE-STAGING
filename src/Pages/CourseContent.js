@@ -410,7 +410,7 @@ class CourseContentMain extends React.Component {
                                  </div>
                                 {this.state.ChapterData.map(( Item, chapterIndex)=>{
                                  return <div className={"panel panel-default " + (Item.activeClass == true ? 'active' : 'deactive')}>
-                                        <div className={"panel-heading "+( Item.chapter_unLock == true ? 'unlockedlockedtitle' : 'lockedtitle')} onClick={()=> this.handleActiveClass( Item.fld_chapterid ) } >
+                                        <div className={"panel-heading "+( Item.chapter_unLock == true ? 'unlockedlockedtitle' : 'lockedtitle')} onClick={()=> this.handleActiveclassName( Item.fld_chapterid ) } >
                                             <h4 className="panel-title">                            
                                                 Chapter Number {chapterIndex+1} : {Item.fld_title}
                                             </h4>
