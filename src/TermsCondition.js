@@ -274,7 +274,7 @@ class TermsCondition extends React.Component {
                                                                                                      <p>22.4.	These Terms &Conditions are subject to Indian laws, and any dispute shall be subject to the jurisdiction of the courts in Delhi (India) only.</p>
                                                                                                     
                                                                                                      <p><b>23.	CONTACT INFORMATION</b></p>
-                                                                                                     <p>23.1.	If you have any queries/issues related to this document, please contact our Grievance Officer, Akanksha, at wecare@beatmysugar.com.</p>
+                                                                                                     <p>23.1.	If you have any queries/issues related to this document, please contact our Grievance Officer, Sukhvinder, at wecare@beatmysugar.com.</p>
                                                                                                      
     
     
