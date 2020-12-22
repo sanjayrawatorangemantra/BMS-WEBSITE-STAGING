@@ -35,6 +35,8 @@ class CourseTopicContentMain extends React.Component {
       current_chapter_total_Topics:0,
       is_completed_time : false,
       next_topic_title : '',
+      is_show_teaser : false,
+      teaser_val : ''
     };
   }
 
@@ -48,6 +50,11 @@ class CourseTopicContentMain extends React.Component {
         this.props.dispatch(setChapterTimerEnable(data.current_chapter.fld_isQuestionTestCompleted === 1 ? true : false));
       if(current_chapter_index === data.chaptersList.length-1 ){
         this.setState({ is_finel_chapter : true});
+      }
+      if(current_topic_index === 0){
+        debugger;
+        console.log(data.current_chapter);
+        this.setState({is_show_teaser : data.current_chapter.is_teaser, teaser_val : data.current_chapter.teaser_val} )
       }
       if(current_topic_index < data.current_chapter.topics.length-1){
         this.setState({ next_topic_title : data.current_chapter.topics[current_topic_index+1].fld_title})
@@ -175,7 +182,8 @@ goToNextChapterTopic=()=>{
 }
 
   render() {
-    const { is_completed_time, next_topic_title, Topic_Details,  current_topic_index , current_chapter_index,  contentIndex, current_chapter_data, current_chapter_total_Topics, is_finel_chapter} = this.state;
+    const { is_completed_time, next_topic_title, Topic_Details,  current_topic_index , current_chapter_index,  contentIndex, current_chapter_data, current_chapter_total_Topics,
+       is_finel_chapter, is_show_teaser, teaser_val } = this.state;
 
       var log = localStorage.getItem(
         "CustomerLoginDetails"
@@ -235,6 +243,20 @@ goToNextChapterTopic=()=>{
                 <div class="container" style={{background:"none"}}>
                     <div class="row mt-2">
                         <div class="col-lg-12 order-lg-first ">
+                            {is_show_teaser === true ? 
+                            
+                            <div class="dashboard-content">
+                              <HeaderCourseProgress login={login} ShowTimer={false} />
+                              <div class="course-details">
+                                <h3>Teaser</h3>
+                                <div dangerouslySetInnerHTML= {{__html: teaser_val }}></div> 
+                                <div class="navlinks" style={{ justifyContent:'center'}}>
+                                  <div class="navlinkbutton next">
+                                    <button class="activelink" style={{ float:'right'}} onClick={ ()=>{ this.setState({ is_show_teaser : false });  }} >Next <span><img src="/assets/images/next.png"/></span> </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>:
                             <div class="dashboard-content">
                                 <HeaderCourseProgress login={login} ShowTimer={current_chapter_data.fld_isQuestionTestCompleted === 0? true : false} moduleTime={current_chapter_data.fld_duration}/>
                                   <div class="course-details">
@@ -299,6 +321,7 @@ goToNextChapterTopic=()=>{
                                   </div>
                                   :''}
                             </div>
+                            }
                         </div>
                        
                     </div>

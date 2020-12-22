@@ -97,7 +97,7 @@ class CourseContentMain extends React.Component {
         status: results.status
       })
     ).then(res => {
-      debugger;
+      
       // setTimeout(  () =>  this.LIstCustomerEducationDetailsAll(customerid) , 2000);
     });
   })
@@ -111,7 +111,6 @@ class CourseContentMain extends React.Component {
 
       })
     ).then(res => {
-      debugger;
       if(res.data && res.data.data){
         let data= {};
         data.isCompleted = res.data.data.fld_iscompleted === 1? true : false;
@@ -240,11 +239,37 @@ class CourseContentMain extends React.Component {
           // if(chapterData[0].topics[0].fld_isunlocked === 0){
           //   this.unlockTopic( current_user_id, chapterData[0].topics[0]);
           // }
-          this.setState({ ChapterData : chapterData });
+          this.getChapterTeaserAll( chapterData);
+          // this.setState({ ChapterData : chapterData });
           this.props.dispatch(setChapterListFullDetails(chapterData));
           this.setEducationProgressBar( chapterData );
           
           Notiflix.Loading.Remove();
+        });
+    });
+  }
+  getChapterTeaserAll( chapterData){
+    GetApiCall.getRequest("GetTeaserAll").then((results) => {
+      results.json().then(data => ({
+        data: data,
+        status: results.status
+      })
+    ).then(res => {
+        let TeaserData = res.data.data;
+        for(let i=0; i<chapterData.length; i++){
+          chapterData[i].is_teaser = false;
+          chapterData[i].teaser_val = '';
+          for(let k=0; k<TeaserData.length; k++){
+            if(chapterData[i].fld_chapterid === TeaserData[k].fld_chapterid){
+              chapterData[i].is_teaser = true;
+              chapterData[i].teaser_val = TeaserData[k].fld_title;
+            }
+          }
+        }
+        this.setState({ ChapterData : chapterData });
+
+        console.log(chapterData)
+        console.log(res.data)
         });
     });
   }
@@ -406,7 +431,7 @@ class CourseContentMain extends React.Component {
                                 <HeaderCourseProgress login={login} ShowTimer={false}/>
                                 <div className="panel-group" id="accordion">
                                 <div className="row mt-2">
-                                  <div className="btn-sec"> <button className="viewdemobtn" onClick={()=>{ this.setState({is_show_teaser_model : true})}}>View Demo</button></div>
+                                  {/* <div className="btn-sec"> <button className="viewdemobtn" onClick={()=>{ this.setState({is_show_teaser_model : true})}}>View Demo</button></div> */}
                                  </div>
                                 {this.state.ChapterData.map(( Item, chapterIndex)=>{
                                  return <div className={"panel panel-default " + (Item.activeClass == true ? 'active' : 'deactive')}>
