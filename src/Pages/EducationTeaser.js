@@ -54,7 +54,7 @@ class EducationTeaser extends React.Component {
       svgColor: "#507dc0",
       //  #507dc0'
     }); 
-    //Notiflix.Loading.Dots()
+    Notiflix.Loading.Dots()
 
     var log = localStorage.getItem("CustomerLoginDetails");
     var login = JSON.parse(log);
@@ -74,6 +74,7 @@ class EducationTeaser extends React.Component {
     ).then(res => {
           if(res.data.data)
           this.setState({ rating : res.data.data.overall_rating, rating_per : parseInt((res.data.data.overall_rating/5)*100)})
+          Notiflix.Loading.Remove();
       });
     });
   }
