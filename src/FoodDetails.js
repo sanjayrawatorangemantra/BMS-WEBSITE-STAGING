@@ -4,7 +4,7 @@ import Menu from "./Header";
 import Footer from "./Footer";
 import Parser from "html-react-parser";
 
-import {Helmet} from "react-helmet";
+
 
 import PostApiCall from "./Api";
 import Notiflix from "notiflix-react";
@@ -476,26 +476,7 @@ src={info.fld_image}/>
 </div>
        
 
-        <Helmet>
-    <script className='structured-data-list' type="application/ld+json">
-      {`{
- "@context": "https://schema.org",
- "@type": "Product",
- "aggregateRating": {
-  "@type": "AggregateRating",
-  "ratingValue": "3.5",
-  "reviewCount": "11 "
- },
- "description": "${this.state.FoodMaster.fld_description != undefined ? this.state.FoodMaster.fld_description.replace(/<[^>]*>?/gm, '').replace(/&nbsp;/,'').replace(/(\r\n|\n|\r)/gm,"") : ''}",
- "name": "${this.state.SelectedVariant.fld_name}",
- "image":"${this.state.selectedFootImg == '' ? this.state.SelectedVariant.Photos != undefined ?  this.state.SelectedVariant.Photos.split('#')[0] : '' : this.state.selectedFootImg}",
- "offers": {
-  "@type": "Offer",
-  "availability": "https://schema.org/${this.state.SelectedVariant.fld_availability}",
-  "price": ${parseFloat(this.state.SelectedVariant.fld_discountprice).toFixed(2)},
-  "priceCurrency": "₹"
- }}`}</script>
-</Helmet> 
+      
 
         {JSON.stringify(this.state.SelectedVariant) == '[]' && this.state.done ? (
                 

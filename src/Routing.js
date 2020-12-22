@@ -90,6 +90,7 @@ import AccessoriesListing from "./AccessoriesListing";
 import AccessoriesDetails from "./AccessoriesDetails";
 import CovidListing from "./CovidListing";
 import CovidDetails from "./CovidDetails";
+import Testimonials from "./Testimonials";
 
 class Routing extends Component {
   render() {
@@ -396,6 +397,12 @@ class Routing extends Component {
             exact
             path={"/festive-offers"}
             component={DiwalioffersListing}
+          />
+
+          <Route
+            exact
+            path={"/testimonials"}
+            component={Testimonials}
           />
 
 
