@@ -571,6 +571,50 @@ class Menu extends React.Component {
     // console.log(this.state.CategorySelect)
   }
 
+  goto1mg(){
+    var log = localStorage.getItem("CustomerLoginDetails");
+    var login = JSON.parse(log);
+    if(login != null && login != ""){
+      debugger;
+      console.log(login);
+      var myHeaders = new Headers();
+      myHeaders.append("Cookie", "__cfduid=de877c01d732f1e6207eee89d211d35c61608553085");
+      
+      var formdata = new FormData();
+      formdata.append("api_key", "5f8a4806-27fc-4448-87e4-b82c4a155183");
+      formdata.append("user_id", login.fld_userid);
+      formdata.append("name", login.fld_name);
+      formdata.append("redirect_url", "https://stag.1mg.com/ ");
+      formdata.append("source", "youfirst");
+      formdata.append("email", login.fld_email);
+      
+      var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: formdata,
+        redirect: 'follow'
+      };
+      
+      fetch("https://stagapi.1mg.com/webservices/merchants/generate-merchant-hash", requestOptions)
+        .then(response => response.text())
+        .then(result =>
+          {debugger;
+          console.log(result)
+          if(result && result.hash){
+            const url = 'https://stag.1mg.com?_source=mdindia&merchant_token='+result.hash
+            window.open( 
+              url, "_blank"); 
+          }
+        }
+          )
+        .catch(error => console.log('error', error));
+
+
+    }else{
+      this.props.history.push('/Login')
+    }
+  }
+
   render() {
     return (
       <div>
@@ -1366,7 +1410,11 @@ class Menu extends React.Component {
                         Dietitians
                       </a>
                     </li>
-                   
+                    <li class="hvr-overline-from-left">
+                      <a onClick={()=>{this.goto1mg() }} class="">
+                        1mg
+                      </a>
+                    </li>
                  
 
                     {/* <li class="hvr-overline-from-left"><a 
@@ -1960,6 +2008,11 @@ class Menu extends React.Component {
                 <li class="hvr-overline-from-left">
                   <a href="/dietitian" class="">
                     Dietitians
+                  </a>
+                </li>
+                <li class="hvr-overline-from-left">
+                  <a onClick={()=>{this.goto1mg() }} class="">
+                    1mg
                   </a>
                 </li>
                 {/* 

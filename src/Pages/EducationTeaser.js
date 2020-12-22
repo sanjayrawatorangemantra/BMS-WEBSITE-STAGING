@@ -159,7 +159,7 @@ class EducationTeaser extends React.Component {
                         <div className="col-lg-8 order-lg-first ">
                         
                           <div className="dashboard-content">
-                            <h3>Teaser</h3>
+                            <h3>Welcome to BMS Education </h3>
                                 <div dangerouslySetInnerHTML= {{__html: teaserContent }}></div> 
                                 <div class="navlinks" style={{ justifyContent:'center'}}>
                                   <div class="navlinkbutton next">
