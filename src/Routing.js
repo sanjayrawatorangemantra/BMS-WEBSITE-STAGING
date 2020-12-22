@@ -99,6 +99,7 @@ import Answers from "./Pages/Answers";
 import Feedback from "./Pages/Feedback";
 import CourseTopicContentMain from './Pages/CourseTopicContent';
 import VerifyEducationEmailSuccess from "./VerifyEducationEmailSuccess";
+import EducationTeaser from './Pages/EducationTeaser';
 
 class Routing extends Component {
   render() {
@@ -415,7 +416,7 @@ class Routing extends Component {
 <Route exact path={"/covidessentials/:category/:covidid/:varid/:covidname"} component={CovidDetails} />
 
         {/* Education Module */}
-        <Route exact path={"/educationDesign"} component={Education} />
+        <Route exact path={"/education-teaser"} component={EducationTeaser} />
         <Route exact path={"/education"} component={CourseContentMain} />
         <Route exact path={"/topicDesign"} component={TopicContentMain} />
         <Route exact path={"/education-topic"} component={CourseTopicContentMain} />

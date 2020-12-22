@@ -1191,7 +1191,7 @@ class Menu extends React.Component {
 
                      {/* ........Education Module Menu .......... */}
                      <li class="hvr-overline-from-left">
-                      <a href="/education" class="">
+                      <a href="/education-teaser" class="">
                         Education
                         <span class="new-option" >
                        *New
@@ -1564,7 +1564,7 @@ class Menu extends React.Component {
 
                  {/* ........Education Module Menu .......... */}
                  <li class="hvr-overline-from-left">
-                      <a href="/education" class="">
+                      <a href="/education-teaser" class="">
                         Education
                         <span class="new-option" >
                        *New

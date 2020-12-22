@@ -51,11 +51,11 @@ class CourseTopicContentMain extends React.Component {
       if(current_chapter_index === data.chaptersList.length-1 ){
         this.setState({ is_finel_chapter : true});
       }
-      if(current_topic_index === 0){
-        debugger;
-        console.log(data.current_chapter);
-        this.setState({is_show_teaser : data.current_chapter.is_teaser, teaser_val : data.current_chapter.teaser_val} )
-      }
+      // if(current_topic_index === 0){
+      //   debugger;
+      //   console.log(data.current_chapter);
+      //   this.setState({is_show_teaser : data.current_chapter.is_teaser, teaser_val : data.current_chapter.teaser_val} )
+      // }
       if(current_topic_index < data.current_chapter.topics.length-1){
         this.setState({ next_topic_title : data.current_chapter.topics[current_topic_index+1].fld_title})
       }
