@@ -14,14 +14,65 @@ class Feedback extends React.Component {
             comments:'',
             show_congratulation : false,
             congratulaion: '',
-            address :''
+            address :'',
+            is_email_verified_user : true
         };
     }
 
     componentDidMount() {
-       this.getCongratulation();
-    //    this.getCheckFeedback();
+        Notiflix.Loading.Init({
+            svgColor: "#507dc0",
+            //  #507dc0'
+          }); 
+          Notiflix.Loading.Dots()
+        var log = localStorage.getItem("CustomerLoginDetails");
+        var login = JSON.parse(log);
+        if(login != null && login != ""){
+            GetApiCall.getRequest("LIstCustomerEducationDetailsAll?customerid="+ login.fld_userid).then((results) => {
+                results.json().then(data => ({
+                data: data,
+                })
+            ).then(res => {
+                if(res.data && res.data.data){
+                    this.setState({ is_email_verified_user : res.data.data.fld_is_email_verified === 0 ? true : false });
+                }
+                })
+            
+            });
+            this.getCongratulation();
+        }else{
+            this.props.history.push('/Login')
+        }
     }
+
+    verifyEducationEmail=()=>{
+        Notiflix.Loading.Dots();
+        var log = localStorage.getItem("CustomerLoginDetails");
+        var login = JSON.parse(log);
+        if(login != null && login != ""){
+          var random = Math.floor(100000 + Math.random() * 900000);
+          localStorage.setItem("OTPEducation", random );
+          PostApiCall.postRequest(
+            {
+              email : login.fld_email,
+              otp : random,
+              name : login.fld_name,
+              customerid : login.fld_userid
+            },
+            "VerifyEducationEmail"
+          ).then((results1) =>
+            // const objs = JSON.parse(result._bodyText)
+            results1.json().then((obj1) => {
+              if (results1.status == 200 || results1.status == 201) {
+                Notiflix.Loading.Remove();
+                Notiflix.Notify.Success('E-mail has been sent.');
+              }else{
+                Notiflix.Loading.Remove();
+                Notiflix.Notify.Failure(obj1.data);
+              }
+            }))
+        }
+      }
 
     SubmitFeedback =()=>{
         if( this.state.rating != '' ){
@@ -29,6 +80,7 @@ class Feedback extends React.Component {
                 var log = localStorage.getItem("CustomerLoginDetails");
                 var login = JSON.parse(log);
                 if(login != null && login != ""){
+                    Notiflix.Loading.Dots()
                     let data={};
                     data.customerid= login.fld_userid;
                     data.feedbacktext = this.state.comments;
@@ -48,8 +100,8 @@ class Feedback extends React.Component {
                     
                     results1.json().then((obj1) => {
                         if (results1.status == 200 || results1.status == 201) {
-                        // Notiflix.Loading.Remove();
-                        this.getCongratulation();
+                            Notiflix.Loading.Remove();
+                            this.getCongratulation();
                             this.setState({ show_congratulation : true})
                             //get congratulaion
                         }else{
@@ -81,7 +133,7 @@ class Feedback extends React.Component {
     }
 
     render() {
-        const {  } = this.state;
+        const {  is_email_verified_user } = this.state;
 
         var log = localStorage.getItem(
             "CustomerLoginDetails"
@@ -94,50 +146,6 @@ class Feedback extends React.Component {
                 <Menu></Menu>
                 <div class="account-section">
                     <div class="co">
-                        {/* <div class="banner-sec">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-md-8">
-                                        <div className="head-text">
-                                            <h1 className="main-head">Diabetes Learning Program</h1>
-                                            <p className="sub-head">A brief about the course and what is expected to be delivered and many more</p>
-                                            <div className="rating-box">
-                                                <span className="ratingtext">4.8 Rating</span>
-                                                <span className="ratingsse">
-                                                    <span className="star-rating" title="70%">
-                                                        <span className="back-stars">
-                                                            <i className="icon-star-empty" aria-hidden="true"></i>
-                                                            <i className="icon-star-empty" aria-hidden="true"></i>
-                                                            <i className="icon-star-empty" aria-hidden="true"></i>
-                                                            <i className="icon-star-empty" aria-hidden="true"></i>
-                                                            <i className="icon-star-empty" aria-hidden="true"></i>
-
-                                                            <span className="front-stars" style={{ width: "70%" }}>
-                                                                <i className="icon-star" aria-hidden="true"></i>
-                                                                <i className="icon-star" aria-hidden="true"></i>
-                                                                <i className="icon-star" aria-hidden="true"></i>
-                                                                <i className="icon-star" aria-hidden="true"></i>
-                                                                <i className="icon-star" aria-hidden="true"></i>
-                                                            </span>
-                                                        </span>
-                                                    </span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="tag-section">
-                                            <div class="tag-box"><img src="/assets/images/free.png" /><span class="tagtext">On Demand</span></div>
-
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="courseimage">
-                                            <img src="/assets/images/course.jpg" alt="course image" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div> */}
                         <div class="container" style={{ background: "none" }}>
                             <div class="row mt-2">
                                 <div class="col-lg-12 order-lg-first ">
@@ -152,6 +160,17 @@ class Feedback extends React.Component {
                                                 <h3>Congratulaion !! </h3>
                                                 <div class="col-md-12">
                                                     <div dangerouslySetInnerHTML= {{__html: this.state.congratulaion}}></div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                {is_email_verified_user === true ? 
+                                                <div class="feedback-section">
+                                                    <div  class="feedback-section">
+                                                        <p> Please verify your email to access Education Program.</p>
+                                                        <button onClick={ ()=>{ this.verifyEducationEmail() }} className="btn btn-secondary" data-dismiss="modal">Resend mail</button>
+                                                    </div>
+                                                </div>:''
+                                               
+                                                }
                                                 </div>
                                                 </div>:
                                                 <div class="feedback-section">
