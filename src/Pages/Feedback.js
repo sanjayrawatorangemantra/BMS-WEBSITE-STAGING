@@ -12,7 +12,7 @@ class Feedback extends React.Component {
         this.state = {
             rating:'',
             comments:'',
-            show_congratulation : true,
+            show_congratulation : false,
             congratulaion: '',
             address :'',
             is_email_verified_user : true
