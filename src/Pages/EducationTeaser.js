@@ -183,7 +183,7 @@ class EducationTeaser extends React.Component {
                                     <div class="prevquestion" style={{width:'50%'}} >
                                       <button class="prev" onClick={ ()=>{ 
                                         this.setState({teaserContentIndex : teaserContentIndex-1 }); 
-                                        }}><span><img src="/assets/images/arrow.png"/></span> <span>Previous</span>
+                                        }}><span><img src="/assets/images/arrow-white.png"/></span> <span>Previous</span>
                                       </button>
                                     </div>
                                     

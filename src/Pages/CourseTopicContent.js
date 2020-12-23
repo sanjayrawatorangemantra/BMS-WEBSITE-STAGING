@@ -282,9 +282,9 @@ goToNextChapterTopic=()=>{
                                   <div class="navlinks">
                                       
                                       {current_topic_index > 0 && contentIndex ===0 ?
-                                        <div class="navlinkbutton next"><button className={current_topic_index ===0 ?"disable":'activelink'} onClick={ ()=>{  this.gotoNextTopic(current_topic_index-1, false)  }}><span><img src="/assets/images/previous.png"/></span> Previous Topic</button></div> 
+                                        <div class="prevquestion "><button className={current_topic_index ===0 ?"disable":'prev'} onClick={ ()=>{  this.gotoNextTopic(current_topic_index-1, false)  }}><span><img src="/assets/images/previous.png"/></span> Previous Topic</button></div> 
                                         : 
-                                        <div class="navlinkbutton next"><button disabled={contentIndex ===0 ? true:false} className={contentIndex ===0 ?"disable":'activelink'} onClick={ ()=>{this.setState({ contentIndex : contentIndex-1 })}}><span><img src="/assets/images/previous.png"/></span> Previous</button></div>        
+                                        <div class="prevquestion "><button disabled={contentIndex ===0 ? true:false} className={contentIndex ===0 ?"disable":'prev'} onClick={ ()=>{this.setState({ contentIndex : contentIndex-1 })}}><span><img src="/assets/images/previous.png"/></span> Previous</button></div>        
                                       }
 
                                       <div class="navlinkbutton previous">

@@ -228,9 +228,7 @@ class Questions extends React.Component {
                                                 </div>
                                             </div> */}
                                         </div>
-                                        <div class="prevquestion">
-                                          <button class="prev" disabled={ contentIndex ===0 ?true : false } onClick={ ()=>{ this.setState({questionData : ChapterQuestionList[contentIndex-1] }); this.setState({contentIndex :contentIndex-1}) }}><span><img src="/assets/images/arrow.png"/></span> <span>Previous</span></button>
-                                        </div>
+                                      
                                         <div class="question-course-details">
                                             <div class="homelink">
                                               <a href="/education"><i class="fa fa-home" aria-hidden="true"></i></a>
@@ -256,19 +254,22 @@ class Questions extends React.Component {
                                                           </div>
                                                           )
                                                       )} 
-                                                      
-                                                    { ChapterQuestionList && ChapterQuestionList.length>0 ?
-                                                      <div class="submitbtn">
-                                                      
-                                                          &nbsp;&nbsp;&nbsp;&nbsp;
-                                                        { ChapterQuestionList.length-1 === contentIndex ? 
-                                                          <button class="activelinksubmit" disabled={ questionData.user_ans != undefined?  false : true} onClick={this.updateUserAnsAndShowCorrectAns.bind(this) }>Submit & Check Correct Answer </button> 
-                                                          :
-                                                          <button class="activelinksubmit" disabled={ questionData.user_ans != undefined?  false : true} onClick={ ()=>{ this.setState({questionData : ChapterQuestionList[contentIndex+1] }); this.setState({contentIndex :contentIndex+1}) }}>Next Question</button>
-                                                        }
-                                                      </div>:''
-                                                    }
-
+                                                      <div className="question-btn">
+                                                        <div class="prevquestion">
+                                                          <button class="prev" disabled={ contentIndex ===0 ?true : false } onClick={ ()=>{ this.setState({questionData : ChapterQuestionList[contentIndex-1] }); this.setState({contentIndex :contentIndex-1}) }}><span><img src="/assets/images/arrow-white.png"/></span> <span>Previous</span></button>
+                                                        </div>
+                                                      { ChapterQuestionList && ChapterQuestionList.length>0 ?
+                                                        <div class="submitbtn">
+                                                        
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                                          { ChapterQuestionList.length-1 === contentIndex ? 
+                                                            <button class="activelinksubmit" disabled={ questionData.user_ans != undefined?  false : true} onClick={this.updateUserAnsAndShowCorrectAns.bind(this) }>Submit & Check Correct Answer  <span><img src="/assets/images/next.png"/></span></button> 
+                                                            :
+                                                            <button class="activelinksubmit" disabled={ questionData.user_ans != undefined?  false : true} onClick={ ()=>{ this.setState({questionData : ChapterQuestionList[contentIndex+1] }); this.setState({contentIndex :contentIndex+1}) }}>Next Question <span><img src="/assets/images/next.png"/></span></button>
+                                                          }
+                                                        </div>:''
+                                                      }
+                                                      </div>
                                                   </div>
                                               </form>
                                             </div>

@@ -163,13 +163,13 @@ class Answers extends React.Component {
                                             </div>
                                             <div class="questions">
                                                 <div class="questions-count">
-                                                    <p>Question {correct_ans_count} / {questionData.length}</p>
+                                                    <p>Your Score {correct_ans_count} / {questionData.length}</p>
                                                 </div>
                                                 <div class="quiz-form text-light">
-                                                    <div class="my-5 qusestp">
+                                                    <div class="my-8 qusestp">
                                                     { questionData && questionData.length>0 && questionData.map( (questionData, index)=>{
 
-                                                        return<div class="answers">
+                                                        return<div class="answers prans">
                                                             <p class="lead question">{index+1}. {questionData.fld_questiontext}</p>
                                                             {   
                                                                 questionData.is_right_ans === true ? questionData.options && questionData.options.length>0 && questionData.options.map((option,index)=>{

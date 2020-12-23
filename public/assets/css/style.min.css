@@ -323,7 +323,7 @@ align-items: center;
 .course-details {
   padding: 30px;
   position: relative;
-  border: 1px solid #a8a8a8;
+  border: 1px solid #507dbe;
 }
 
 .panel-title {
@@ -437,12 +437,13 @@ align-items: center;
 }
 
 .questions-count p {
-    font-size: 16px;
-    letter-spacing: 2px;
-    color: #ec3764;
-    font-weight: 700;
-    font-family: "Rajdhani";
-    text-align: center;
+  font-size: 25px;
+  letter-spacing: 2px;
+  color: #ec3764;
+  font-weight: 700;
+  font-family: "Rajdhani";
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .questions {
@@ -462,6 +463,18 @@ align-items: center;
   line-height: 60px;
   color: #000000;
   font-weight: 400;
+}
+.prevquestion .disable{
+  display: flex;
+  font-size: 16px;
+  letter-spacing: 2px;
+  color: #fff;
+  font-weight: 500;
+  /* margin-top: 20px; */
+  align-items: center;
+  padding: 10px 20px;
+  border: 0;
+  border-radius: 20px !important; 
 }
 .prev {
   display: flex;
@@ -613,6 +626,7 @@ align-items: center;
 }
 .answers.correct .correctcomment {
   background: #6da773;
+  line-height: 33px;
 }
 button:focus{
   outline:none;
@@ -634,6 +648,7 @@ button:focus{
 }
 .answers.wrong .wrongcomment {
   background: #d86b66;
+  line-height: 33px;
 }
 
 .wrongcomment {
@@ -911,4 +926,21 @@ button:focus{
   50% {
     transform: translate(10px, 0);
   }
+}
+.question-btn {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px 0;
+}
+.question-btn .submitbtn {
+  padding: 0px !important;
+}
+.question-btn .submitbtn span img{
+  width: auto !important;
+  animation: slide1 1s ease-in-out infinite;
+}
+.answers.prans {
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
 }
