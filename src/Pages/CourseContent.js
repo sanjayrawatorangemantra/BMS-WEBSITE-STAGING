@@ -379,10 +379,11 @@ class CourseContentMain extends React.Component {
         <Menu></Menu>
         <div className="account-section"> 
             <div className="co">
-              <div className="banner-sec">
                 <div className="container">
+                  <div className="banner-sec">
+                  <div className="container">
                   <div className="row">
-                    <div className="col-md-8">
+                    <div className="col-md-12">
                       <div className="head-text">
                         <h1 className="main-head">Diabetes Learning Program</h1>
                         <p className="sub-head">A brief about the course and what is expected to be delivered and many more</p>
@@ -414,18 +415,19 @@ class CourseContentMain extends React.Component {
 
                       </div>
                     </div>
-                    <div className="col-md-4">
+                    {/* <div className="col-md-4">
                       <div className="courseimage">
                            <img src="/assets/images/course.jpg" alt="course image"/>
                       </div>
-                    </div>
+                    </div> */}
+                  </div>
                   </div>
                 </div>
 
               </div>
                 <div className="container" style={{background:"none"}}>
                     <div className="row mt-2">
-                        <div className="col-lg-8 order-lg-first ">
+                        <div className="col-lg-12 order-lg-first ">
                         {this.state.ChapterData.length>0?
                             <div className="dashboard-content">
                                 <HeaderCourseProgress login={login} ShowTimer={false}/>
@@ -471,50 +473,7 @@ class CourseContentMain extends React.Component {
                             </div>
                         }
                        </div>
-                        <div className="col-lg-4">
-                            <div className="course-side-bar">
-                                { login != null && login != "" ? 
-                                    <div className="login-box">
-                                      {resume_learning.start == true ? 
-                                      <>
-                                       <h3>Want to start your free course?</h3>
-                                        <a onClick={()=>{ this.gotoStartLearning() }} className="loginbutton">Start Learning</a>
-                                      </> : resume_learning.isCompleted == true ?
-                                      <>
-                                        <h3> course completed</h3>
-                                        {/* <a href="#" className="loginbutton">Resume Learning</a> */}
-                                      </>:
-                                      <>
-                                        <h3>Want to start your free course?</h3>
-                                        <a onClick={()=>{ this.gotoResumeLearning() }} className="loginbutton">Resume Learning</a>
-                                      </>
-                                      
-                                    }
-                                    </div>
-                                    :
-                                        <div className="login-box">
-                                            <h3>Want to start your free course?</h3>
-                                            <Link
-                                          to={  { pathname :"/login", state: { pre_page_url: '/education' }}} className="loginbutton"  >
-                                           Login Now
-                                          </Link>
-                                        </div>
-                                }
-                              <div className="benefits">
-                                 <h4>Course Benefits</h4>
-                                 <ul>
-                                   <li><strong>Flexible</strong> You pick the schedule</li>
-                                   <li><strong>Pause</strong> Take break anytime</li>
-                                   <li><strong>Reliable</strong> Prepared by experts</li>
-                                   <li><strong>Goodies</strong> Free gifts on completion</li>
-                                 </ul>
-                              </div>
-                              <div className="gift-hemper">
-                                <h5>Gift Hamper</h5>
-                                <img src="/assets/images/gifts.jpg" />
-                              </div>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
             </div>

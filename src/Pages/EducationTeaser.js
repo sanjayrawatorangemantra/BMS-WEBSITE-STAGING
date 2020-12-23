@@ -110,10 +110,11 @@ class EducationTeaser extends React.Component {
         <Menu></Menu>
         <div className="account-section"> 
             <div className="co">
-              <div className="banner-sec">
+                <div className="container" style={{background:"none"}}>
+                <div className="banner-sec">
                 <div className="container">
                   <div className="row">
-                    <div className="col-md-8">
+                    <div className="col-md-12">
                       <div className="head-text">
                         <h1 className="main-head">Diabetes Learning Program</h1>
                         <p className="sub-head">A brief about the course and what is expected to be delivered and many more</p>
@@ -145,18 +146,17 @@ class EducationTeaser extends React.Component {
 
                       </div>
                     </div>
-                    <div className="col-md-4">
+                    {/* <div className="col-md-4">
                       <div className="courseimage">
                            <img src="/assets/images/course.jpg" alt="course image"/>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
 
               </div>
-                <div className="container" style={{background:"none"}}>
                     <div className="row mt-2">
-                        <div className="col-lg-8 order-lg-first ">
+                        <div className="col-lg-12 order-lg-first ">
                         
                           <div className="dashboard-content">
                             <h3>Welcome to BMS Education </h3>
@@ -180,7 +180,7 @@ class EducationTeaser extends React.Component {
                             </div>
                         
                        </div>
-                        <div className="col-lg-4">
+                        {/* <div className="col-lg-4">
                             <div className="course-side-bar">
                                 { login != null && login != "" ? 
                                     <div className="login-box">
@@ -213,7 +213,7 @@ class EducationTeaser extends React.Component {
                                 <img src="/assets/images/gifts.jpg" />
                               </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>
