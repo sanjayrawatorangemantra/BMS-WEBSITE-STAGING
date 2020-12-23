@@ -45,9 +45,7 @@ class EducationTeaser extends React.Component {
       rating_per:0,
       is_block_user : false,
       is_show_teaser_model : false,
-      teaserContent : '',
-      teaserContentIndex :0,
-      allTeaserContent : []
+      teaserContent : ''
     };
   }
 
@@ -89,19 +87,17 @@ class EducationTeaser extends React.Component {
       })
     ).then(res => {
           if(res.data.data)
-          this.setState({ teaserContent : res.data.data[0].fld_content, allTeaserContent :  res.data.data , teaserContentIndex : 0})
+          this.setState({ teaserContent : res.data.data[0].fld_content })
       });
     });
   }
 
-  gotoNextTeaser=()=>{
-    this.setState({ teaserContentIndex: this.state.teaserContentIndex+1})
-  }
+  
  
 
 
   render() {
-    const { rating, rating_per, is_block_user , teaserContent, allTeaserContent, teaserContentIndex} = this.state;
+    const { rating, rating_per, is_block_user , teaserContent} = this.state;
 
       var log = localStorage.getItem(
         "CustomerLoginDetails"
@@ -114,10 +110,11 @@ class EducationTeaser extends React.Component {
         <Menu></Menu>
         <div className="account-section"> 
             <div className="co">
-            <div className="banner-sec">
+                <div className="container" style={{background:"none"}}>
+                <div className="banner-sec">
                 <div className="container">
                   <div className="row">
-                    <div className={ teaserContentIndex === allTeaserContent.length-1 ? "col-md-8  ": "col-md-12 "}>
+                    <div className="col-md-12">
                       <div className="head-text">
                         <h1 className="main-head">Diabetes Learning Program</h1>
                         <p className="sub-head">A brief about the course and what is expected to be delivered and many more</p>
@@ -149,59 +146,41 @@ class EducationTeaser extends React.Component {
 
                       </div>
                     </div>
-                    <div className="col-md-4" style={{ display :  teaserContentIndex === allTeaserContent.length-1 ?'block':'none' }}>
+                    {/* <div className="col-md-4">
                       <div className="courseimage">
                            <img src="/assets/images/course.jpg" alt="course image"/>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
 
               </div>
-                <div className="container" style={{background:"none"}}>
                     <div className="row mt-2">
-                        <div className={ teaserContentIndex === allTeaserContent.length-1 ? "col-lg-8 order-lg-first ": "col-lg-12 order-lg-first"}>
+                        <div className="col-lg-12 order-lg-first ">
                         
                           <div className="dashboard-content">
                             <h3>Welcome to BMS Education </h3>
-                                <div dangerouslySetInnerHTML= {{__html: allTeaserContent.length>0 ? allTeaserContent[teaserContentIndex].fld_content :'' }}></div> 
-                                <div class="navlinks" style={{ justifyContent:'space-evenly'}}>
-                                   {teaserContentIndex === allTeaserContent.length-1 && teaserContentIndex === 0 ? 
-                                   
+                                <div dangerouslySetInnerHTML= {{__html: teaserContent }}></div> 
+                                <div class="navlinks" style={{ justifyContent:'center'}}>
                                   <div class="navlinkbutton next">
-                                    <button class="activelink" style={{ float:'right'}} onClick={ ()=>{
-                                      this.props.history.push('/education') 
-                                        }} >Enter <span><img src="/assets/images/next.png"/></span> </button>
+                                    <button class="activelink" style={{ float:'right'}} onClick={ ()=>{ this.props.history.push('/education')  }} >Enter <span><img src="/assets/images/next.png"/></span> </button>
                                   </div>
-                                  : teaserContentIndex === 0?
-                                  <div class="navlinkbutton next">
-                                    <button class="activelink" style={{ float:'right'}} onClick={ ()=>{
-                                      this.setState({teaserContentIndex : teaserContentIndex+1 })
-                                        }} >Next <span><img src="/assets/images/next.png"/></span> </button>
-                                  </div>:
-                                  <>
-                                    <div class="prevquestion" style={{width:'50%'}} >
-                                      <button class="prev" onClick={ ()=>{ 
-                                        this.setState({teaserContentIndex : teaserContentIndex-1 }); 
-                                        }}><span><img src="/assets/images/arrow.png"/></span> <span>Previous</span>
-                                      </button>
-                                    </div>
-                                    
-                                    <div class="navlinkbutton next" style={{width:'50%'}}>
-                                      <button class="activelink" style={{ float:'right'}} onClick={ ()=>{
-                                        {teaserContentIndex === allTeaserContent.length-1 ?
-                                          this.props.history.push('/education') :
-                                          this.setState({teaserContentIndex : teaserContentIndex+1 }) }
-                                          }} > {teaserContentIndex === allTeaserContent.length-1 ? 'Enter':'Next'} <span><img src="/assets/images/next.png"/></span> 
-                                      </button>
-                                    </div>
-                                  </>
-                                  }
                                 </div>
+                               {/* <div
+                                style={{
+                                  width: "100%",
+                                  height: "100",
+                                  display: "flex",
+                                  justifyContent: "center",
+                                  alignItems: "center"
+                                }}
+                              >
+                                <Loader type="ThreeDots" color="#00BFFF" height="50" width="50" />
+                              </div> */}
                             </div>
                         
                        </div>
-                        <div className="col-lg-4" style={{ display :  teaserContentIndex === allTeaserContent.length-1 ?'block':'none' }}>
+                        {/* <div className="col-lg-4">
                             <div className="course-side-bar">
                                 { login != null && login != "" ? 
                                     <div className="login-box">
@@ -234,7 +213,7 @@ class EducationTeaser extends React.Component {
                                 <img src="/assets/images/gifts.jpg" />
                               </div>
                             </div>
-                        </div> 
+                        </div> */}
                     </div>
                 </div>
             </div>

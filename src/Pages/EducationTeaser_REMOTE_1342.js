@@ -114,10 +114,10 @@ class EducationTeaser extends React.Component {
         <Menu></Menu>
         <div className="account-section"> 
             <div className="co">
-            <div className="banner-sec">
+              <div className="banner-sec">
                 <div className="container">
                   <div className="row">
-                    <div className={ teaserContentIndex === allTeaserContent.length-1 ? "col-md-8  ": "col-md-12 "}>
+                    <div className="col-md-8">
                       <div className="head-text">
                         <h1 className="main-head">Diabetes Learning Program</h1>
                         <p className="sub-head">A brief about the course and what is expected to be delivered and many more</p>
@@ -149,7 +149,7 @@ class EducationTeaser extends React.Component {
 
                       </div>
                     </div>
-                    <div className="col-md-4" style={{ display :  teaserContentIndex === allTeaserContent.length-1 ?'block':'none' }}>
+                    <div className="col-md-4">
                       <div className="courseimage">
                            <img src="/assets/images/course.jpg" alt="course image"/>
                       </div>
@@ -165,7 +165,7 @@ class EducationTeaser extends React.Component {
                           <div className="dashboard-content">
                             <h3>Welcome to BMS Education </h3>
                                 <div dangerouslySetInnerHTML= {{__html: allTeaserContent.length>0 ? allTeaserContent[teaserContentIndex].fld_content :'' }}></div> 
-                                <div class="navlinks" style={{ justifyContent:'space-evenly'}}>
+                                <div class="navlinks" style={{ justifyContent:'center'}}>
                                    {teaserContentIndex === allTeaserContent.length-1 && teaserContentIndex === 0 ? 
                                    
                                   <div class="navlinkbutton next">
@@ -180,14 +180,14 @@ class EducationTeaser extends React.Component {
                                         }} >Next <span><img src="/assets/images/next.png"/></span> </button>
                                   </div>:
                                   <>
-                                    <div class="prevquestion" style={{width:'50%'}} >
+                                    <div class="prevquestion">
                                       <button class="prev" onClick={ ()=>{ 
                                         this.setState({teaserContentIndex : teaserContentIndex-1 }); 
                                         }}><span><img src="/assets/images/arrow.png"/></span> <span>Previous</span>
                                       </button>
                                     </div>
                                     
-                                    <div class="navlinkbutton next" style={{width:'50%'}}>
+                                    <div class="navlinkbutton next">
                                       <button class="activelink" style={{ float:'right'}} onClick={ ()=>{
                                         {teaserContentIndex === allTeaserContent.length-1 ?
                                           this.props.history.push('/education') :
@@ -234,7 +234,7 @@ class EducationTeaser extends React.Component {
                                 <img src="/assets/images/gifts.jpg" />
                               </div>
                             </div>
-                        </div> 
+                        </div>
                     </div>
                 </div>
             </div>
