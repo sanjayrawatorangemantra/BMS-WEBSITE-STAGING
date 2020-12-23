@@ -45,7 +45,12 @@ class FoodHP extends Component {
     //   });
   
     //   Notiflix.Loading.Dots("Please wait...");
-  
+     let bmsHomeFoodApiData = sessionStorage.getItem('bms-home-food-api') ? JSON.parse(sessionStorage.getItem('bms-home-food-api')) : null;
+     if(bmsHomeFoodApiData!=null){
+      this.setState({
+        Food: bmsHomeFoodApiData,
+      });
+     }else{
       GetApiCall.getRequest("GetFoodHomePageWebsite").then((results) => {
         results
           .json()
@@ -66,11 +71,14 @@ class FoodHP extends Component {
               }
             }
             console.log(dtar)
+            sessionStorage.setItem('bms-home-food-api', JSON.stringify(dtar));
             this.setState({
               Food: dtar,
             });
           });
       });
+     }
+      
   
     }
     

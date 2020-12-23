@@ -14,6 +14,7 @@ import {
   setcartitemcount,
   setcartamount
 } from "./Actions/actionType";
+import { Link } from "react-router-dom";
 
 class Menu extends React.Component {
   constructor(props) {
@@ -56,88 +57,102 @@ class Menu extends React.Component {
       LoginData: details,
     });
 
+    let sessionStorageObj={};
+    let bmsHomeFoodApiData = sessionStorage.getItem('bms-Header-api') ? JSON.parse(sessionStorage.getItem('bms-Header-api')) : null;
+    debugger;
+    if(bmsHomeFoodApiData!=null){
+      this.setState({
+        OfferData : bmsHomeFoodApiData.OfferData,
+        FoodCategory : bmsHomeFoodApiData.FoodCategory,
+        AccessoriesCategory : bmsHomeFoodApiData.AccessoriesCategory,
+        CovidCategory : bmsHomeFoodApiData.CovidCategory,
+        SearchBarCategory : bmsHomeFoodApiData.SearchBarCategory,
+      })
+    }else{
 
-    GetApiCall.getRequest("GetFestiveOfferHomePageWebsite").then((results) => {
-      results
-        .json()
-        .then((data) => ({
-          data: data,
-          status: results.status,
-        }))
-        .then((res) => {
-          // console.log(res.data.data)
-          this.setState({
-            OfferData : res.data.data
+      GetApiCall.getRequest("GetFestiveOfferHomePageWebsite").then((results) => {
+        results
+          .json()
+          .then((data) => ({
+            data: data,
+            status: results.status,
+          }))
+          .then((res) => {
+            // console.log(res.data.data)
+            this.setState({
+              OfferData : res.data.data
+            })
+            sessionStorageObj.OfferData = res.data.data;
           })
-        })
-    });
+      });
 
-    GetApiCall.getRequest("GetFoodCategoryWebsiteData").then((resultdes) =>
-      resultdes.json().then((obj) => {
-        // console.log(obj.data)
-        this.setState({
-          FoodCategory: obj.data,
-        });
-
-        GetApiCall.getRequest("GetAccessoriesCategoryWebsiteData").then((resultacc) =>
-        resultacc.json().then((objacc) => {
+      GetApiCall.getRequest("GetFoodCategoryWebsiteData").then((resultdes) =>
+        resultdes.json().then((obj) => {
           // console.log(obj.data)
           this.setState({
-            AccessoriesCategory: objacc.data,
+            FoodCategory: obj.data,
           });
-        
-
-          GetApiCall.getRequest("GetCovidCategoryWebsiteData").then((resultcov) =>
-          resultcov.json().then((objcov) => {
+          sessionStorageObj.FoodCategory = obj.data;
+          GetApiCall.getRequest("GetAccessoriesCategoryWebsiteData").then((resultacc) =>
+          resultacc.json().then((objacc) => {
             // console.log(obj.data)
             this.setState({
-              CovidCategory: objcov.data,
+              AccessoriesCategory: objacc.data,
             });
+            sessionStorageObj.AccessoriesCategory = objacc.data;
 
+            GetApiCall.getRequest("GetCovidCategoryWebsiteData").then((resultcov) =>
+            resultcov.json().then((objcov) => {
+              // console.log(obj.data)
+              this.setState({
+                CovidCategory: objcov.data,
+              });
+              sessionStorageObj.CovidCategory= objcov.data;
 
-        var dts = [];
-        dts.push({
-          fld_category: "All",
-          fld_id: 0,
-          fld_status: "Active",
-          fld_page: "search",
-        });
-        dts.push(...obj.data);
-        dts.push({
-          fld_category: "Footwear",
-          fld_id: 0,
-          fld_status: "Active",
-          fld_page: "footwear",
-        });
-        dts.push({
-          fld_category: "Socks",
-          fld_id: 0,
-          fld_status: "Active",
-          fld_page: "socks",
-        });
-        dts.push(...objcov.data);
-        dts.push(...objacc.data);
-        dts.push({
-          fld_category: "Health Knowledge",
-          fld_id: 0,
-          fld_status: "Active",
-          fld_page: "healthknowledge",
-        });
-        // console.log(dts)
-        this.setState({
-          SearchBarCategory: dts,
-          // SearchSelectedCategory : dts[0].fld_category
-          // CategorySelected : obj.data[0].fld_category,
-          // FoodRef : obj.data
-        });
+          var dts = [];
+          dts.push({
+            fld_category: "All",
+            fld_id: 0,
+            fld_status: "Active",
+            fld_page: "search",
+          });
+          dts.push(...obj.data);
+          dts.push({
+            fld_category: "Footwear",
+            fld_id: 0,
+            fld_status: "Active",
+            fld_page: "footwear",
+          });
+          dts.push({
+            fld_category: "Socks",
+            fld_id: 0,
+            fld_status: "Active",
+            fld_page: "socks",
+          });
+          dts.push(...objcov.data);
+          dts.push(...objacc.data);
+          dts.push({
+            fld_category: "Health Knowledge",
+            fld_id: 0,
+            fld_status: "Active",
+            fld_page: "healthknowledge",
+          });
+          // console.log(dts)
+          this.setState({
+            SearchBarCategory: dts,
+            // SearchSelectedCategory : dts[0].fld_category
+            // CategorySelected : obj.data[0].fld_category,
+            // FoodRef : obj.data
+          });
+          sessionStorageObj.SearchBarCategory= dts;
+          sessionStorage.setItem('bms-Header-api', JSON.stringify(sessionStorageObj));
+        }))
       }))
-    }))
-      })
-    );
+        })
+      );
+      
 
-
-
-   
+    }
 
     this.getUpdatedCart();
   }
@@ -1235,12 +1250,12 @@ class Menu extends React.Component {
 
                      {/* ........Education Module Menu .......... */}
                      <li class="hvr-overline-from-left">
-                      <a href="/education-teaser" class="">
+                      <Link to="/education-teaser" class="">
                         Education
                         <span class="new-option" >
                        *New
                        </span>
-                      </a>
+                      </Link>
                     </li>
 
                     <li class="hvr-overline-from-left">
@@ -1612,12 +1627,12 @@ class Menu extends React.Component {
 
                  {/* ........Education Module Menu .......... */}
                  <li class="hvr-overline-from-left">
-                      <a href="/education-teaser" class="">
+                      <Link to="/education-teaser" class="">
                         Education
                         <span class="new-option" >
                        *New
                        </span>
-                      </a>
+                      </Link>
                     </li>
 
                 {/* <li><a href="/allopathy">Allopathy</a></li> */}
