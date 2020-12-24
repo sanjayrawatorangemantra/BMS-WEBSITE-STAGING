@@ -27,18 +27,18 @@ app.get('*', function(request, response) {
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
-const SitemapGenerator = require('sitemap-generator');
+// const SitemapGenerator = require('sitemap-generator');
  
-// create generator
-const generator = SitemapGenerator('https://www.beatmysugar.com', {
-  stripQuerystring: false
-});
+// // create generator
+// const generator = SitemapGenerator('https://www.beatmysugar.com', {
+//   stripQuerystring: false
+// });
  
-// register event listeners
-generator.on('done', () => {
-  console.log('done');
-  // sitemaps created
-});
+// // register event listeners
+// generator.on('done', () => {
+//   console.log('done');
+//   // sitemaps created
+// });
  
-// start the crawler
-generator.start();
+// // start the crawler
+// generator.start();
