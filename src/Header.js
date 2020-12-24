@@ -612,7 +612,6 @@ class Menu extends React.Component {
         method: 'POST',
         headers: myHeaders,
         body: formdata,
-        mode:'no-cors',
         
       };
       
