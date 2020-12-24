@@ -593,7 +593,7 @@ class Menu extends React.Component {
       debugger;
       console.log(login);
       var myHeaders = new Headers();
-      myHeaders.append("Cookie", "__cfduid=de877c01d732f1e6207eee89d211d35c61608553085");
+      myHeaders.append("Cookie", "__cfduid=de877c01d732f1e6207eee89d211d35c61608553085",{ mode:'no-cors'});
       
       var formdata = new FormData();
       formdata.append("api_key", "5f8a4806-27fc-4448-87e4-b82c4a155183");
@@ -607,7 +607,8 @@ class Menu extends React.Component {
         method: 'POST',
         headers: myHeaders,
         body: formdata,
-        redirect: 'follow'
+        redirect: 'follow',
+        
       };
       
       fetch("https://stagapi.1mg.com/webservices/merchants/generate-merchant-hash", requestOptions)
