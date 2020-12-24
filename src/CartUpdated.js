@@ -19,6 +19,9 @@ import {
 } from "./Actions/actionType";
 
 
+import Modal from 'react-responsive-modal';
+import "react-responsive-modal/styles.css";
+
 class CartUpdated extends React.Component
 {
 
@@ -55,7 +58,17 @@ class CartUpdated extends React.Component
             Couponcode : '',
             done : false,
             CodMasterData : [],
-            CovidData : []
+            CovidData : [],
+            CustomerPrevOrders : [],
+            BaseSubTotalForOffer : 0,
+      
+            ShippingChargeData : [],
+            ShippingChargeValue : 0,
+            ShippingChargeCount : 0,
+            TotalCartLength : 0,
+      
+            BankOffer : '',
+            openModel : false
 
            
         }
@@ -78,6 +91,15 @@ class CartUpdated extends React.Component
 
             
             }))
+
+            GetApiCall.getRequest("Get_ShippingChargeWebsite").then((resultdes) =>
+            resultdes.json().then((obj) => {
+              console.log(obj.data)
+              this.setState({
+               ShippingChargeData: obj.data,
+              });
+            })
+          );
 
       this.getUpdatedCart()
 
@@ -253,8 +275,32 @@ class CartUpdated extends React.Component
                                                             GstValue : gstval,
                                                             GstValueRef : gstval
                                                         })
-                                                        this.props.setcartitemcount(this.state.Cart.length)
-                                                        this.props.setcartamount(subt)
+                                                       
+                                                        this.props.setcartitemcount(
+                                                          this.state.Cart.length
+                                                        );
+                                                        this.props.setcartamount(subt);
+      
+                                                  
+      
+                                                        for(var k=0;k<this.state.ShippingChargeData.length;k++){
+      
+                                                          if(this.state.Cart[i][j].fld_productcategory == this.state.ShippingChargeData[k].fld_vertical && this.state.Cart[i][j].fld_variantid == this.state.ShippingChargeData[k].fld_productid)
+                                                          {
+      
+      
+      
+                                                            shipchargettl = shipchargettl +  (parseFloat(this.state.Cart[i][j].fld_quantity/this.state.ShippingChargeData[k].fld_quantity).toFixed() * this.state.ShippingChargeData[k].fld_shippingCharges)
+      
+                                                            this.setState({
+                                                              ShippingChargeValue : shipchargettl,
+                                                              ShippingChargeCount : this.state.ShippingChargeCount +1
+                                                            })
+                                                          }
+      
+                                                        }
+
+
                                                         Notiflix.Loading.Remove()
                                                     }
                                              
@@ -348,6 +394,8 @@ class CartUpdated extends React.Component
             var baset = 0
             var gstval = 0
             var cn = 0
+            
+    var shipchargettl = 0 
     
         
     
@@ -688,6 +736,22 @@ class CartUpdated extends React.Component
                                     })
                                     this.props.setcartitemcount(this.state.Cart.length)
                                     this.props.setcartamount(subt)
+
+                                    for(var k=0;k<this.state.ShippingChargeData.length;k++){
+
+                                      if(this.state.Cart[i][j].fld_productcategory == this.state.ShippingChargeData[k].fld_vertical && this.state.Cart[i][j].fld_variantid == this.state.ShippingChargeData[k].fld_productid)
+                                      {
+            
+            
+                                        shipchargettl = shipchargettl +  (parseFloat(this.state.Cart[i][j].fld_quantity/this.state.ShippingChargeData[k].fld_quantity).toFixed() * this.state.ShippingChargeData[k].fld_shippingCharges)
+                                       
+                                        this.setState({
+                                          ShippingChargeValue : shipchargettl,
+                                          ShippingChargeCount : this.state.ShippingChargeCount +1
+                                        })
+                                      }
+            
+                                    }
                                     Notiflix.Loading.Remove()
                                 }
                                 })
