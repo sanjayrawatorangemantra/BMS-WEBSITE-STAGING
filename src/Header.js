@@ -39,7 +39,8 @@ class Menu extends React.Component {
 
       AccessoriesCategory : [],
       AccessoriesData : [],
-      CovidCategory : []
+      CovidCategory : [],
+      BooksCategory : []
     };
   }
 
@@ -134,6 +135,14 @@ class Menu extends React.Component {
     }))
       })
     );
+
+    GetApiCall.getRequest("GetBooksCategoryWebsiteData").then((resultdes) =>
+    resultdes.json().then((obj) => {
+      console.log(obj.data)
+      this.setState({
+        BooksCategory: obj.data,
+      });
+    }))
 
 
 
@@ -1213,6 +1222,39 @@ class Menu extends React.Component {
                         ))}
                       </ul>
                     </li>
+
+                   <li class="hvr-overline-from-left">
+                      <a href="javascript: void(0);" class="">
+                       Books{" "}
+
+                       <span class="new-option" >
+                       *New
+                       </span>
+                      </a>
+                      <ul>
+                        {this.state.BooksCategory.map((cat, index) => (
+                          <li>
+                            <a
+                              onClick={() => {
+                                localStorage.removeItem("SearchText");
+                                window.location.href = `/books/${
+                                  cat.fld_id +
+                                  "/" +
+                                  cat.fld_category.replace(
+                                    /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
+                                    "-"
+                                  )
+                                }`;
+                              }}
+                              class=""
+                            >
+                              {cat.fld_category}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                            </li>
+
 
                     <li class="hvr-overline-from-left">
                       <a href="javascript: void(0);" class="">
