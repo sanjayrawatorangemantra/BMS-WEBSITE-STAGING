@@ -24,6 +24,7 @@
 }
 
 
+<<<<<<< HEAD
 img.new-option{width:15px;display:inline-block}
 .new-option
 {
@@ -944,3 +945,60 @@ button:focus{
   margin-bottom: 15px;
   padding-bottom: 15px;
 }
+=======
+.testimonial-img
+{
+  width:65px;
+  height:65px;
+  margin-right:auto;
+  margin-left:auto;
+  border-radius: 50%;
+}
+.testimonials-section
+{
+  background:#fff;
+  padding:30px 30px; 
+  margin-top:40px;
+}
+.inner-testimonials-img
+{
+ 
+
+  border-radius:50%;
+ 
+}
+.inner-testimonial-text
+{
+  color: #757575;
+    font: 500 15px/1.35 Rajdhani, Helvetica Neue, Verdana, Arial, sans-serif;
+}
+.inner-testimonial-username
+{
+  margin-bottom:-2px;
+  font: 600 15px/1.35 Rajdhani, Helvetica Neue, Verdana, Arial, sans-serif;
+}
+.star-rating 
+{
+  color:#FF9529;
+}
+.testimonial-inner
+{
+  padding: 10px;
+  padding-bottom: 20px;
+  /* border-bottom: 1px dashed #f2f2f2; */
+  padding-top:20px;
+}
+
+.testimonial1
+{
+  padding: 10px;
+  padding-bottom: 20px;
+  border-bottom: 1px dashed #f2f2f2;
+  padding-top:20px;
+}
+.testimonial-title
+{
+  padding:0 20px;
+  margin-top:0px;
+}
+>>>>>>> gt_orphan

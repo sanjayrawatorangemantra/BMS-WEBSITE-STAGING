@@ -100,6 +100,7 @@ import Feedback from "./Pages/Feedback";
 import CourseTopicContentMain from './Pages/CourseTopicContent';
 import VerifyEducationEmailSuccess from "./VerifyEducationEmailSuccess";
 import EducationTeaser from './Pages/EducationTeaser';
+import Testimonials from "./Testimonials";
 
 class Routing extends Component {
   render() {
@@ -406,6 +407,12 @@ class Routing extends Component {
             exact
             path={"/festive-offers"}
             component={DiwalioffersListing}
+          />
+
+          <Route
+            exact
+            path={"/testimonials"}
+            component={Testimonials}
           />
 
 
