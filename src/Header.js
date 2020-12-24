@@ -592,8 +592,13 @@ class Menu extends React.Component {
     if(login != null && login != ""){
       debugger;
       console.log(login);
-      var myHeaders = new Headers();
-      myHeaders.append("Cookie", "__cfduid=de877c01d732f1e6207eee89d211d35c61608553085",{ mode:'no-cors'});
+      //var myHeaders = new Headers();
+      var myHeaders = {
+        'Accept': 'application/json',
+        'Access-Control-Allow-Origin':'*',
+        'Access-Control-Allow-Headers' : '*'
+      }
+      // myHeaders.append("Cookie", "__cfduid=de877c01d732f1e6207eee89d211d35c61608553085",{ mode:'no-cors'});
       
       var formdata = new FormData();
       formdata.append("api_key", "5f8a4806-27fc-4448-87e4-b82c4a155183");
@@ -607,7 +612,7 @@ class Menu extends React.Component {
         method: 'POST',
         headers: myHeaders,
         body: formdata,
-        redirect: 'follow',
+        mode:'no-cors',
         
       };
       
@@ -616,11 +621,11 @@ class Menu extends React.Component {
         .then(result =>
           {debugger;
           console.log(result)
-          if(result && result.hash){
-            const url = 'https://stag.1mg.com?_source=mdindia&merchant_token='+result.hash
-            window.open( 
-              url, "_blank"); 
-          }
+          // if(result && result.hash){
+          //   const url = 'https://stag.1mg.com?_source=mdindia&merchant_token='+result.hash
+          //   window.open( 
+          //     url, "_blank"); 
+          // }
         }
           )
         .catch(error => console.log('error', error));
