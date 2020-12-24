@@ -45,24 +45,29 @@ class FootwearHP extends Component {
     //   });
   
     //   Notiflix.Loading.Dots("Please wait...");
-  
-      GetApiCall.getRequest("GetFootwearHomePageWebsite").then((results) => {
-        results
-          .json()
-          .then((data) => ({
-            data: data,
-            status: results.status,
-          }))
-          .then((res) => {
-            //   console.log(res.data.data)
-  
-            this.setState({
-              Footwear: res.data.data,
+      let bmsFootwearData = sessionStorage.getItem('bms-Footwear-home') ? JSON.parse(sessionStorage.getItem('bms-Footwear-home')) : null;
+      if(bmsFootwearData!=null){
+        this.setState({
+          Footwear: bmsFootwearData,
+        });
+      }else{
+        GetApiCall.getRequest("GetFootwearHomePageWebsite").then((results) => {
+          results
+            .json()
+            .then((data) => ({
+              data: data,
+              status: results.status,
+            }))
+            .then((res) => {
+              //   console.log(res.data.data)
+    
+              this.setState({
+                Footwear: res.data.data,
+              });
+              sessionStorage.setItem('bms-Footwear-home', JSON.stringify(res.data.data));
             });
-          });
-      });
-  
-  
+        });
+      }
     }
 
     AddToCartFootwear(info){

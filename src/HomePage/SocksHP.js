@@ -44,7 +44,12 @@ class SocksHP extends Component {
     //   });
   
     //   Notiflix.Loading.Dots("Please wait...");
-  
+    let bmsSocksData = sessionStorage.getItem('bms-Socks-home') ? JSON.parse(sessionStorage.getItem('bms-Socks-home')) : null;
+    if(bmsSocksData!=null){
+      this.setState({
+        Socks: bmsSocksData,
+      });
+    }else{
       GetApiCall.getRequest("GetSocksHomePageWebsite").then((results) => {
         results
           .json()
@@ -58,8 +63,11 @@ class SocksHP extends Component {
             this.setState({
               Socks: res.data.data,
             });
+            sessionStorage.setItem('bms-Socks-home', JSON.stringify(res.data.data));
           });
       });
+    }
+     
   
      
     }

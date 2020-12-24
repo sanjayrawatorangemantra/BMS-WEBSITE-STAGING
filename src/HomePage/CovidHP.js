@@ -37,25 +37,25 @@ class CovidHP extends Component {
     //   });
   
     //   Notiflix.Loading.Dots("Please wait...");
-  
-    GetApiCall.getRequest("GetCovidHomePageWebsite").then((results) => {
-        results.json().then((obj) => {
-          if (results.status == 200 || results.status == 201) {
-  
-    
-            this.setState({
-  
-              ProductData: obj.data,
+      let bmsCovidData = sessionStorage.getItem('bms-Covid-home') ? JSON.parse(sessionStorage.getItem('bms-Covid-home')) : null;
+      if(bmsCovidData!=null){
+        this.setState({
+          ProductData: bmsCovidData,
+        });
+      }else{
+        GetApiCall.getRequest("GetCovidHomePageWebsite").then((results) => {
+          results.json().then((obj) => {
+            if (results.status == 200 || results.status == 201) {
+              this.setState({
+                ProductData: obj.data,
+              });
+              sessionStorage.setItem('bms-Covid-home', JSON.stringify(obj.data));
             
-              
-            });
-        
-          
-          Notiflix.Loading.Remove(); 
-        }
-    })});
+            Notiflix.Loading.Remove(); 
+          }
+      })});
+      }
 
-  
     }
     
 
