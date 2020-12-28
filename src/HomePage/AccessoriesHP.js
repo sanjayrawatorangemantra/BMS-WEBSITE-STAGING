@@ -37,23 +37,27 @@ class AccessoriesHP extends Component {
     //   });
   
     //   Notiflix.Loading.Dots("Please wait...");
-  
-    GetApiCall.getRequest("GetAccessoriesHomePageWebsite").then((results) => {
-        results.json().then((obj) => {
-          if (results.status == 200 || results.status == 201) {
-  
+    let bmsAccessoriesData = sessionStorage.getItem('bms-Accessories-home') ? JSON.parse(sessionStorage.getItem('bms-Accessories-home')) : null;
+    if(bmsAccessoriesData!=null){
+      this.setState({
+        ProductData: bmsAccessoriesData,
+      });
+    }else{
+        GetApiCall.getRequest("GetAccessoriesHomePageWebsite").then((results) => {
+          results.json().then((obj) => {
+            if (results.status == 200 || results.status == 201) {
     
-            this.setState({
-  
-              ProductData: obj.data,
+      
+              this.setState({
+                ProductData: obj.data,
+              });
+              sessionStorage.setItem('bms-Accessories-home', JSON.stringify(obj.data));
             
-              
-            });
-        
-          
-          Notiflix.Loading.Remove(); 
-        }
-    })});
+            Notiflix.Loading.Remove(); 
+          }
+      })});
+    }
+    
 
   
     }

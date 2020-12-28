@@ -758,7 +758,7 @@ src={info.fld_image}/>
 
 
                         <select id="cars" name="cars"
-                        style={{display : this.state.SelectedPack == 'N/A' || this.state.SelectedPack == null ? 'none' : ''}}
+                        style={{display : this.state.SelectedPack == 'N/A' || this.state.SelectedPack == null ||  this.state.SelectedVariant.fld_packagingtypeid == 0 ? 'none' : ''}}
                         value ={this.state.SelectedPack}
                         onChange={(dt)=>{
                           var dr = [...this.state.FoodVariants]

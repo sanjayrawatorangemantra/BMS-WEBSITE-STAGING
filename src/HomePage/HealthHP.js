@@ -44,25 +44,33 @@ class HealthHP extends Component {
     //   });
   
     //   Notiflix.Loading.Dots("Please wait...");
+      let bmsHealthData = sessionStorage.getItem('bms-Health-home') ? JSON.parse(sessionStorage.getItem('bms-Health-home')) : null;
+      if(bmsHealthData!=null){
+        this.setState({
+          Blog: bmsHealthData,
+        });
+      }else{
+        GetApiCall.getRequest("GetBlogNine").then((resultdes) =>
+          resultdes.json().then((obj) => {
+            // console.log(obj.data)
     
-      GetApiCall.getRequest("GetBlogNine").then((resultdes) =>
-        resultdes.json().then((obj) => {
-          // console.log(obj.data)
-  
-          if (JSON.stringify(obj.data) != "[]") {
-            var arr = [];
-            for (var i = 0; i < 4; i++) {
-              arr.push(obj.data[i]);
-  
-              this.setState({
-                Blog: arr,
-              });
+            if (JSON.stringify(obj.data) != "[]") {
+              var arr = [];
+              for (var i = 0; i < 4; i++) {
+                arr.push(obj.data[i]);
+    
+                this.setState({
+                  Blog: arr,
+                });
+              }
+              sessionStorage.setItem('bms-Health-home', JSON.stringify(arr));
             }
-          }
-  
-          Notiflix.Loading.Remove();
-        })
-      );
+            
+    
+            Notiflix.Loading.Remove();
+          })
+        );
+      }
     }
     
     onBlogView(blog) {

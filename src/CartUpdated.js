@@ -55,7 +55,18 @@ class CartUpdated extends React.Component
             Couponcode : '',
             done : false,
             CodMasterData : [],
-            CovidData : []
+            CovidData : [],
+
+
+      CustomerPrevOrders : [],
+      BaseSubTotalForOffer : 0,
+
+      ShippingChargeData : [],
+      ShippingChargeValue : 0,
+      ShippingChargeCount : 0,
+      TotalCartLength : 0,
+
+      BankOffer : '',
 
            
         }
@@ -79,6 +90,48 @@ class CartUpdated extends React.Component
             
             }))
 
+
+            PostApiCall.postRequest(
+              {
+                startdatetime : moment().format('YYYY-MM-DDTHH:mm'),
+                enddatetime : moment().format('YYYY-MM-DDTHH:mm')
+              },
+              "GetNewOfferWebsite").then((resultdes) =>
+              resultdes.json().then((obj) => {
+      
+                console.log(obj.data)
+                this.setState({
+                  OfferData: obj.data,
+                  //   done: true
+                });
+              })
+              );
+
+
+
+              var log = localStorage.getItem("CustomerLoginDetails");
+              var login = JSON.parse(log);
+             
+              if (login != null && login != "") {
+                Notiflix.Loading.Dots("");
+             
+               PostApiCall.postRequest(
+                {
+                  customerid: login.fld_userid,
+                },
+                "GetCustomerOrderInfo"
+              ).then((results) =>
+                results.json().then((obj) => {
+                  if (results.status == 200 || results.status == 201) {
+          
+                    // console.log(obj.data)
+                    this.setState({
+                      CustomerPrevOrders : obj.data
+                    })
+                  }
+                }))
+            }
+
       this.getUpdatedCart()
 
     }
@@ -95,6 +148,41 @@ class CartUpdated extends React.Component
         var baset = 0
         var gstval = 0
         var cn = 0
+
+
+
+
+        GetApiCall.getRequest("GetExtraCharges").then(resultdes =>
+          resultdes.json().then(obj => {
+         
+          // console.log(obj.data)
+          for(var i =0 ; i<Object.keys(obj.data).length;i++){
+
+              if(obj.data[i].fld_type == 'Shipping'){
+                  this.setState({
+                      ShippingCharge : obj.data[i].fld_price,
+                      ShippingTh : obj.data[i].fld_thresholdvalue
+                  })
+              }
+              else  if(obj.data[i].fld_type == 'COD'){
+                  this.setState({
+                      // COD : obj.data[i].fld_price
+                  })
+              }
+
+          }
+          
+            this.setState({
+                ExtraCharges : obj.data
+            })
+
+
+            // Notiflix.Loading.Remove();
+          }))
+
+
+
+
 
         if(login != null && login != ''){
 
@@ -288,50 +376,8 @@ class CartUpdated extends React.Component
       
       
             
-            GetApiCall.getRequest("GetExtraCharges").then(resultdes =>
-                resultdes.json().then(obj => {
-               
-                // console.log(obj.data)
-                for(var i =0 ; i<Object.keys(obj.data).length;i++){
-
-                    if(obj.data[i].fld_type == 'Shipping'){
-                        this.setState({
-                            ShippingCharge : obj.data[i].fld_price,
-                            ShippingTh : obj.data[i].fld_thresholdvalue
-                        })
-                    }
-                    else  if(obj.data[i].fld_type == 'COD'){
-                        this.setState({
-                            // COD : obj.data[i].fld_price
-                        })
-                    }
-
-                }
-                
-                  this.setState({
-                      ExtraCharges : obj.data
-                  })
-    
-    
-                  // Notiflix.Loading.Remove();
-                }))
-
-
-                GetApiCall.getRequest("GetOfferWebsite").then(resultdes =>
-                    resultdes.json().then(obj => {
-                   
-                      this.setState({
-                          OfferData : obj.data,
-                        //   done: true
-                      })
-                    //   Notiflix.Loading.Remove()
         
-        
-                      // Notiflix.Loading.Remove();
-                    }))
-    
-         
-        //  Notiflix.Loading.Remove()
+
          
         }else
         {
@@ -767,6 +813,1120 @@ class CartUpdated extends React.Component
         
     }
 
+
+    BankOfferApplied(i){
+
+
+
+
+      var gstvl = 0;
+      var bse = 0;
+      var bsettl = 0;
+      var ttl = 0;
+      var cc = 0
+      var cc1 = 0
+      var dt = this.state.OfferData[i]
+
+      for (var k = 0;k <Object.keys(this.state.Cart).length;  k++  ) {
+        cc1++
+        for (var j = 0; j < Object.keys(this.state.Cart[k]).length; j++) {
+          // console.log(this.state.Cart[i][j].fld_productcategory)
+     
+            bse = (this.state.Cart[k][j].fld_discountprice /(1 +this.state.Cart[k][j].fld_gstpercent / 100)) *this.state.Cart[k][j].fld_quantity;
+            bsettl = bsettl + bse
+            gstvl =gstvl +(bse -(bse * dt.fld_discount) /100) *(this.state.Cart[k][j].fld_gstpercent /100);
+
+            ttl = ttl + (this.state.Cart[k][j].fld_discountprice*this.state.Cart[k][j].fld_quantity)
+
+            cc++
+        
+
+          
+       
+          if( cc1 == Object.keys(this.state.Cart).length && cc==Object.keys(this.state.Cart[k]).length)
+          {
+          console.log(ttl >=this.state.OfferData[i].fld_minimumamount && (ttl<=this.state.OfferData[i].fld_maximumamount || this.state.OfferData[i].fld_maximumamount == 0))
+          if (ttl >=this.state.OfferData[i].fld_minimumamount && (ttl<=this.state.OfferData[i].fld_maximumamount || this.state.OfferData[i].fld_maximumamount == 0)) {
+       
+
+            this.setState({
+              // SelectedCouponData: this.state.OfferData[i],
+              SelectedCouponData : [],
+              BankOffer : this.state.OfferData[i].fld_offerKey
+            });
+          
+            if(this.state.OfferData[i].fld_freeShipping == 'Yes'){
+              this.setState({
+                ShippingCharge : 0,
+              })
+            }
+            // console.log(this.state.OfferData[i])
+
+          this.setState({
+            // GstValue: gstvl,
+            // Offer :  bsettl * (dt.fld_discount / 100),
+            Offer : 0,
+            BaseSubTotalForOffer : parseFloat(bsettl).toFixed(2),
+          });
+
+          Notiflix.Report.Success(
+            "Congratulations!",
+            "You" + "'" + "ve got a discount.",
+            "Ok"
+          );
+          this.setState({
+            showoffer: false,
+          });
+
+            
+          // Notiflix.Report.Success(
+          //   "Congratulations!",
+          //   "You" + "'" + "ve got a discount.",
+          //   "Ok"
+          // );
+          // this.setState({
+          //   showoffer: false,
+          // });
+
+        }else{
+          // console.log(ttl)
+          Notiflix.Report.Failure(
+            "Oops!",
+            "Offer can only be applied above ₹" +
+              this.state.OfferData[i].fld_minimumamount +
+              " and below ₹"+this.state.OfferData[i].fld_maximumamount+".",
+            "Ok"
+          );
+        }
+      }
+
+         
+        }
+      }
+
+        // console.log('Bank Offer')
+    
+    }
+
+
+    AllVerticalOfferApplied(i){
+      var gstvl = 0;
+      var bse = 0;
+      var bsettl = 0;
+      var ttl = 0;
+      var cc = 0
+      var cc1 = 0
+      var dt = this.state.OfferData[i]
+
+      for (var k = 0;k <Object.keys(this.state.Cart).length;  k++  ) {
+        cc1++
+        for (var j = 0; j < Object.keys(this.state.Cart[k]).length; j++) {
+          // console.log(this.state.Cart[i][j].fld_productcategory)
+     
+            bse = (this.state.Cart[k][j].fld_discountprice /(1 +this.state.Cart[k][j].fld_gstpercent / 100)) *this.state.Cart[k][j].fld_quantity;
+            bsettl = bsettl + bse
+            gstvl =gstvl +(bse -(bse * dt.fld_discount) /100) *(this.state.Cart[k][j].fld_gstpercent /100);
+
+            ttl = ttl + this.state.Cart[k][j].fld_discountprice*this.state.Cart[k][j].fld_quantity
+
+            cc++
+        
+
+          
+       
+          if( cc1 == Object.keys(this.state.Cart).length)
+          {
+          // console.log(gstvl)
+          if (ttl >=this.state.OfferData[i].fld_minimumamount && (ttl<=this.state.OfferData[i].fld_maximumamount || this.state.OfferData[i].fld_maximumamount == 0)) {
+            this.setState({
+              SelectedCouponData: this.state.OfferData[i],
+            });
+          
+            if(this.state.OfferData[i].fld_freeShipping == 'Yes'){
+              this.setState({
+                ShippingCharge : 0,
+              })
+            }
+
+          this.setState({
+            GstValue: gstvl,
+            // Offer :  bsettl * (dt.fld_discount / 100),
+            Offer :  bsettl * (dt.fld_discount / 100) > this.state.OfferData[i].fld_maximumdiscountprice && this.state.OfferData[i].fld_maximumdiscountprice > 0 ? this.state.OfferData[i].fld_maximumdiscountprice : bsettl * (dt.fld_discount / 100),
+            BaseSubTotalForOffer : parseFloat(bsettl).toFixed(2),
+          });
+          Notiflix.Report.Success(
+            "Congratulations!",
+            "You" + "'" + "ve got a discount.",
+            "Ok"
+          );
+          this.setState({
+            showoffer: false,
+          });
+
+        }else{
+          Notiflix.Report.Failure(
+            "Oops!",
+            "Offer can only be applied above ₹" +
+              this.state.OfferData[i].fld_minimumamount +
+               " and below ₹"+this.state.OfferData[i].fld_maximumamount+".",
+              ".",
+            "Ok"
+          );
+        }
+      }
+
+         
+        }
+      }
+
+    }
+
+
+    AllFoodOfferApplied(i){
+      var gstvl = 0;
+      var bse = 0;
+      var bsettl = 0;
+      var ttl = 0;
+      var cc = 0
+      var cc1 = 0
+      var dt = this.state.OfferData[i]
+
+      for (var k = 0;k <Object.keys(this.state.Cart).length;  k++  ) {
+        cc1++
+        for (var j = 0; j < Object.keys(this.state.Cart[k]).length; j++) {
+          // console.log(this.state.Cart[i][j].fld_productcategory)
+          if(this.state.Cart[k][j].fld_productcategory == 'Food'){
+            bse = (this.state.Cart[k][j].fld_discountprice /(1 +this.state.Cart[k][j].fld_gstpercent / 100)) *this.state.Cart[k][j].fld_quantity;
+            bsettl = bsettl + bse
+            gstvl =gstvl +(bse -(bse * dt.fld_discount) /100) *(this.state.Cart[k][j].fld_gstpercent /100);
+
+            ttl = ttl + this.state.Cart[k][j].fld_discountprice*this.state.Cart[k][j].fld_quantity
+
+            cc++
+          }else
+          {
+
+            bse = (this.state.Cart[k][j].fld_discountprice /(1 +this.state.Cart[k][j].fld_gstpercent / 100)) *this.state.Cart[k][j].fld_quantity;
+
+            gstvl =gstvl +(bse -(bse * dt.fld_discount) /100) *(this.state.Cart[k][j].fld_gstpercent /100);
+
+            this.setState({
+              GstValue: gstvl,
+            });
+            cc++
+          }
+
+
+          
+       
+          if( cc1 == Object.keys(this.state.Cart).length)
+          {
+          // console.log(gstvl)
+          if (ttl >=this.state.OfferData[i].fld_minimumamount && (ttl<=this.state.OfferData[i].fld_maximumamount || this.state.OfferData[i].fld_maximumamount == 0) ) {
+            this.setState({
+              SelectedCouponData: this.state.OfferData[i],
+            });
+          
+          this.setState({
+            GstValue: gstvl,
+            Offer :  bsettl * (dt.fld_discount / 100) > this.state.OfferData[i].fld_maximumdiscountprice && this.state.OfferData[i].fld_maximumdiscountprice > 0  ? this.state.OfferData[i].fld_maximumdiscountprice : bsettl * (dt.fld_discount / 100),
+            BaseSubTotalForOffer : parseFloat(bsettl).toFixed(2),
+          });
+          Notiflix.Report.Success(
+            "Congratulations!",
+            "You" + "'" + "ve got a discount.",
+            "Ok"
+          );
+          this.setState({
+            showoffer: false,
+          });
+
+        }else{
+          Notiflix.Report.Failure(
+            "Oops!",
+            "Offer can only be applied above ₹" +
+              this.state.OfferData[i].fld_minimumamount +
+              " and below ₹"+this.state.OfferData[i].fld_maximumamount+".",
+              ".",
+            "Ok"
+          );
+        }
+      }
+
+         
+        }
+      }
+     
+    }
+
+
+    AllFootwearOfferApplied(i){
+      var gstvl = 0;
+      var bse = 0;
+      var bsettl = 0;
+      var ttl = 0;
+      var cc = 0
+      var cc1 = 0
+      var dt = this.state.OfferData[i]
+
+      for (var k = 0;k <Object.keys(this.state.Cart).length;  k++  ) {
+        cc1++
+        for (var j = 0; j < Object.keys(this.state.Cart[k]).length; j++) {
+          // console.log(this.state.Cart[i][j].fld_productcategory)
+          if(this.state.Cart[k][j].fld_productcategory == 'Footwear'){
+            bse = (this.state.Cart[k][j].fld_discountprice /(1 +this.state.Cart[k][j].fld_gstpercent / 100)) *this.state.Cart[k][j].fld_quantity;
+            bsettl = bsettl + bse
+            gstvl =gstvl +(bse -(bse * dt.fld_discount) /100) *(this.state.Cart[k][j].fld_gstpercent /100);
+
+            ttl = ttl + this.state.Cart[k][j].fld_discountprice*this.state.Cart[k][j].fld_quantity
+
+            cc++
+          }else
+          {
+
+            bse = (this.state.Cart[k][j].fld_discountprice /(1 +this.state.Cart[k][j].fld_gstpercent / 100)) *this.state.Cart[k][j].fld_quantity;
+
+            gstvl =gstvl +(bse -(bse * dt.fld_discount) /100) *(this.state.Cart[k][j].fld_gstpercent /100);
+
+            this.setState({
+              GstValue: gstvl,
+            });
+            cc++
+          }
+
+
+          
+       
+          if( cc1 == Object.keys(this.state.Cart).length)
+          {
+          console.log(gstvl)
+          if (ttl >=this.state.OfferData[i].fld_minimumamount && (ttl<=this.state.OfferData[i].fld_maximumamount || this.state.OfferData[i].fld_maximumamount == 0)) {
+            this.setState({
+              SelectedCouponData: this.state.OfferData[i],
+            });
+          
+          this.setState({
+            GstValue: gstvl,
+            Offer :  bsettl * (dt.fld_discount / 100) > this.state.OfferData[i].fld_maximumdiscountprice && this.state.OfferData[i].fld_maximumdiscountprice > 0 ? this.state.OfferData[i].fld_maximumdiscountprice : bsettl * (dt.fld_discount / 100),
+            // Offer :  bsettl * (dt.fld_discount / 100),
+            BaseSubTotalForOffer : parseFloat(bsettl).toFixed(2),
+          });
+          Notiflix.Report.Success(
+            "Congratulations!",
+            "You" + "'" + "ve got a discount.",
+            "Ok"
+          );
+          this.setState({
+            showoffer: false,
+          });
+
+        }else{
+          Notiflix.Report.Failure(
+            "Oops!",
+            "Offer can only be applied above ₹" +
+              this.state.OfferData[i].fld_minimumamount +
+              " and below ₹"+this.state.OfferData[i].fld_maximumamount+".",
+              ".",
+            "Ok"
+          );
+        }
+      }
+
+         
+        }
+      }
+    }
+
+    AllSocksOfferApplied(i){
+      var gstvl = 0;
+      var bse = 0;
+      var bsettl = 0;
+      var ttl = 0;
+      var cc = 0
+      var cc1 = 0
+      var dt = this.state.OfferData[i]
+
+      for (var k = 0;k <Object.keys(this.state.Cart).length;  k++  ) {
+        cc1++
+        for (var j = 0; j < Object.keys(this.state.Cart[k]).length; j++) {
+          // console.log(this.state.Cart[i][j].fld_productcategory)
+          if(this.state.Cart[k][j].fld_productcategory == 'Socks'){
+            bse = (this.state.Cart[k][j].fld_discountprice /(1 +this.state.Cart[k][j].fld_gstpercent / 100)) *this.state.Cart[k][j].fld_quantity;
+            bsettl = bsettl + bse
+            gstvl =gstvl +(bse -(bse * dt.fld_discount) /100) *(this.state.Cart[k][j].fld_gstpercent /100);
+
+            ttl = ttl + this.state.Cart[k][j].fld_discountprice*this.state.Cart[k][j].fld_quantity
+
+            cc++
+          }else
+          {
+
+            bse = (this.state.Cart[k][j].fld_discountprice /(1 +this.state.Cart[k][j].fld_gstpercent / 100)) *this.state.Cart[k][j].fld_quantity;
+
+            gstvl =gstvl +(bse -(bse * dt.fld_discount) /100) *(this.state.Cart[k][j].fld_gstpercent /100);
+
+            this.setState({
+              GstValue: gstvl,
+            });
+            cc++
+          }
+
+
+          
+       
+          if( cc1 == Object.keys(this.state.Cart).length)
+          {
+          console.log(gstvl)
+          if (ttl >=this.state.OfferData[i].fld_minimumamount && (ttl<=this.state.OfferData[i].fld_maximumamount || this.state.OfferData[i].fld_maximumamount == 0)) {
+            this.setState({
+              SelectedCouponData: this.state.OfferData[i],
+            });
+          
+          this.setState({
+            GstValue: gstvl,
+            Offer :  bsettl * (dt.fld_discount / 100) > this.state.OfferData[i].fld_maximumdiscountprice && this.state.OfferData[i].fld_maximumdiscountprice > 0 ? this.state.OfferData[i].fld_maximumdiscountprice : bsettl * (dt.fld_discount / 100),
+            // Offer :  bsettl * (dt.fld_discount / 100),
+            BaseSubTotalForOffer : parseFloat(bsettl).toFixed(2),
+          });
+          Notiflix.Report.Success(
+            "Congratulations!",
+            "You" + "'" + "ve got a discount.",
+            "Ok"
+          );
+          this.setState({
+            showoffer: false,
+          });
+
+        }else{
+          Notiflix.Report.Failure(
+            "Oops!",
+            "Offer can only be applied above ₹" +
+              this.state.OfferData[i].fld_minimumamount +
+              " and below ₹"+this.state.OfferData[i].fld_maximumamount+".",
+              ".",
+            "Ok"
+          );
+        }
+      }
+
+         
+        }
+      }
+    }
+
+
+    AllCovidOfferApplied(i){
+      var gstvl = 0;
+      var bse = 0;
+      var bsettl = 0;
+      var ttl = 0;
+      var cc = 0
+      var cc1 = 0
+      var dt = this.state.OfferData[i]
+
+      for (var k = 0;k <Object.keys(this.state.Cart).length;  k++  ) {
+        cc1++
+        for (var j = 0; j < Object.keys(this.state.Cart[k]).length; j++) {
+          // console.log(this.state.Cart[i][j].fld_productcategory)
+          if(this.state.Cart[k][j].fld_productcategory == 'Covid'){
+            bse = (this.state.Cart[k][j].fld_discountprice /(1 +this.state.Cart[k][j].fld_gstpercent / 100)) *this.state.Cart[k][j].fld_quantity;
+            bsettl = bsettl + bse
+            gstvl =gstvl +(bse -(bse * dt.fld_discount) /100) *(this.state.Cart[k][j].fld_gstpercent /100);
+
+            ttl = ttl + this.state.Cart[k][j].fld_discountprice*this.state.Cart[k][j].fld_quantity
+
+            cc++
+          }else
+          {
+
+            bse = (this.state.Cart[k][j].fld_discountprice /(1 +this.state.Cart[k][j].fld_gstpercent / 100)) *this.state.Cart[k][j].fld_quantity;
+
+            gstvl =gstvl +(bse -(bse * dt.fld_discount) /100) *(this.state.Cart[k][j].fld_gstpercent /100);
+
+            this.setState({
+              GstValue: gstvl,
+            });
+            cc++
+          }
+
+
+          
+       
+          if( cc1 == Object.keys(this.state.Cart).length)
+          {
+          console.log(gstvl)
+          if (ttl >=this.state.OfferData[i].fld_minimumamount && (ttl<=this.state.OfferData[i].fld_maximumamount || this.state.OfferData[i].fld_maximumamount == 0)) {
+            this.setState({
+              SelectedCouponData: this.state.OfferData[i],
+            });
+          
+          this.setState({
+            GstValue: gstvl,
+            Offer :  bsettl * (dt.fld_discount / 100) > this.state.OfferData[i].fld_maximumdiscountprice && this.state.OfferData[i].fld_maximumdiscountprice > 0 ? this.state.OfferData[i].fld_maximumdiscountprice : bsettl * (dt.fld_discount / 100),
+            // Offer :  bsettl * (dt.fld_discount / 100),
+            BaseSubTotalForOffer : parseFloat(bsettl).toFixed(2),
+          });
+          Notiflix.Report.Success(
+            "Congratulations!",
+            "You" + "'" + "ve got a discount.",
+            "Ok"
+          );
+          this.setState({
+            showoffer: false,
+          });
+
+        }else{
+          Notiflix.Report.Failure(
+            "Oops!",
+            "Offer can only be applied above ₹" +
+              this.state.OfferData[i].fld_minimumamount +
+              " and below ₹"+this.state.OfferData[i].fld_maximumamount+".",
+              ".",
+            "Ok"
+          );
+        }
+      }
+
+         
+        }
+      }
+    }
+
+    AllAccessoriesOfferApplied(i){
+      var gstvl = 0;
+      var bse = 0;
+      var bsettl = 0;
+      var ttl = 0;
+      var cc = 0
+      var cc1 = 0
+      var dt = this.state.OfferData[i]
+
+      for (var k = 0;k <Object.keys(this.state.Cart).length;  k++  ) {
+        cc1++
+        for (var j = 0; j < Object.keys(this.state.Cart[k]).length; j++) {
+          // console.log(this.state.Cart[i][j].fld_productcategory)
+          if(this.state.Cart[k][j].fld_productcategory == 'Accessories'){
+            bse = (this.state.Cart[k][j].fld_discountprice /(1 +this.state.Cart[k][j].fld_gstpercent / 100)) *this.state.Cart[k][j].fld_quantity;
+            bsettl = bsettl + bse
+            gstvl =gstvl +(bse -(bse * dt.fld_discount) /100) *(this.state.Cart[k][j].fld_gstpercent /100);
+
+            ttl = ttl + this.state.Cart[k][j].fld_discountprice*this.state.Cart[k][j].fld_quantity
+
+            cc++
+          }else
+          {
+
+            bse = (this.state.Cart[k][j].fld_discountprice /(1 +this.state.Cart[k][j].fld_gstpercent / 100)) *this.state.Cart[k][j].fld_quantity;
+
+            gstvl =gstvl +(bse -(bse * dt.fld_discount) /100) *(this.state.Cart[k][j].fld_gstpercent /100);
+
+            this.setState({
+              GstValue: gstvl,
+            });
+            cc++
+          }
+
+
+          
+       
+          if( cc1 == Object.keys(this.state.Cart).length)
+          {
+          console.log(gstvl)
+          if (ttl >=this.state.OfferData[i].fld_minimumamount && (ttl<=this.state.OfferData[i].fld_maximumamount || this.state.OfferData[i].fld_maximumamount == 0)) {
+            this.setState({
+              SelectedCouponData: this.state.OfferData[i],
+            });
+          
+          this.setState({
+            GstValue: gstvl,
+            Offer :  bsettl * (dt.fld_discount / 100) > this.state.OfferData[i].fld_maximumdiscountprice && this.state.OfferData[i].fld_maximumdiscountprice > 0 ? this.state.OfferData[i].fld_maximumdiscountprice : bsettl * (dt.fld_discount / 100),
+            // Offer :  bsettl * (dt.fld_discount / 100),
+            BaseSubTotalForOffer : parseFloat(bsettl).toFixed(2),
+          });
+          Notiflix.Report.Success(
+            "Congratulations!",
+            "You" + "'" + "ve got a discount.",
+            "Ok"
+          );
+          this.setState({
+            showoffer: false,
+          });
+
+        }else{
+          Notiflix.Report.Failure(
+            "Oops!",
+            "Offer can only be applied above ₹" +
+              this.state.OfferData[i].fld_minimumamount +
+              " and below ₹"+this.state.OfferData[i].fld_maximumamount+".",
+              ".",
+            "Ok"
+          );
+        }
+      }
+
+         
+        }
+      }
+    }
+
+    AllBooksOfferApplied(i){
+      var gstvl = 0;
+      var bse = 0;
+      var bsettl = 0;
+      var ttl = 0;
+      var cc = 0
+      var cc1 = 0
+      var dt = this.state.OfferData[i]
+
+      for (var k = 0;k <Object.keys(this.state.Cart).length;  k++  ) {
+        cc1++
+        for (var j = 0; j < Object.keys(this.state.Cart[k]).length; j++) {
+          // console.log(this.state.Cart[i][j].fld_productcategory)
+          if(this.state.Cart[k][j].fld_productcategory == 'Books'){
+            bse = (this.state.Cart[k][j].fld_discountprice /(1 +this.state.Cart[k][j].fld_gstpercent / 100)) *this.state.Cart[k][j].fld_quantity;
+            bsettl = bsettl + bse
+            gstvl =gstvl +(bse -(bse * dt.fld_discount) /100) *(this.state.Cart[k][j].fld_gstpercent /100);
+
+            ttl = ttl + this.state.Cart[k][j].fld_discountprice*this.state.Cart[k][j].fld_quantity
+
+            cc++
+          }else
+          {
+
+            bse = (this.state.Cart[k][j].fld_discountprice /(1 +this.state.Cart[k][j].fld_gstpercent / 100)) *this.state.Cart[k][j].fld_quantity;
+
+            gstvl =gstvl +(bse -(bse * dt.fld_discount) /100) *(this.state.Cart[k][j].fld_gstpercent /100);
+
+            this.setState({
+              GstValue: gstvl,
+            });
+            cc++
+          }
+
+
+          
+       
+          if( cc1 == Object.keys(this.state.Cart).length)
+          {
+          console.log(gstvl)
+          if (ttl >=this.state.OfferData[i].fld_minimumamount && (ttl<=this.state.OfferData[i].fld_maximumamount || this.state.OfferData[i].fld_maximumamount == 0)) {
+            this.setState({
+              SelectedCouponData: this.state.OfferData[i],
+            });
+          
+          this.setState({
+            GstValue: gstvl,
+            Offer :  bsettl * (dt.fld_discount / 100) > this.state.OfferData[i].fld_maximumdiscountprice && this.state.OfferData[i].fld_maximumdiscountprice > 0 ? this.state.OfferData[i].fld_maximumdiscountprice : bsettl * (dt.fld_discount / 100),
+            // Offer :  bsettl * (dt.fld_discount / 100),
+            BaseSubTotalForOffer : parseFloat(bsettl).toFixed(2),
+          });
+          Notiflix.Report.Success(
+            "Congratulations!",
+            "You" + "'" + "ve got a discount.",
+            "Ok"
+          );
+          this.setState({
+            showoffer: false,
+          });
+
+        }else{
+          Notiflix.Report.Failure(
+            "Oops!",
+            "Offer can only be applied above ₹" +
+              this.state.OfferData[i].fld_minimumamount +
+              " and below ₹"+this.state.OfferData[i].fld_maximumamount+".",
+              ".",
+            "Ok"
+          );
+        }
+      }
+
+         
+        }
+      }
+    }
+
+    CategoryFoodOfferApplied(i){
+      var gstvl = 0;
+      var bse = 0;
+      var bsettl = 0;
+      var ttl = 0;
+      var cc = 0
+      var cc1 = 0
+      var dt = this.state.OfferData[i]
+
+      for (var k = 0;k <Object.keys(this.state.Cart).length;  k++  ) {
+        cc1++
+        for (var j = 0; j < Object.keys(this.state.Cart[k]).length; j++) {
+          // console.log(this.state.Cart[i][j].fld_productcategory)
+          if(this.state.Cart[k][j].fld_productcategory == 'Food' && this.state.Cart[k][j].fld_category == this.state.OfferData[i].fld_categoryname){
+            bse = (this.state.Cart[k][j].fld_discountprice /(1 +this.state.Cart[k][j].fld_gstpercent / 100)) *this.state.Cart[k][j].fld_quantity;
+            bsettl = bsettl + bse
+            gstvl =gstvl +(bse -(bse * dt.fld_discount) /100) *(this.state.Cart[k][j].fld_gstpercent /100);
+
+            ttl = ttl + this.state.Cart[k][j].fld_discountprice*this.state.Cart[k][j].fld_quantity
+
+            cc++
+          }else
+          {
+
+            bse = (this.state.Cart[k][j].fld_discountprice /(1 +this.state.Cart[k][j].fld_gstpercent / 100)) *this.state.Cart[k][j].fld_quantity;
+
+            gstvl =gstvl +(bse -(bse * dt.fld_discount) /100) *(this.state.Cart[k][j].fld_gstpercent /100);
+
+            this.setState({
+              GstValue: gstvl,
+            });
+            cc++
+          }
+
+
+          
+       
+          if( cc1 == Object.keys(this.state.Cart).length)
+          {
+          // console.log(gstvl)
+          if (ttl >=this.state.OfferData[i].fld_minimumamount && (ttl<=this.state.OfferData[i].fld_maximumamount || this.state.OfferData[i].fld_maximumamount == 0) ) {
+            this.setState({
+              SelectedCouponData: this.state.OfferData[i],
+            });
+          
+          this.setState({
+            GstValue: gstvl,
+            Offer :  bsettl * (dt.fld_discount / 100) > this.state.OfferData[i].fld_maximumdiscountprice && this.state.OfferData[i].fld_maximumdiscountprice > 0  ? this.state.OfferData[i].fld_maximumdiscountprice : bsettl * (dt.fld_discount / 100),
+            BaseSubTotalForOffer : parseFloat(bsettl).toFixed(2),
+          });
+          Notiflix.Report.Success(
+            "Congratulations!",
+            "You" + "'" + "ve got a discount.",
+            "Ok"
+          );
+          this.setState({
+            showoffer: false,
+          });
+
+        }else{
+          Notiflix.Report.Failure(
+            "Oops!",
+            "Offer can only be applied above ₹" +
+              this.state.OfferData[i].fld_minimumamount +
+              " and below ₹"+this.state.OfferData[i].fld_maximumamount+".",
+              ".",
+            "Ok"
+          );
+        }
+      }
+
+         
+        }
+      }
+     
+    }
+
+
+    CategoryCovidOfferApplied(i){
+      var gstvl = 0;
+      var bse = 0;
+      var bsettl = 0;
+      var ttl = 0;
+      var cc = 0
+      var cc1 = 0
+      var dt = this.state.OfferData[i]
+
+      for (var k = 0;k <Object.keys(this.state.Cart).length;  k++  ) {
+        cc1++
+        for (var j = 0; j < Object.keys(this.state.Cart[k]).length; j++) {
+          // console.log(this.state.Cart[i][j].fld_productcategory)
+          if(this.state.Cart[k][j].fld_productcategory == 'Covid' && this.state.Cart[k][j].fld_category == this.state.OfferData[i].fld_categoryname){
+            bse = (this.state.Cart[k][j].fld_discountprice /(1 +this.state.Cart[k][j].fld_gstpercent / 100)) *this.state.Cart[k][j].fld_quantity;
+            bsettl = bsettl + bse
+            gstvl =gstvl +(bse -(bse * dt.fld_discount) /100) *(this.state.Cart[k][j].fld_gstpercent /100);
+
+            ttl = ttl + this.state.Cart[k][j].fld_discountprice*this.state.Cart[k][j].fld_quantity
+
+            cc++
+          }else
+          {
+
+            bse = (this.state.Cart[k][j].fld_discountprice /(1 +this.state.Cart[k][j].fld_gstpercent / 100)) *this.state.Cart[k][j].fld_quantity;
+
+            gstvl =gstvl +(bse -(bse * dt.fld_discount) /100) *(this.state.Cart[k][j].fld_gstpercent /100);
+
+            this.setState({
+              GstValue: gstvl,
+            });
+            cc++
+          }
+
+
+          
+       
+          if( cc1 == Object.keys(this.state.Cart).length)
+          {
+          console.log(gstvl)
+          if (ttl >=this.state.OfferData[i].fld_minimumamount && (ttl<=this.state.OfferData[i].fld_maximumamount || this.state.OfferData[i].fld_maximumamount == 0)) {
+            this.setState({
+              SelectedCouponData: this.state.OfferData[i],
+            });
+          
+          this.setState({
+            GstValue: gstvl,
+            Offer :  bsettl * (dt.fld_discount / 100) > this.state.OfferData[i].fld_maximumdiscountprice && this.state.OfferData[i].fld_maximumdiscountprice > 0 ? this.state.OfferData[i].fld_maximumdiscountprice : bsettl * (dt.fld_discount / 100),
+            // Offer :  bsettl * (dt.fld_discount / 100),
+            BaseSubTotalForOffer : parseFloat(bsettl).toFixed(2),
+          });
+          Notiflix.Report.Success(
+            "Congratulations!",
+            "You" + "'" + "ve got a discount.",
+            "Ok"
+          );
+          this.setState({
+            showoffer: false,
+          });
+
+        }else{
+          Notiflix.Report.Failure(
+            "Oops!",
+            "Offer can only be applied above ₹" +
+              this.state.OfferData[i].fld_minimumamount +
+              " and below ₹"+this.state.OfferData[i].fld_maximumamount+".",
+              ".",
+            "Ok"
+          );
+        }
+      }
+
+         
+        }
+      }
+    }
+    
+
+    CategoryAccessoriesOfferApplied(i){
+      var gstvl = 0;
+      var bse = 0;
+      var bsettl = 0;
+      var ttl = 0;
+      var cc = 0
+      var cc1 = 0
+      var dt = this.state.OfferData[i]
+
+      for (var k = 0;k <Object.keys(this.state.Cart).length;  k++  ) {
+        cc1++
+        for (var j = 0; j < Object.keys(this.state.Cart[k]).length; j++) {
+          // console.log(this.state.Cart[i][j].fld_productcategory)
+          if(this.state.Cart[k][j].fld_productcategory == 'Accessories'&& this.state.Cart[k][j].fld_category == this.state.OfferData[i].fld_categoryname){
+            bse = (this.state.Cart[k][j].fld_discountprice /(1 +this.state.Cart[k][j].fld_gstpercent / 100)) *this.state.Cart[k][j].fld_quantity;
+            bsettl = bsettl + bse
+            gstvl =gstvl +(bse -(bse * dt.fld_discount) /100) *(this.state.Cart[k][j].fld_gstpercent /100);
+
+            ttl = ttl + this.state.Cart[k][j].fld_discountprice*this.state.Cart[k][j].fld_quantity
+
+            cc++
+          }else
+          {
+
+            bse = (this.state.Cart[k][j].fld_discountprice /(1 +this.state.Cart[k][j].fld_gstpercent / 100)) *this.state.Cart[k][j].fld_quantity;
+
+            gstvl =gstvl +(bse -(bse * dt.fld_discount) /100) *(this.state.Cart[k][j].fld_gstpercent /100);
+
+            this.setState({
+              GstValue: gstvl,
+            });
+            cc++
+          }
+
+
+          
+       
+          if( cc1 == Object.keys(this.state.Cart).length)
+          {
+          console.log(gstvl)
+          if (ttl >=this.state.OfferData[i].fld_minimumamount && (ttl<=this.state.OfferData[i].fld_maximumamount || this.state.OfferData[i].fld_maximumamount == 0)) {
+            this.setState({
+              SelectedCouponData: this.state.OfferData[i],
+            });
+          
+          this.setState({
+            GstValue: gstvl,
+            Offer :  bsettl * (dt.fld_discount / 100) > this.state.OfferData[i].fld_maximumdiscountprice && this.state.OfferData[i].fld_maximumdiscountprice > 0 ? this.state.OfferData[i].fld_maximumdiscountprice : bsettl * (dt.fld_discount / 100),
+            // Offer :  bsettl * (dt.fld_discount / 100),
+            BaseSubTotalForOffer : parseFloat(bsettl).toFixed(2),
+          });
+          Notiflix.Report.Success(
+            "Congratulations!",
+            "You" + "'" + "ve got a discount.",
+            "Ok"
+          );
+          this.setState({
+            showoffer: false,
+          });
+
+        }else{
+          Notiflix.Report.Failure(
+            "Oops!",
+            "Offer can only be applied above ₹" +
+              this.state.OfferData[i].fld_minimumamount +
+              " and below ₹"+this.state.OfferData[i].fld_maximumamount+".",
+              ".",
+            "Ok"
+          );
+        }
+      }
+
+         
+        }
+      }
+    }
+
+    CategoryBooksOfferApplied(i){
+      var gstvl = 0;
+      var bse = 0;
+      var bsettl = 0;
+      var ttl = 0;
+      var cc = 0
+      var cc1 = 0
+      var dt = this.state.OfferData[i]
+
+      for (var k = 0;k <Object.keys(this.state.Cart).length;  k++  ) {
+        cc1++
+        for (var j = 0; j < Object.keys(this.state.Cart[k]).length; j++) {
+          // console.log(this.state.Cart[i][j].fld_productcategory)
+          if(this.state.Cart[k][j].fld_productcategory == 'Books'&& this.state.Cart[k][j].fld_category == this.state.OfferData[i].fld_categoryname){
+            bse = (this.state.Cart[k][j].fld_discountprice /(1 +this.state.Cart[k][j].fld_gstpercent / 100)) *this.state.Cart[k][j].fld_quantity;
+            bsettl = bsettl + bse
+            gstvl =gstvl +(bse -(bse * dt.fld_discount) /100) *(this.state.Cart[k][j].fld_gstpercent /100);
+
+            ttl = ttl + this.state.Cart[k][j].fld_discountprice*this.state.Cart[k][j].fld_quantity
+
+            cc++
+          }else
+          {
+
+            bse = (this.state.Cart[k][j].fld_discountprice /(1 +this.state.Cart[k][j].fld_gstpercent / 100)) *this.state.Cart[k][j].fld_quantity;
+
+            gstvl =gstvl +(bse -(bse * dt.fld_discount) /100) *(this.state.Cart[k][j].fld_gstpercent /100);
+
+            this.setState({
+              GstValue: gstvl,
+            });
+            cc++
+          }
+
+
+          
+       
+          if( cc1 == Object.keys(this.state.Cart).length)
+          {
+          console.log(gstvl)
+          if (ttl >=this.state.OfferData[i].fld_minimumamount && (ttl<=this.state.OfferData[i].fld_maximumamount || this.state.OfferData[i].fld_maximumamount == 0)) {
+            this.setState({
+              SelectedCouponData: this.state.OfferData[i],
+            });
+          
+          this.setState({
+            GstValue: gstvl,
+            Offer :  bsettl * (dt.fld_discount / 100) > this.state.OfferData[i].fld_maximumdiscountprice && this.state.OfferData[i].fld_maximumdiscountprice > 0 ? this.state.OfferData[i].fld_maximumdiscountprice : bsettl * (dt.fld_discount / 100),
+            // Offer :  bsettl * (dt.fld_discount / 100),
+            BaseSubTotalForOffer : parseFloat(bsettl).toFixed(2),
+          });
+          Notiflix.Report.Success(
+            "Congratulations!",
+            "You" + "'" + "ve got a discount.",
+            "Ok"
+          );
+          this.setState({
+            showoffer: false,
+          });
+
+        }else{
+          Notiflix.Report.Failure(
+            "Oops!",
+            "Offer can only be applied above ₹" +
+              this.state.OfferData[i].fld_minimumamount +
+              " and below ₹"+this.state.OfferData[i].fld_maximumamount+".",
+              ".",
+            "Ok"
+          );
+        }
+      }
+
+         
+        }
+      }
+    }
+
+  ApplyOfferFunction(){
+
+    // console.log(this.state.Couponcode)
+    var cn = 0;
+    var count = 0;
+    var dt = [];
+
+  var cncf = 0
+  var found = 0
+
+    for (var i = 0;i < this.state.OfferData.length;i++) {
+    
+      // console.log(this.state.OfferData[i].fld_code ==this.state.Couponcode)
+      if (this.state.OfferData[i].fld_code ==this.state.Couponcode) {
+        cncf ++
+
+        found = 1
+
+        if(this.state.OfferData[i].fld_minimumProduct != 'N/A'){
+                                      
+          // console.log(this.state.Cart[0].length)
+
+          if(this.state.Cart[0].length < this.state.OfferData[i].fld_minimumProduct){
+
+            Notiflix.Notify.Failure('Minimum number of products in cart must be '+ this.state.OfferData[i].fld_minimumProduct)
+            return;
+          }
+
+        }if(this.state.OfferData[i].fld_firstOrder == 'Yes'){
+
+          if(this.state.CustomerPrevOrders.length > 0)
+          {
+            Notiflix.Notify.Failure('Offer can be applied to first order.')
+            return; 
+          }
+
+        }if(this.state.OfferData[i].fld_freeShipping == 'Yes'){
+
+
+
+        }if(this.state.OfferData[i].fld_oneTime == 'Yes'){
+
+          var ont = this.state.CustomerPrevOrders.find(val=> this.state.OfferData[i].fld_code != null &&  val.fld_offercode == this.state.OfferData[i].fld_code)
+
+          if(ont != undefined || ont){
+
+            Notiflix.Notify.Failure('Offer can be applied to once.')
+            // return; 
+            
+
+          }
+
+        }
+
+
+       if(this.state.OfferData[i].fld_bankOffer == 'Yes'){
+
+        // console.log('Bank offer')
+
+      this.BankOfferApplied(i)
+
+        }
+        else if(this.state.OfferData[i].fld_bankOffer != 'Yes')
+        {
+
+          if(this.state.OfferData[i].fld_freeShipping == 'Yes'){
+            this.setState({
+              ShippingCharge : 0,
+            })
+          }
+
+          // console.log(this.state.OfferData[i].fld_vertical)
+
+          if(this.state.OfferData[i].fld_vertical != 'All'){
+
+            if(this.state.OfferData[i].fld_vertical == 'Food'){
+
+              if(this.state.OfferData[i].fld_categoryid == 0){
+
+
+                this.AllFoodOfferApplied(i)
+  
+              
+              }else
+              {
+                
+                this.CategoryFoodOfferApplied(i)
+
+              }
+
+            }else if(this.state.OfferData[i].fld_vertical == 'Footwear'){
+
+            
+              this.AllFootwearOfferApplied(i)
+              
+            }else  if(this.state.OfferData[i].fld_vertical == 'Socks'){
+              
+
+              this.AllSocksOfferApplied(i)
+          
+
+
+            }else if(this.state.OfferData[i].fld_vertical == 'Books'){
+
+              if(this.state.OfferData[i].fld_categoryid == 0){
+
+         
+                this.AllBooksOfferApplied(i)
+                  }else{
+  
+                    this.CategoryBooksOfferApplied(i)
+                  }
+          }
+
+          else if(this.state.OfferData[i].fld_vertical == 'Covid'){
+
+
+            if(this.state.OfferData[i].fld_categoryid == 0){
+
+         
+              this.AllCovidOfferApplied(i)
+                }else{
+
+                  this.CategoryCovidOfferApplied(i)
+                }
+            
+          }
+          else if(this.state.OfferData[i].fld_vertical == 'Accessories'){
+
+            if(this.state.OfferData[i].fld_categoryid == 0){
+            this.AllAccessoriesOfferApplied(i)
+            }else{
+              this.CategoryAccessoriesOfferApplied(i)
+            }
+            
+          }
+          
+          }else{
+
+   
+            if(this.state.OfferData[i].fld_bankOffer != 'Yes')
+{
+       
+  this.AllVerticalOfferApplied(i)
+
+          }
+
+        }
+      
+      }
+    }else
+    {
+      cncf++
+      if(cncf == this.state.OfferData.length)
+      {
+        if(found == 0){
+          Notiflix.Notify.Failure('Offer code invalid.')
+        }
+
+      }
+    
+    }
+    
+
+  
+    }
+
+  }
+
+
+
     render()
     {
         return (
@@ -829,91 +1989,7 @@ class CartUpdated extends React.Component
                                                 <div class="input-group-append">
                                                     <button class="btn btn-sm btn-primary" type="submit" data-dismiss="modal" aria-hidden="true" 
                                                     onClick={()=>{
-                                                        var cn = 0
-                                                        var count = 0 
-                                                        var dt = []
-                                                        if(this.state.OfferData.length <= 0){
-                                                          Notiflix.Report.Failure('Oops!','Sorry, your offer code is not valid.',
-                                                          'Ok');
-
-                                                        }
-                                                        for(var i = 0 ;i<this.state.OfferData.length ;i++){
-     
-                                                         if(this.state.OfferData[i].fld_code == this.state.Couponcode){
-                                                             if(this.state.SubTotal >= this.state.OfferData[i].fld_minimumdiscountprice)
-                                                             {
-
-                                                                this.setState({
-                                                                    SelectedCouponData : this.state.OfferData[i]
-                                                                })
-                                                                dt = this.state.OfferData[i]
-                                                                cn = 1
-                                                             }
-                                                             else
-                                                             {
-                                                                this.setState({
-                                                                    showoffer : false,
-                                                        
-                                                                })
-                                                                cn = 2
-                                                               //  console.log(dt)
-                                                                // Notiflix.Notify.Failure('Offer can be applied above '+this.state.OfferData[i].fld_minimumdiscountprice+'.')  
-                                                            
-                                                                
-                                                                Notiflix.Report.Failure('Oops!','Offer can only be applied above '+this.state.OfferData[i].fld_minimumdiscountprice+'.',
-                                                                'Ok');
-                                                            }
-                                                            
-                                                           
-                                                         }else{
-                                                          Notiflix.Report.Failure('Oops!','Sorry, your offer code is not valid.',
-                                                          'Ok');
-                                                         }
-                                                         count = count +1
-     
-                                                         if(count == this.state.OfferData.length){
-                                                             if(cn == 0){
-     
-                                                                Notiflix.Report.Failure('Oops!','Sorry, your offer code is not valid.',
-                                                                'Ok');
-     
-                                                             }
-                                                             else if(cn == 2){
-
-                                                             }
-                                                             else
-                                                             {
-                                                                 this.setState({
-                                                                     showoffer : false,
-                                                                     Offer : this.state.BaseSubTotal*(dt.fld_pricepercent/100)
-                                                                 })
-                                                                //  console.log(dt)
-
-                                                                var gstvl = 0
-                                                                var bse = 0
-
-                                                                for(var i = 0 ; i<Object.keys(this.state.Cart).length;i++){
-                        
-                                                                    for(var j = 0 ; j<Object.keys(this.state.Cart[i]).length;j++){
-
-                                                                        bse = (this.state.Cart[i][j].fld_discountprice/(1+(this.state.Cart[i][j].fld_gstpercent/100)))*this.state.Cart[i][j].fld_quantity
-
-                                                                        gstvl = gstvl + (bse-(bse*dt.fld_pricepercent/100))*(this.state.Cart[i][j].fld_gstpercent/100)
-
-                                                                        this.setState({
-                                                                            GstValue : gstvl
-                                                                        })
-
-
-
-                                                                    }
-                                                                }
-                                                                Notiflix.Report.Success('Congratulations!','You'+"'"+'ve got a discount.',
-                                                                'Ok'); 
-                                                             }
-                                                         }
-     
-                                                        }
+                                                      this.ApplyOfferFunction()
                                                     }} >Apply Discount</button>
                                                 </div>
 
@@ -1717,7 +2793,7 @@ class CartUpdated extends React.Component
                                                                     <td>Coupon Discount Amount</td>
                                                                     <td>{JSON.stringify(this.state.SelectedCouponData) == '[]' ? '₹ 0'
                                                : <p>-  ₹ 
-                                               {' '}{(parseFloat(this.state.BaseSubTotal*(this.state.SelectedCouponData.fld_pricepercent/100)).toFixed(2))}</p> }</td>
+                                                {parseFloat(this.state.Offer).toFixed(2)}</p> }</td>
                                                                     </tr>
                                                                     <tr>
                                                                     <td>GST Value</td>
@@ -1770,15 +2846,27 @@ class CartUpdated extends React.Component
                                                                                     OfferCode : JSON.stringify(this.state.SelectedCouponData) == '[]' ? '' : this.state.SelectedCouponData.fld_code,
                                                                                     SubTotalAmt : parseFloat(this.state.SubTotal).toFixed(2),
                                                                                     BaseSubTotalAmt : parseFloat(this.state.BaseSubTotal).toFixed(2),
+                                                                                    BaseSubTotalAmtForOffer: parseFloat(
+                                                                                      this.state.BaseSubTotalForOffer
+                                                                                    ).toFixed(2),
                                                                                     MrpSubTotalAmt : parseFloat(this.state.MrpSubTotal).toFixed(2),
                                                                                     GstValue : parseFloat(this.state.GstValue).toFixed(2),
-                                                                                    OfferPercent : this.state.SelectedCouponData.fld_pricepercent,
+                                                                                    // OfferPercent : this.state.SelectedCouponData.fld_pricepercent,
+
+                                                                                     OfferPercent: JSON.stringify(this.state.SelectedCouponData) != '[]' ? parseFloat((this.state.Offer*100)/this.state.BaseSubTotalForOffer).toFixed() : 0,
+
+
                                                                                     YouSaved : parseFloat((this.state.MrpSubTotal-this.state.SubTotal)+this.state.Offer).toFixed(2),
                                                                                     // OfferPercent : '5',
-                                                                                    OfferAmt : JSON.stringify(this.state.SelectedCouponData) == '[]' ? 0.00 : parseFloat(((this.state.BaseSubTotal*(this.state.SelectedCouponData.fld_pricepercent/100)))).toFixed(2),
-                                                                                    ShippngAmt : (this.state.SubTotal - this.state.Offer) < this.state.ShippingTh ? this.state.ShippingCharge : 0.00,
+                                                                                    OfferAmt : JSON.stringify(this.state.SelectedCouponData) =="[]" ? 0.0: parseFloat(this.state.Offer).toFixed(2),
+
+                                                                                    ShippngAmt :   this.state.SubTotal - this.state.Offer < this.state.ShippingTh  ? this.state.ShippingCharge : 0.00,
                                                                                     CodAmt : this.state.PayCod ? this.state.COD : 0.00,
                                                                                     PayMode : this.state.PayCod ? 'COD' : 'Online',
+
+                                                                                    BankOffer : this.state.BankOffer,
+
+
                                                                                     TotalAmt :
                                                                                     JSON.stringify(this.state.SelectedCouponData) == '[]' ? 
                                                                                     (this.state.SubTotal) < this.state.ShippingTh ? 
@@ -1787,11 +2875,11 @@ class CartUpdated extends React.Component
                                                                                     this.state.PayCod ? parseFloat(this.state.BaseSubTotal+this.state.COD+this.state.GstValue).toFixed(2)
                                                                                     : parseFloat(this.state.BaseSubTotal+this.state.GstValue).toFixed(2)
                                                                                     :
-                                                                                    (this.state.SubTotal - (this.state.BaseSubTotal*(this.state.SelectedCouponData.fld_pricepercent/100))) < this.state.ShippingTh ? 
-                                                                                    this.state.PayCod ? parseFloat(this.state.BaseSubTotal-((this.state.BaseSubTotal*(this.state.SelectedCouponData.fld_pricepercent/100)))+this.state.ShippingCharge+this.state.COD+this.state.GstValue).toFixed(2)
-                                                                                    : parseFloat(this.state.BaseSubTotal-((this.state.BaseSubTotal*(this.state.SelectedCouponData.fld_pricepercent/100)))+this.state.ShippingCharge+this.state.GstValue).toFixed(2) : 
-                                                                                    this.state.PayCod ? parseFloat(this.state.BaseSubTotal-((this.state.BaseSubTotal*(this.state.SelectedCouponData.fld_pricepercent/100)))+this.state.COD+this.state.GstValue).toFixed(2)
-                                                                                    : parseFloat((this.state.BaseSubTotal-((this.state.BaseSubTotal*(this.state.SelectedCouponData.fld_pricepercent/100))))+this.state.GstValue).toFixed(2)
+                                                                                    (this.state.SubTotal - this.state.Offer ) < this.state.ShippingTh ? 
+                                                                                    this.state.PayCod ? parseFloat(this.state.BaseSubTotal-  this.state.Offer +this.state.ShippingCharge+this.state.COD+this.state.GstValue).toFixed(2)
+                                                                                    : parseFloat(this.state.BaseSubTotal- this.state.Offer +this.state.ShippingCharge+this.state.GstValue).toFixed(2) : 
+                                                                                    this.state.PayCod ? parseFloat(this.state.BaseSubTotal-  this.state.Offer +this.state.COD+this.state.GstValue).toFixed(2)
+                                                                                    : parseFloat((this.state.BaseSubTotal- this.state.Offer )+this.state.GstValue).toFixed(2)
                                                                                 }
                                                                                 localStorage.setItem('CartData',JSON.stringify(this.state.Cart))
                                                                                 localStorage.setItem('OfferData',JSON.stringify(this.state.SelectedCouponData))
@@ -1822,11 +2910,11 @@ class CartUpdated extends React.Component
                                                     this.state.PayCod ? parseFloat(this.state.BaseSubTotal+this.state.COD+this.state.GstValue).toFixed(2)
                                                     : parseFloat(this.state.BaseSubTotal+this.state.GstValue).toFixed(2)
                                                     :
-                                                    (this.state.SubTotal - (this.state.BaseSubTotal*(this.state.SelectedCouponData.fld_pricepercent/100))) < this.state.ShippingTh ? 
-                                                    this.state.PayCod ? parseFloat(this.state.BaseSubTotal-((this.state.BaseSubTotal*(this.state.SelectedCouponData.fld_pricepercent/100)))+this.state.ShippingCharge+this.state.COD+this.state.GstValue).toFixed(2)
-                                                    : parseFloat(this.state.BaseSubTotal-((this.state.BaseSubTotal*(this.state.SelectedCouponData.fld_pricepercent/100)))+this.state.ShippingCharge+this.state.GstValue).toFixed(2) : 
-                                                    this.state.PayCod ? parseFloat(this.state.BaseSubTotal-((this.state.BaseSubTotal*(this.state.SelectedCouponData.fld_pricepercent/100)))+this.state.COD+this.state.GstValue).toFixed(2)
-                                                    : parseFloat((this.state.BaseSubTotal-((this.state.BaseSubTotal*(this.state.SelectedCouponData.fld_pricepercent/100))))+this.state.GstValue).toFixed(2)
+                                                    (this.state.SubTotal -   this.state.Offer ) < this.state.ShippingTh ? 
+                                                    this.state.PayCod ? parseFloat(this.state.BaseSubTotal-  this.state.Offer +this.state.ShippingCharge+this.state.COD+this.state.GstValue).toFixed(2)
+                                                    : parseFloat(this.state.BaseSubTotal-  this.state.Offer +this.state.ShippingCharge+this.state.GstValue).toFixed(2) : 
+                                                    this.state.PayCod ? parseFloat(this.state.BaseSubTotal-  this.state.Offer +this.state.COD+this.state.GstValue).toFixed(2)
+                                                    : parseFloat((this.state.BaseSubTotal-  this.state.Offer )+this.state.GstValue).toFixed(2)
                                                    }</td></tr>
                                                                         </tfoot>
                                                                         </table>
@@ -1843,6 +2931,25 @@ class CartUpdated extends React.Component
                                                                                
                                                                                
                                                                                 </div>
+
+               <div 
+                  class="cart-summary last cart-box-footer"
+                  style={{ textAlign: "left",background: '#ffefc9',
+                  padding: '10px',
+                  border: '1px dashed #e19203',
+                  color: '#ff9109',
+                  display: this.state.BankOffer =='' ? 'none' : ''}}
+                >
+                  <table class="footer-table">
+                    <tfoot class="cart-footer">
+                     
+                      <tr>
+                       <td style={{display: "flex"}}><sup style={{top:"0"}}><i class="fas fa-star" style={{fontSize: "10px",}}></i></sup>
+                       Offer will be applied while making payment, subject to correct usage of Credit / Debit Card etc, if any</td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
                                 </div>
                             </div>
                  

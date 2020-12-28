@@ -163,7 +163,7 @@ class Answers extends React.Component {
                                             </div>
                                             <div class="questions">
                                                 <div class="questions-count">
-                                                    <p>Your Score {correct_ans_count} / {questionData.length}</p>
+                                                    <p> Your Score {correct_ans_count} / {questionData.length}</p>
                                                 </div>
                                                 <div class="quiz-form text-light">
                                                     <div class="my-8 qusestp">
@@ -175,14 +175,14 @@ class Answers extends React.Component {
                                                                 questionData.is_right_ans === true ? questionData.options && questionData.options.length>0 && questionData.options.map((option,index)=>{
                                                                     if(option.fld_iscorrect === 1 && option.fld_id === questionData.user_ans){
                                                                         return <div class="form-check my-4 text-white-50">
-                                                                                <p class={ "answers "+ ("correct")}>{option.fld_optiontext} <span class={ "correctcomment"}><i class="fa fa-check"></i> </span></p>
+                                                                                <p class={ "answers "+ ("correct")}><b>Your Answer : </b>{option.fld_optiontext} <span class={ "correctcomment"}><i class="fa fa-check"></i> </span></p>
                                                                                 </div>
                                                                         }
                                                                 }) : questionData.is_right_ans === false ? <>
                                                             {  questionData.options && questionData.options.length>0 && questionData.options.map((option,index)=>{
                                                                     if(option.fld_id === questionData.user_ans){
                                                                         return <div class="form-check my-4 text-white-50">
-                                                                                <p class={ "answers "+ ("wrong")}>{option.fld_optiontext} <span class={ "wrongcomment"}><i class="fa fa-times"></i></span></p>
+                                                                                <p class={ "answers "+ ("wrong")}> <b>Your Answer : </b> {option.fld_optiontext} <span class={ "wrongcomment"}><i class="fa fa-times"></i></span></p>
                                                                                 </div>
                                                                         }
                                                                 })
@@ -190,7 +190,7 @@ class Answers extends React.Component {
                                                                     questionData.options && questionData.options.length>0 && questionData.options.map((option,index)=>{
                                                                         if(option.fld_iscorrect === 1){
                                                                             return <div class="form-check my-4 text-white-50">
-                                                                                     <p class={ "answers "+ ("correct")}><b>{'Correct Answer : '+ option.fld_optiontext}</b> </p>
+                                                                                     <p class={ "answers "+ ("correct")}><b>Correct Answer : </b> {option.fld_optiontext} </p>
                                                                                     </div>
                                                                             }
                                                                     })

@@ -34,6 +34,9 @@ class Orderplace extends React.Component {
       MerSalt: "Y8YsVhof",
       CustomerLoginData: [],
       CustomerHash: "",
+
+
+      BankOffer : []
     };
   }
 
@@ -105,6 +108,7 @@ class Orderplace extends React.Component {
             productinfo: "Diabetic Products",
             firstname: login.fld_name,
             email: login.fld_email,
+            offer_key : SummaryData.BankOffer
           });
           this.setState(
             {
@@ -1137,6 +1141,23 @@ class Orderplace extends React.Component {
                       name="phone"
                       placeholder="Mobile/Cell Number"
                       value={this.state.CustomerLoginData.fld_mobile}
+                    />
+                  </span>
+                </div>
+
+
+
+                <div class="dv">
+                  <span class="text">
+                    <label>Offer Key:</label>
+                  </span>
+                  <span>
+                    <input
+                      type="text"
+                      id="offer_key"
+                      name="offer_key"
+                      placeholder="Offer Key"
+                      value={this.state.SummaryData.BankOffer}
                     />
                   </span>
                 </div>
