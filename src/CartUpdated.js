@@ -354,11 +354,6 @@ class CartUpdated extends React.Component
                                                             GstValue : gstval,
                                                             GstValueRef : gstval
                                                         })
-<<<<<<< HEAD
-                                                        this.props.setcartitemcount(this.state.Cart.length)
-                                                        this.props.setcartamount(subt)
-                                                        // Notiflix.Loading.Remove()
-=======
                                                        
                                                         this.props.setcartitemcount(
                                                           this.state.Cart.length
@@ -386,7 +381,6 @@ class CartUpdated extends React.Component
 
 
                                                         Notiflix.Loading.Remove()
->>>>>>> 28_12
                                                     }
                                              
                                                 }
