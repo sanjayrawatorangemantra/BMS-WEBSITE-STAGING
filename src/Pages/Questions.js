@@ -260,8 +260,7 @@ class Questions extends React.Component {
                                                         </div>
                                                       { ChapterQuestionList && ChapterQuestionList.length>0 ?
                                                         <div class="submitbtn">
-                                                        
-                                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                                      
                                                           { ChapterQuestionList.length-1 === contentIndex ? 
                                                             <button class="activelinksubmit" disabled={ questionData.user_ans != undefined?  false : true} onClick={this.updateUserAnsAndShowCorrectAns.bind(this) }>Submit & Check Correct Answer  <span><img src="/assets/images/next.png"/></span></button> 
                                                             :
