@@ -756,8 +756,7 @@ src={info.fld_image}/>
                           </li>
                         </ul>
 
-
-                        <select id="cars" name="cars"
+                      {/* <select id="cars" name="cars"
                         style={{display : this.state.SelectedPack == 'N/A' || this.state.SelectedPack == null ||  this.state.SelectedVariant.fld_packagingtypeid == 0 ? 'none' : ''}}
                         value ={this.state.SelectedPack}
                         onChange={(dt)=>{
@@ -779,7 +778,7 @@ src={info.fld_image}/>
                           ))}
  
 
-</select>
+            </select>*/}
 
 
 <div class="size-chart-updated" style={{display : this.state.SelectedSize == 'N/A' || this.state.SelectedSize == null ? 'none' : ''}}>
