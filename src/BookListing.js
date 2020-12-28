@@ -12,9 +12,45 @@ class BookListing extends React.Component {
     this.state = {
       Book: [],
       BookImage: [],
-      BookDetails: [],
+      BooksDetails: [],
+      PriceData:[{fld_id: 1, fld_label: "Below ?500", fld_min: 0, fld_max: 500, fld_updatedon: "June 18, 2020"},
+      {fld_id: 2, fld_label: "?501 - ?1000", fld_min: 501, fld_max: 1000, fld_updatedon: "June 18, 2020"},
+       {fld_id: 3, fld_label: "?1001 - ?2000", fld_min: 1001, fld_max: 2000, fld_updatedon: "June 18, 2020"},
+       {fld_id: 4, fld_label: "?2001 - ?3000", fld_min: 2001, fld_max: 3000, fld_updatedon: "June 18, 2020"},
+      {fld_id: 5, fld_label: "?3001 Above", fld_min: 3001, fld_max: 50000, fld_updatedon: "June 18, 2020"},
+      ],
+      PriceFilter:[],
+      sortBy:'',
+      LanguageData : [],
+      BrandData : [],
+
+      LanguageFilter : [],
+      BrandFilter : [],
+
+
+      BrandDataRef: [],
+      TypeData : [],
+      TypeFilter : [],
+      PriceData : [],
+      PriceFilter : [],
+
+      GenderData : [
+        {fld_gender : 'Male'},
+        {fld_gender : 'Female'},
+        {fld_gender : 'Unisex'},
+      ],
+
+
+      done : false ,
+      SearchDataRef : [],
+      sortBy:'New Arrivals',
+      FootwearData:[],
+      bannerfood : [],
+      images : []
     };
   }
+
+
 
   componentDidMount() {
     Notiflix.Loading.Init({
@@ -22,196 +58,607 @@ class BookListing extends React.Component {
       //  #507dc0'
     });
 
-    // Notiflix.Loading.Dots("");
+    Notiflix.Loading.Dots("");
+
+    let images=[]
+    PostApiCall.postRequest(
+      {
+        verticle : 'Books',
+        type:'Listing Page'
+      }
+      ,"Get_AdBannerWebsite").then(resultdes =>
+    resultdes.json().then(obj => {
+      // console.log(obj.data)
+      if(obj.data.length > 0)
+      {
+        this.setState({
+          bannerfood:[obj.data[0]]
+          // images:images
+        })  
+      }   
+      }))
+      
+      var login = localStorage.getItem("CustomerLoginDetails");
+      var details = JSON.parse(login);
+  
+      this.setState({
+        LoginData: details,
+        CategorySelected : this.props.match.params.category
+      });
+
 
     var arr = [];
 
-    // GetApiCall.getRequest("GetBooksWeb").then((results) => {
-    //   results
-    //     .json()
-    //     .then((data) => ({
-    //       data: data,
-    //       status: results.status,
-    //     }))
-    //     .then((res) => {
-    //       //   console.log(res.data.data
+    var search = JSON.parse(localStorage.getItem('SearchText'))
 
-    //       const result = [];
-    //       const map = new Map();
-    //       for (const item of res.data.data) {
-    //         if (!map.has(item.fld_bookid)) {
-    //           map.set(item.fld_bookid, true); // set any value to Map
-    //           result.push({
-    //             fld_bookid: item.fld_bookid,
-    //             fld_title: item.fld_title,
-    //             fld_productprice: item.fld_productprice,
-    //             fld_discountprice: item.fld_discountprice,
-    //             fld_discountpercent: item.fld_discountpercent,
-    //             fld_photo: item.fld_photo,
-    //             fld_authorname: item.fld_authorname,
-    //           });
-    //         }
-    //       }
-    //       // console.log(result)
-    //       this.setState({
-    //         Book: result,
-    //         BookDetails: res.data.data,
-    //       });
+    // console.log(search)
 
-    //       Notiflix.Loading.Remove();
-    //     });
-    // });
+    PostApiCall.postRequest(
+        {
+          category: this.props.match.params.id,
+        },
+        "GetBooksListing"
+      ).then((results) =>
+        results.json().then((obj) => {
+          if (results.status == 200 || results.status == 201) {
+  
+          console.log(obj.data)
+
+          var srDt= []
+          if(search != null){
+
+           obj.data.filter(item => {
+              if (item.fld_name.toLowerCase().includes(search.toLowerCase())
+              || item.fld_brand.toLowerCase().includes(search.toLowerCase())
+              // || item.fld_description.toLowerCase().includes(search.toLowerCase())
+              ) {
+                srDt.push(item)
+                
+              }
+            })
+            this.setState({
+  
+              BooksDetails: srDt,
+              BooksRef : obj.data,
+              // FootVariantRef : obj.data,
+              SearchDataRef : srDt
+              
+            });
+          }else
+          {
+            this.setState({
+  
+              BooksDetails: obj.data,
+              // FootVariantRef : obj.data,
+              BooksRef : obj.data,
+              
+            });
+          }
+          
+          Notiflix.Loading.Remove(); 
+        }}
+      ));
+
+
+
+      PostApiCall.postRequest(
+        {
+          category: this.props.match.params.id,
+        },"GetBooksTypeDataWebsite").then(resultdes =>
+          resultdes.json().then(obj => {
+            // console.log(obj.data)
+              this.setState({
+                  
+              TypeData : obj.data
+            })
+
+          }))
+
+
+
+        
+
+            GetApiCall.getRequest("GetFootwearPriceDataFilter").then(resultdes =>
+              resultdes.json().then(obj => {
+                // console.log(obj.data)
+                  this.setState({
+                      
+                  PriceData : obj.data
+                })
+        
+              }))
+        
+
+              PostApiCall.postRequest(
+                {
+                  category: this.props.match.params.id,
+                },"GetBooksLanguageDataWebsite").then(resultdes =>
+          resultdes.json().then(obj => {
+             
+
+      
+            this.setState({
+              LanguageData : obj.data
+            })
+       
+          }))
+
+
+          PostApiCall.postRequest(
+            {
+              category: this.props.match.params.id,
+            },
+            "GetFilterBooksListing"
+          ).then((results) =>
+            results.json().then((obj) => {
+              if (results.status == 200 || results.status == 201) {
+         
+                // console.log(obj.data)
+                this.setState({
+        
+                  BooksVariantRef: obj.data,
+                  done : true
+                });
+                Notiflix.Loading.Remove();
+            }
+              }));
+    
+
+              // this.getUpdatedCart()
+
+             
   }
 
-  truncate(source, size) {
-    // console.log(source)
-    if (source != null) {
-      return source.length > size ? source.slice(0, size - 1) + "…" : source;
+
+  onChangeSortBy=(e)=>{
+    e.preventDefault()
+    this.setState({
+      ...this.state,
+     sortBy:e.target.value
+    })
+  }
+
+
+ 
+
+  OnSubmitPriceFilter(Ref){
+  
+    var  newData = []
+    var count = 0;
+  
+    if( this.state.PriceFilter.length > 0){
+    for(var i =0 ; i < this.state.PriceFilter.length;i++){
+
+      Ref.filter(item => {
+        if (item.fld_discountprice >= this.state.PriceFilter[i].fld_min && item.fld_discountprice <= this.state.PriceFilter[i].fld_max) {
+          newData.push(item)
+        }
+      })
+  
+      
+    
+      count = count + 1
+  
+      if(count == this.state.PriceFilter.length){
+  
+        if(newData.length == 0){
+  
+          this.setState({
+            BooksDetails : newData
+          })
+  
+          Notiflix.Loading.Remove()
+  
+        }else
+        {
+  
+          this.OnSubmitLanguageFilter(newData)
+        }
+       
+  
+      }
+    
     }
+  
+  }
+  else
+  {
+    this.OnSubmitLanguageFilter(Ref)
+  }
+  
+  }
+  
+
+  OnSubmitLanguageFilter(Ref){
+  
+    var  newData = []
+    var count = 0;
+  
+    if( this.state.LanguageFilter.length > 0){
+    for(var i =0 ; i < this.state.LanguageFilter.length;i++){
+  
+      Ref.filter(item => {
+        if (item.fld_language.includes(this.state.LanguageFilter[i])) {
+          newData.push(item)
+        }
+      })
+    
+      count = count + 1
+  
+      if(count == this.state.LanguageFilter.length){
+  
+        if(newData.length == 0){
+  
+          this.setState({
+            BooksDetails : newData
+          })
+  
+          Notiflix.Loading.Remove()
+  
+        }else
+        {
+  
+          this.OnSubmitTypeFilter(newData)
+        }
+       
+  
+      }
+    
+    }
+  
+  }
+  else
+  {
+    this.OnSubmitTypeFilter(Ref)
+  }
+  
+  }
+
+
+
+  OnSubmitTypeFilter(Ref){
+  
+    var  newData = []
+    var count = 0;
+  
+    if( this.state.TypeFilter.length > 0){
+    for(var i =0 ; i < this.state.TypeFilter.length;i++){
+  
+      Ref.filter(item => {
+        if (item.fld_type.includes(this.state.TypeFilter[i])) {
+          newData.push(item)
+        }
+      })
+    
+      count = count + 1
+  
+      if(count == this.state.TypeFilter.length){
+  
+        var resArr = [];
+        newData.forEach(function(item){
+        var i = resArr.findIndex(x => x.fld_code == item.fld_code);
+        if(i <= -1){
+          resArr.push(item);
+        }
+      });
+
+      // console.log(resArr)
+  
+          this.setState({
+            BooksDetails : resArr
+          })
+  
+          Notiflix.Loading.Remove()
+  
+       
+      }
+    
+    }
+  
+  }
+  else
+  {
+
+    // console.log(Ref)
+
+    var resArr1 = [];
+    Ref.forEach(function(item){
+    var i = resArr1.findIndex(x => x.fld_code == item.fld_code);
+    if(i <= -1){
+      resArr1.push(item);
+    }
+  });
+
+    this.setState({
+      BooksDetails : resArr1
+    })
+
+    Notiflix.Loading.Remove()
+  }
+  
   }
 
   render() {
     return (
       <div>
         <Menu></Menu>
+    
+
+
         <div class="container ad-banner">
-          <img src="../assets/images/images.png"></img>
-        </div>
+
+<div class="d-none d-sm-none d-md-block">
+{this.state.bannerfood && this.state.bannerfood.map(info=>(
+
+<img 
+onClick={()=>{
+ if(info.fld_url != ''){
+                          window.open(info.fld_url, '_blank');
+                         }
+}}
+src={info.fld_image}/>  
+))
+}
+
+</div>
+
+  <div id="myTargetMobile" class="d-md-none d-sm-block">
+
+  {this.state.bannerfood && this.state.bannerfood.map(info=>(
+    <img 
+    onClick={()=>{
+      if(info.fld_url != ''){
+        window.open(info.fld_url, '_blank');
+       }
+    }}
+   src={info.fld_mobileimage}/>   
+  ))
+}
+
+  </div>
+
+
+</div>
+
         <main class="main">
         <div class="container healthcare-slider doctors-section">
           {/* <h3 class="section-title">Books</h3> */}
-          <div class="row">
+          <div class="row healthcare-slider">
             {/* {this.state.Book.map((book, index) => ( */}
+          <div class="col-md-3 col-sm-3 col-xs-3 col-3">
+              
               <div class="sidebar-overlay"></div>
                 <div class="sidebar-toggle">
                   <i class="icon-sliders"></i>
                 </div>
+                </div>
+
+
+                <div class="col-md-9 col-sm-9 col-xs-9 col-9">
+                <div class="sort-dropdown">
+                  <span>Sort By</span>
+                  <select onChange={this.onChangeSortBy.bind(this)}>
+
+<option value='New Arrivals'>New Arrivals</option>
+                     
+<option value='High to Low' >Price : High to Low</option>
+<option value='Low to High'>Price : Low to High</option>
+</select>
+                </div>  
+              </div>
+
                 <aside class="sidebar-product col-md-2 padding-left-lg mobile-sidebar">
                   <div class="sidebar-wrapper">
 
-              <div class="filter-side">
-                <h4>Filters</h4>
-                <div class="search">
-                  <input type="text" placeholder="Search"></input>
+                  <div class="filter-side">
+              <div class="brands">
+                  <h5 style={{borderTop: '0px',paddingTop:'0px'}}>{this.state.CategorySelected}  <br/>( {this.state.BooksDetails.length} Products )</h5>
+                  </div>
+                <div class="row">
+                  <div class="col-md-12"><h4>Filters</h4></div>
+               
                 </div>
+         
+           
                 <div class="brands">
-                  <h5>Brands</h5>
-                  <ul class="scrollbar" id="style-3">
-                    <li>
-                      <input
-                        type="checkbox"
-                        name="checkbox3"
-                        id="checkbox3"
-                        class="css-checkbox"
-                      />
-                      <label for="checkbox3" class="css-label">
-                        Panlin
-                      </label>
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        name="checkbox3"
-                        id="checkbox3"
-                        class="css-checkbox"
-                      />
-                      <label for="checkbox3" class="css-label">
-                        Foot Cure
-                      </label>
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        name="checkbox3"
-                        id="checkbox3"
-                        class="css-checkbox"
-                      />
-                      <label for="checkbox3" class="css-label">
-                        Hochste
-                      </label>
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        name="checkbox3"
-                        id="checkbox3"
-                        class="css-checkbox"
-                      />
-                      <label for="checkbox3" class="css-label">
-                        Podiastore
-                      </label>
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        name="checkbox3"
-                        id="checkbox3"
-                        class="css-checkbox"
-                      />
-                      <label for="checkbox3" class="css-label">
-                        Panlin
-                      </label>
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        name="checkbox3"
-                        id="checkbox3"
-                        class="css-checkbox"
-                      />
-                      <label for="checkbox3" class="css-label">
-                        Foot Cure
-                      </label>
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        name="checkbox3"
-                        id="checkbox3"
-                        class="css-checkbox"
-                      />
-                      <label for="checkbox3" class="css-label">
-                        Hochste
-                      </label>
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        name="checkbox3"
-                        id="checkbox3"
-                        class="css-checkbox"
-                      />
-                      <label for="checkbox3" class="css-label">
-                        Podiastore
-                      </label>
-                    </li>
+                  <h5 style={{display : this.state.PriceData.length ==0 ? 'none' : ''}}>Price</h5>
+                  <ul >
+                 
+                    
+                         
+                  {this.state.PriceData.map((dt, i) => (
+                          <li>
+                            <input
+                              checked={
+                                this.state.PriceFilter.includes(dt)
+                                  ? true
+                                  : false
+                              }
+                              type="checkbox"
+                              name="checkbox3"
+                              id="checkbox3"
+                              class="css-checkbox"
+                              onChange={() => {
+                                var ar = [...this.state.PriceFilter];
+
+                                if (ar.includes(dt)) {
+                                  ar.splice(ar.indexOf(dt), 1);
+                                } else {
+                                  ar.push(dt);
+                                }
+
+                                this.setState({
+                                  PriceFilter: ar,
+                                },
+                                ()=>{
+                                  
+                                  this.OnSubmitPriceFilter(this.state.BooksVariantRef)
+                                });
+                              }}
+                            />
+                            <label  class="css-label">
+                              {dt.fld_label.replace(/[?]/g,'₹')}
+                            </label>
+                          </li>
+                        ))}
+                   
+                   
+                  
                   </ul>
                 </div>
+
+
+                <div class="brands">
+                  <h5 style={{display : this.state.LanguageData.length ==0 ? 'none' : ''}}>Language</h5>
+                  <ul  id="style-3">
+                  {this.state.LanguageData.map((dt,i)=>(
+                    <li>
+                      <input
+                       checked={this.state.LanguageFilter.includes(dt.fld_language) ? true : false}
+                        type="checkbox"
+                        name="checkbox3"
+                        id="checkbox3"
+                        class="css-checkbox"
+                        onChange={()=>{
+                          var ar = [...this.state.LanguageFilter]
+
+                          if(ar.includes(dt.fld_language)){
+
+                            ar.splice(ar.indexOf(dt.fld_language),1)
+
+                          }else{
+                            ar.push(dt.fld_language)
+                          }
+
+                          this.setState({
+                           LanguageFilter : ar
+                          },
+                          ()=>{
+                            
+                            this.OnSubmitPriceFilter(this.state.BooksVariantRef)
+                          });
+
+                        }}
+                      />
+                      <label  class="css-label">
+                       {dt.fld_language}
+                      </label>
+                    </li>
+                  ))}
+                    
+                    
+                  </ul>
+                </div>
+
+             
+
+                <div class="brands">
+                  <h5 style={{display : this.state.TypeData.length ==0 ? 'none' : ''}}>Type</h5>
+                  <ul  id="style-3">
+                  {this.state.TypeData.map((dt,i)=>(
+                    <li>
+                      <input
+                       checked={this.state.TypeFilter.includes(dt.fld_type) ? true : false}
+                        type="checkbox"
+                        name="checkbox3"
+                        id="checkbox3"
+                        class="css-checkbox"
+                        onChange={()=>{
+                          var ar = [...this.state.TypeFilter]
+
+                          if(ar.includes(dt.fld_type)){
+
+                            ar.splice(ar.indexOf(dt.fld_type),1)
+
+                          }else{
+                            ar.push(dt.fld_type)
+                          }
+
+                          this.setState({
+                            TypeFilter : ar
+                          },
+                          ()=>{
+                            
+                            this.OnSubmitPriceFilter(this.state.BooksVariantRef)
+                          });
+
+                        }}
+                      />
+                      <label  class="css-label">
+                       {dt.fld_type}
+                      </label>
+                    </li>
+                  ))}
+                    
+                    
+                  </ul>
+
+                  <a 
+                   onClick={()=>{
+                    this.setState({
+                    
+           
+                      PriceFilter : [],
+                  
+                      TypeFilter : [],
+                      LanguageFilter  : [],
+
+                      BooksDetails : this.state.BooksRef
+
+                    })
+                   
+                  }}
+                  class="filter-btn btn">Reset Filters</a>
+             
+                </div>
+
+             
+               
+               
+               
               </div>
+           
+
             </div>
             </aside>
             <div class="col-md-10">
               <div class="row">
+              {this.state.BooksDetails.length==0 && this.state.done ?  
+                  <div class="col-md-12">
+                        <img src="/assets/images/No-product-Found.png" style={{    margin: 'auto'}}/>
+                      </div>
+               : ''}
+                {this.state.BooksDetails.sort((a,b)=>{
+                     if(this.state.sortBy!==''){
+                       if(this.state.sortBy==='Low to High'){
+                   return parseInt(a.fld_discountprice)-parseInt(b.fld_discountprice)
+                    
+                       }
+                       else if(this.state.sortBy==='High to Low'){
+                   return parseInt(b.fld_discountprice)-parseInt(a.fld_discountprice)
+                      
+                       }
+                       else if(this.state.sortBy==='New Arrivals'){
+                         
+                        return new Date(b.fld_updatedon)-new Date(a.fld_updatedon)
+
+                       }
+                     }
+                   
+
+                  }).map((info, index)=>(
                 <div class="col-md-3">
                   <div class="partner book-inner">
-                    <div
-                      id="overlay"
-                      // style={{
-                      //   display:
-                      //     book.fld_availability == "Outofstock" ? "" : "none",
-                      // }}
-                    >
-                      Out Of Stock
-                    </div>
+                  <div id="overlay" style={{display : info.fld_availability =='In stock' ? 'none' : ''}}>Out Of Stock</div>
 
-                    <img
-                      //   onClick={() => {
-                      //     window.location.href = `/book/${
-                      //       book.fld_bookid + "-" + book.fld_title.replace(/ /g, "-")
-                      //     }`;
-                      //   }}
-                      class="book-image"
-                      src={"../assets/images/cauliflowerbook.jpg"}
+                
+                  <img
+                      src={info.Photos.split(',')[0]}
+                      alt="product"
+                      class="footcare-image img-center"
+                      onClick={()=>{
+                        window.location.href = `/books/${info.fld_bookid+"/"+info.fld_id+"/"+info.fld_title.replace( / /g,'-').replace( /\//g,'-').replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '-')}`
+                      }}
                     />
                     {/* <div class="button"><a onClick={()=>{
                                        
@@ -220,40 +667,45 @@ class BookListing extends React.Component {
                                       
                                     }}> Quick View </a></div> */}
                     <div class="product-details">
-                      <p class="product-title ">
-                        <a
-                        //   onClick={() => {
-                        //     window.location.href = `/book/${
-                        //       book.fld_bookid +
-                        //       "-" +
-                        //       book.fld_title.replace(/ /g, "-")
-                        //     }`;
-                        //   }}
-                        >
-                          Cauliflower Diet
+                    <p class="product-title">
+                        <a 
+                        onClick={()=>{
+                        window.location.href = `/books/${info.fld_bookid+"/"+info.fld_id+"/"+info.fld_title.replace( / /g,'-').replace( /\//g,'-').replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '-')}`
+                      }}
+                        class="item-name">
+                          {info.fld_title}
                         </a>
                       </p>
                       {/* {book.fld_discountpercent == 0.0 ? ( */}
                      
-                      <p>
-                      <p class="small-desc item-name"><span style={{color:"#222222",fontWeight:"600"}}>Author:</span> Radha Thomas</p>
+                     
+                      <p class="small-desc item-name"><span style={{color:"#222222",fontWeight:"600"}}>Author:</span> {info.fld_authorname}</p>
 
-<p class="price">
 
-  &#8377; 100.00
-  {" "}<span>
-    <s>&#8377; 200.00</s>
-  </span>
-</p>
+                      <p class="discount-height">
+                      {info.fld_discountpercent == 0 ? 
+    
+    <p class="price">
+      
+    &#8377; {info.fld_discountprice}
+    
+  </p>
+    :
+      <p class="price">
+      
+        &#8377; {info.fld_discountprice}
+        {" "}<span>
+          <s>&#8377;  {info.fld_price}</s>
+        </span>
+        
+      </p>
+  }
+
+                        {info.fld_discountpercent == 0 ? '' :
+      <p class="discount-price">  You Save &#8377; {info.fld_price - info.fld_discountprice} ({info.fld_discountpercent}%)</p>
+    }
                       </p>
-                      <p>
-                        <p class="price">
-                          <span>
-                            <s></s>
-                          </span>{" "}
-                        </p>
-                        <p class="discount-price">20% discount, You Save &#8377; 50</p>
-                      </p>
+
 
                       <p class="brief-desc"></p>
                       <ul class="group-buttons">
@@ -272,357 +724,45 @@ class BookListing extends React.Component {
                       </ul>
                     </div>
                   </div>
+             
                 </div>
 
-                <div class="col-md-3">
-                  <div class="partner book-inner">
-                    <div
-                      id="overlay"
-                      // style={{
-                      //   display:
-                      //     book.fld_availability == "Outofstock" ? "" : "none",
-                      // }}
-                    >
-                      Out Of Stock
-                    </div>
-
-                    <img
-                      //   onClick={() => {
-                      //     window.location.href = `/book/${
-                      //       book.fld_bookid + "-" + book.fld_title.replace(/ /g, "-")
-                      //     }`;
-                      //   }}
-                      class="book-image"
-                      src={"../assets/images/cauliflowerbook.jpg"}
-                    />
-                    {/* <div class="button"><a onClick={()=>{
-                                       
-                                    window.location.href = `/book/${book.fld_bookid+"-"+book.fld_title.replace( / /g,'-')}`
-                                 
-                                      
-                                    }}> Quick View </a></div> */}
-                    <div class="product-details">
-                      <p class="product-title ">
-                        <a
-                        //   onClick={() => {
-                        //     window.location.href = `/book/${
-                        //       book.fld_bookid +
-                        //       "-" +
-                        //       book.fld_title.replace(/ /g, "-")
-                        //     }`;
-                        //   }}
-                        >
-                          Cauliflower Diet
-                        </a>
-                      </p>
-                      {/* {book.fld_discountpercent == 0.0 ? ( */}
-                     
-                      <p>
-                      <p class="small-desc item-name"><span style={{color:"#222222",fontWeight:"600"}}>Author:</span> Radha Thomas</p>
-
-<p class="price">
-
-  &#8377; 100.00
-  {" "}<span>
-    <s>&#8377; 200.00</s>
-  </span>
-</p>
-                      </p>
-                      <p>
-                        <p class="price">
-                          <span>
-                            <s></s>
-                          </span>{" "}
-                        </p>
-                        <p class="discount-price">20% discount, You Save &#8377; 50</p>
-                      </p>
-
-                      <p class="brief-desc"></p>
-                      <ul class="group-buttons">
-                        <li>
-                          {" "}
-                          <button class="add-to-cart-btn">
-                            <i class="fas fa-shopping-cart"></i> ADD TO CART
-                          </button>
-                        </li>
-                        <li>
-                          <button class="like-btn">
-                            <i class="fas fa-heart"></i>
-                          </button>{" "}
-                        </li>
-                        {/* <li><button class="like-btn"><i class="fas fa-info-circle"></i></button> </li> */}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-md-3">
-                  <div class="partner book-inner">
-                    <div
-                      id="overlay"
-                      // style={{
-                      //   display:
-                      //     book.fld_availability == "Outofstock" ? "" : "none",
-                      // }}
-                    >
-                      Out Of Stock
-                    </div>
-
-                    <img
-                      //   onClick={() => {
-                      //     window.location.href = `/book/${
-                      //       book.fld_bookid + "-" + book.fld_title.replace(/ /g, "-")
-                      //     }`;
-                      //   }}
-                      class="book-image"
-                      src={"../assets/images/cauliflowerbook.jpg"}
-                    />
-                    {/* <div class="button"><a onClick={()=>{
-                                       
-                                    window.location.href = `/book/${book.fld_bookid+"-"+book.fld_title.replace( / /g,'-')}`
-                                 
-                                      
-                                    }}> Quick View </a></div> */}
-                    <div class="product-details">
-                      <p class="product-title ">
-                        <a
-                        //   onClick={() => {
-                        //     window.location.href = `/book/${
-                        //       book.fld_bookid +
-                        //       "-" +
-                        //       book.fld_title.replace(/ /g, "-")
-                        //     }`;
-                        //   }}
-                        >
-                          Cauliflower Diet
-                        </a>
-                      </p>
-                      {/* {book.fld_discountpercent == 0.0 ? ( */}
-                     
-                      <p>
-                      <p class="small-desc item-name"><span style={{color:"#222222",fontWeight:"600"}}>Author:</span> Radha Thomas</p>
-
-<p class="price">
-
-  &#8377; 100.00
-  {" "}<span>
-    <s>&#8377; 200.00</s>
-  </span>
-</p>
-                      </p>
-                      <p>
-                        <p class="price">
-                          <span>
-                            <s></s>
-                          </span>{" "}
-                        </p>
-                        <p class="discount-price">20% discount, You Save &#8377; 50</p>
-                      </p>
-
-                      <p class="brief-desc"></p>
-                      <ul class="group-buttons">
-                        <li>
-                          {" "}
-                          <button class="add-to-cart-btn">
-                            <i class="fas fa-shopping-cart"></i> ADD TO CART
-                          </button>
-                        </li>
-                        <li>
-                          <button class="like-btn">
-                            <i class="fas fa-heart"></i>
-                          </button>{" "}
-                        </li>
-                        {/* <li><button class="like-btn"><i class="fas fa-info-circle"></i></button> </li> */}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-md-3">
-                  <div class="partner book-inner">
-                    <div
-                      id="overlay"
-                      // style={{
-                      //   display:
-                      //     book.fld_availability == "Outofstock" ? "" : "none",
-                      // }}
-                    >
-                      Out Of Stock
-                    </div>
-
-                    <img
-                      //   onClick={() => {
-                      //     window.location.href = `/book/${
-                      //       book.fld_bookid + "-" + book.fld_title.replace(/ /g, "-")
-                      //     }`;
-                      //   }}
-                      class="book-image"
-                      src={"../assets/images/cauliflowerbook.jpg"}
-                    />
-                    {/* <div class="button"><a onClick={()=>{
-                                       
-                                    window.location.href = `/book/${book.fld_bookid+"-"+book.fld_title.replace( / /g,'-')}`
-                                 
-                                      
-                                    }}> Quick View </a></div> */}
-                    <div class="product-details">
-                      <p class="product-title ">
-                        <a
-                        //   onClick={() => {
-                        //     window.location.href = `/book/${
-                        //       book.fld_bookid +
-                        //       "-" +
-                        //       book.fld_title.replace(/ /g, "-")
-                        //     }`;
-                        //   }}
-                        >
-                          Cauliflower Diet
-                        </a>
-                      </p>
-                      {/* {book.fld_discountpercent == 0.0 ? ( */}
-                     
-                      <p>
-                      <p class="small-desc item-name"><span style={{color:"#222222",fontWeight:"600"}}>Author:</span> Radha Thomas</p>
-
-<p class="price">
-
-  &#8377; 100.00
-  {" "}<span>
-    <s>&#8377; 200.00</s>
-  </span>
-</p>
-                      </p>
-                      <p>
-                        <p class="price">
-                          <span>
-                            <s></s>
-                          </span>{" "}
-                        </p>
-                        <p class="discount-price">20% discount, You Save &#8377; 50</p>
-                      </p>
-
-                      <p class="brief-desc"></p>
-                      <ul class="group-buttons">
-                        <li>
-                          {" "}
-                          <button class="add-to-cart-btn">
-                            <i class="fas fa-shopping-cart"></i> ADD TO CART
-                          </button>
-                        </li>
-                        <li>
-                          <button class="like-btn">
-                            <i class="fas fa-heart"></i>
-                          </button>{" "}
-                        </li>
-                        {/* <li><button class="like-btn"><i class="fas fa-info-circle"></i></button> </li> */}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
+))}
+           </div>
             </div>
-            {/* ))} */}
-            {/* <div class="col-md-2">
-                            <div class="book book-inner">
-                                    <img src="assets/images/books/book.jpg"/>
-                                    <div class="button"><a href="/bookDetails"> Quick View </a></div>
-     
-                                    <p class="book-title">The Cauliflower Diet by Radha Thomas</p>
-                                    <p class="price"><span><s>₹375.00</s></span> ₹300.00</p>
-                                    <p class="discount-price">You Save ₹75 (20%)</p>
-                                     </div>
-                       </div>
-
-                       <div class="col-md-2">
-                            <div class="book book-inner">
-                                    <img src="assets/images/books/book.jpg"/>
-                                    <div class="button"><a href="/bookDetails"> Quick View </a></div>
-     
-                                    <p class="book-title">The Cauliflower Diet by Radha Thomas</p>
-                                    <p class="price"><span><s>₹375.00</s></span> ₹300.00</p>
-                                    <p class="discount-price">You Save ₹75 (20%)</p>
-                                     </div>
-                       </div>
-
-                       <div class="col-md-2">
-                            <div class="book book-inner">
-                                    <img src="assets/images/books/book.jpg"/>
-                                    <div class="button"><a href="/bookDetails"> Quick View </a></div>
-     
-                                    <p class="book-title">The Cauliflower Diet by Radha Thomas</p>
-                                    <p class="price"><span><s>₹375.00</s></span> ₹300.00</p>
-                                    <p class="discount-price">You Save ₹75 (20%)</p>
-                                     </div>
-                       </div>
-
-                       <div class="col-md-2">
-                            <div class="book book-inner">
-                                    <img src="assets/images/books/book.jpg"/>
-                                    <div class="button"><a href="/bookDetails"> Quick View </a></div>
-     
-                                    <p class="book-title">The Cauliflower Diet by Radha Thomas</p>
-                                    <p class="price"><span><s>₹375.00</s></span> ₹300.00</p>
-                                    <p class="discount-price">You Save ₹75 (20%)</p>
-                                     </div>
-                       </div>
-
-                       <div class="col-md-2">
-                            <div class="book book-inner">
-                                    <img src="assets/images/books/book.jpg"/>
-                                    <div class="button"><a href="/bookDetails"> Quick View </a></div>
-     
-                                    <p class="book-title">The Cauliflower Diet by Radha Thomas</p>
-                                    <p class="price"><span><s>₹375.00</s></span> ₹300.00</p>
-                                    <p class="discount-price">You Save ₹75 (20%)</p>
-                                     </div>
-                       </div>
-
-                       <div class="col-md-2">
-                            <div class="book book-inner">
-                                    <img src="assets/images/books/book.jpg"/>
-                                    <div class="button"><a href="/bookDetails"> Quick View </a></div>
-     
-                                    <p class="book-title">The Cauliflower Diet by Radha Thomas</p>
-                                    <p class="price"><span><s>₹375.00</s></span> ₹300.00</p>
-                                    <p class="discount-price">You Save ₹75 (20%)</p>
-                                     </div>
-                       </div>
-
-                       <div class="col-md-2">
-                            <div class="book book-inner">
-                                    <img src="assets/images/books/book.jpg"/>
-                                    <div class="button"><a href="/bookDetails"> Quick View </a></div>
-     
-                                    <p class="book-title">The Cauliflower Diet by Radha Thomas</p>
-                                    <p class="price"><span><s>₹375.00</s></span> ₹300.00</p>
-                                    <p class="discount-price">You Save ₹75 (20%)</p>
-                                     </div>
-                       </div> */}
+          
           </div>
         </div>
-        <div class="container-box container-box-lg info-boxes container">
-                                        <div class="row">
-                                          <div class="col-md-12">
-                                          
-                                         <p style={{textAlign:"justify",fontSize:"13px"}}><b>Disclaimer:</b> Books sold by Vendors on the website are not intended as a substitute for medical advice from physicians/doctors. The reader should regularly consult a physician/doctor in matters relating to his/her health and particularly with respect to any symptoms that may require diagnosis or medical attention.
+        <div class="container">
+          <div class="container-box container-box-lg info-boxes ">
+          <div class="row">
+            <div class="col-md-12">
+              <p style={{ textAlign: "justify", fontSize: "13px" }}>
+                <b>Disclaimer:</b> BeatMySugar team always put in their best
+                effort towards making the vendor/service provider ensure that
+                the product information given on the website is correct and
+                updated. However, always read the product labels for direction
+                for use, warnings, and precautions before using the product. It
+                is advisable to consult your doctor or healthcare provider
+                before using a product.{" "}
+                <a
+                  href="https://www.beatmysugar.com/"
+                  style={{ fontWeight: 700, color: "#000" }}
+                >
+                  www.BeatMySugar.com
+                </a>
+                , being only a facilitator and not the business
+                operator/manufacturer/vendor/service provider, is not legally
+                liable and does not assume any responsibility for any untoward
+                occurrence from the use of any product available on the web
+                site. All liabilities rest with the business operator/
+                manufacturer/vendor/service provider.
+              </p>
+            </div>
+          </div>
+          </div>
+        </div>
 
-
-
-</p>
-
-                                          </div>
-                                         
-                                        
-                    
-                                         
-                                        
-                                                 
-                                        </div>
-                    
-                                       
-                    
-                                      
-                                    </div>
                                     </main>
        
         <Footer></Footer>

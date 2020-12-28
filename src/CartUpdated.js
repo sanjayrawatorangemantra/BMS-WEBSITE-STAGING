@@ -19,6 +19,9 @@ import {
 } from "./Actions/actionType";
 
 
+import Modal from 'react-responsive-modal';
+import "react-responsive-modal/styles.css";
+
 class CartUpdated extends React.Component
 {
 
@@ -90,6 +93,14 @@ class CartUpdated extends React.Component
             
             }))
 
+            GetApiCall.getRequest("Get_ShippingChargeWebsite").then((resultdes) =>
+            resultdes.json().then((obj) => {
+              console.log(obj.data)
+              this.setState({
+               ShippingChargeData: obj.data,
+              });
+            })
+          );
 
             PostApiCall.postRequest(
               {
@@ -111,6 +122,7 @@ class CartUpdated extends React.Component
 
               var log = localStorage.getItem("CustomerLoginDetails");
               var login = JSON.parse(log);
+              
              
               if (login != null && login != "") {
                 Notiflix.Loading.Dots("");
@@ -149,6 +161,7 @@ class CartUpdated extends React.Component
         var gstval = 0
         var cn = 0
 
+        var shipchargettl = 0
 
 
 
@@ -341,9 +354,39 @@ class CartUpdated extends React.Component
                                                             GstValue : gstval,
                                                             GstValueRef : gstval
                                                         })
+<<<<<<< HEAD
                                                         this.props.setcartitemcount(this.state.Cart.length)
                                                         this.props.setcartamount(subt)
                                                         // Notiflix.Loading.Remove()
+=======
+                                                       
+                                                        this.props.setcartitemcount(
+                                                          this.state.Cart.length
+                                                        );
+                                                        this.props.setcartamount(subt);
+      
+                                                  
+      
+                                                        for(var k=0;k<this.state.ShippingChargeData.length;k++){
+      
+                                                          if(this.state.Cart[i][j].fld_productcategory == this.state.ShippingChargeData[k].fld_vertical && this.state.Cart[i][j].fld_variantid == this.state.ShippingChargeData[k].fld_productid)
+                                                          {
+      
+      
+      
+                                                            shipchargettl = shipchargettl +  (parseFloat(this.state.Cart[i][j].fld_quantity/this.state.ShippingChargeData[k].fld_quantity).toFixed() * this.state.ShippingChargeData[k].fld_shippingCharges)
+      
+                                                            this.setState({
+                                                              ShippingChargeValue : shipchargettl,
+                                                              ShippingChargeCount : this.state.ShippingChargeCount +1
+                                                            })
+                                                          }
+      
+                                                        }
+
+
+                                                        Notiflix.Loading.Remove()
+>>>>>>> 28_12
                                                     }
                                              
                                                 }
@@ -394,6 +437,8 @@ class CartUpdated extends React.Component
             var baset = 0
             var gstval = 0
             var cn = 0
+            
+    var shipchargettl = 0 
     
         
     
@@ -734,6 +779,22 @@ class CartUpdated extends React.Component
                                     })
                                     this.props.setcartitemcount(this.state.Cart.length)
                                     this.props.setcartamount(subt)
+
+                                    for(var k=0;k<this.state.ShippingChargeData.length;k++){
+
+                                      if(this.state.Cart[i][j].fld_productcategory == this.state.ShippingChargeData[k].fld_vertical && this.state.Cart[i][j].fld_variantid == this.state.ShippingChargeData[k].fld_productid)
+                                      {
+            
+            
+                                        shipchargettl = shipchargettl +  (parseFloat(this.state.Cart[i][j].fld_quantity/this.state.ShippingChargeData[k].fld_quantity).toFixed() * this.state.ShippingChargeData[k].fld_shippingCharges)
+                                       
+                                        this.setState({
+                                          ShippingChargeValue : shipchargettl,
+                                          ShippingChargeCount : this.state.ShippingChargeCount +1
+                                        })
+                                      }
+            
+                                    }
                                     Notiflix.Loading.Remove()
                                 }
                                 })
@@ -1933,6 +1994,42 @@ class CartUpdated extends React.Component
             <div>
                 <Menu></Menu>
                   <div class="container">
+
+                  <Modal class="modal-content"  
+    open={this.state.openModel}
+    onClose={()=>{
+        this.setState({openModel : false})
+      
+      }}
+   
+     center>
+
+    <div class="modal-content modelcontent2" >
+    <div class="modal-header">
+    <h4 class="modal-title">Shipping Charges</h4>
+  </div>
+      <div class="modal-body">
+            <div class="col-md-12">
+            <h4>Shipping charges on cart &lt; ₹500 : ₹{(this.state.SubTotal - this.state.Offer) <
+                          this.state.ShippingTh 
+                            ? ((this.state.ShippingChargeCount == this.state.TotalCartLength ? 0 : (this.state.ShippingCharge)))
+                            : 0}
+         
+           </h4>
+           <h4>Total shipping charges on item : ₹{(this.state.SubTotal - this.state.Offer) <
+                          this.state.ShippingTh 
+                            ? ((this.state.ShippingChargeCount == this.state.TotalCartLength ? this.state.ShippingChargeValue : (this.state.ShippingChargeValue)))
+                            : this.state.ShippingChargeValue}</h4>
+           
+       
+           
+        </div>
+       
+      </div>
+     
+ 
+</div>
+    </Modal>
                  
                   {(this.state.SubTotal == 0 && this.state.done) || this.state.Cart == 0 ? (
                  <div class="container-box cart-section">
@@ -2269,13 +2366,34 @@ class CartUpdated extends React.Component
                                             <p><b>Brand</b> - {info.fld_brand}</p>
                                             <p><b>Net Weight</b> - {info.fld_productweight +" "+ info.fld_productunit}</p>
                                             <div class="cart-price">
-                                                {info.fld_discountpercent == 0 ?
-                                                <p class=""> <p class="price"><b>Price </b> - ₹ {info.fld_discountprice}</p>
+                                            {info.fld_discountpercent == 0 ? (
+                                              <p class="">
+                                                {" "}
+                                                <p class="price">
+                                                  <b>Price </b> - ₹ {info.fld_discountprice} {(this.state.ShippingChargeData.find(val=> val.fld_vertical == 'Food' && val.fld_productid == info.fld_id)) ? <span style={{color : '#507dbe'}}> + ₹{(this.state.ShippingChargeData.filter(val=> val.fld_vertical == 'Food' && val.fld_productid == info.fld_id)[0].fld_shippingCharges)} shipping charges  </span> : ''}
+                                                </p>
                                               </p>
-                                            :
-                                            <p class=""> <p class="price"><b>Price </b> - ₹ {info.fld_discountprice} <span><s>₹ {info.fld_price}</s></span></p>
-                                            <p class="discount-price"> You Save ₹ {info.fld_price-info.fld_discountprice} ({info.fld_discountpercent}% )</p></p>}
-                                            </div>
+                                            ) : (
+                                              <p class="">
+                                                {" "}
+                                                <p class="price">
+                                                  <b>Price </b> - ₹ {info.fld_discountprice}{" "}
+                                                  <span>
+                                                    <s>₹ {info.fld_price}</s>
+                                                  </span>
+                                                
+                                                  {(this.state.ShippingChargeData.find(val=> val.fld_vertical == 'Food' && val.fld_productid == info.fld_id)) ? <span style={{color : '#507dbe',fontSize:'15px',fontWeight:'600'}}> + ₹{(this.state.ShippingChargeData.filter(val=> val.fld_vertical == 'Food' && val.fld_productid == info.fld_id)[0].fld_shippingCharges)} shipping charges  </span> : ''}
+                                              
+                                                </p>
+                                                <p class="discount-price">
+                                                  {" "}
+                                                  You Save ₹{" "}
+                                                  {info.fld_price - info.fld_discountprice} (
+                                                  {info.fld_discountpercent}% )
+                                                </p>
+                                              </p>
+                                            )}
+                                          </div>
                                         </div>
                                         <div class="col-md-2">
                                             <div class="cart-btn">
@@ -2367,13 +2485,33 @@ class CartUpdated extends React.Component
                                             <p><b>Brand</b> - {info.fld_brand}</p>
                                             {/* <p><b>Nett Weight</b> - {info.fld_productweight +" "+ info.fld_productunit}</p> */}
                                             <div class="cart-price">
-                                                {info.fld_discountpercent == 0 ?
-                                                <p class=""> <p class="price"><b>Price </b> - ₹ {info.fld_discountprice}</p>
+                                            {info.fld_discountpercent == 0 ? (
+                                              <p class="">
+                                                {" "}
+                                                <p class="price">
+                                                  <b>Price </b> - ₹ {info.fld_discountprice}
+                                                  {(this.state.ShippingChargeData.find(val=> val.fld_vertical == 'Footwear' && val.fld_productid == info.fld_id)) ? <span style={{color : '#507dbe'}}> + ₹{(this.state.ShippingChargeData.filter(val=> val.fld_vertical == 'Footwear' && val.fld_productid == info.fld_id)[0].fld_shippingCharges)} shipping charges  </span> : ''}
+                                                </p>
                                               </p>
-                                            :
-                                            <p class=""> <p class="price"><b>Price </b> - ₹ {info.fld_discountprice} <span><s>₹ {info.fld_price}</s></span></p>
-                                            <p class="discount-price"> You Save ₹ {info.fld_price-info.fld_discountprice} ({info.fld_discountpercent}% )</p></p>}
-                                            </div>
+                                            ) : (
+                                              <p class="">
+                                                {" "}
+                                                <p class="price">
+                                                  <b>Price </b> - ₹ {info.fld_discountprice}{" "}
+                                                  <span>
+                                                    <s>₹ {info.fld_price}</s>
+                                                  </span>
+                                                  {(this.state.ShippingChargeData.find(val=> val.fld_vertical == 'Footwear' && val.fld_productid == info.fld_id)) ? <span style={{color : '#507dbe'}}> + ₹{(this.state.ShippingChargeData.filter(val=> val.fld_vertical == 'Footwear' && val.fld_productid == info.fld_id)[0].fld_shippingCharges)} shipping charges  </span> : ''}
+                                                </p>
+                                                <p class="discount-price">
+                                                  {" "}
+                                                  You Save ₹{" "}
+                                                  {info.fld_price - info.fld_discountprice} (
+                                                  {info.fld_discountpercent}% )
+                                                </p>
+                                              </p>
+                                            )}
+                                          </div>
                                         </div>
                                         <div class="col-md-2">
                                             <div class="cart-btn">
@@ -2467,13 +2605,33 @@ class CartUpdated extends React.Component
                                             <p><b>Brand</b> - {info.fld_brand}</p>
                                             {/* <p><b>Nett Weight</b> - {info.fld_productweight +" "+ info.fld_productunit}</p> */}
                                             <div class="cart-price">
-                                                {info.fld_discountpercent == 0 ?
-                                                <p class=""> <p class="price"><b>Price </b> - ₹ {info.fld_discountprice}</p>
+                                            {info.fld_discountpercent == 0 ? (
+                                              <p class="">
+                                                {" "}
+                                                <p class="price">
+                                                  <b>Price </b> - ₹ {info.fld_discountprice}
+                                                  {(this.state.ShippingChargeData.find(val=> val.fld_vertical == 'Socks' && val.fld_productid == info.fld_id)) ? <span style={{color : '#507dbe'}}> + ₹{(this.state.ShippingChargeData.filter(val=> val.fld_vertical == 'Socks' && val.fld_productid == info.fld_id)[0].fld_shippingCharges)} shipping charges  </span> : ''}
+                                                </p>
                                               </p>
-                                            :
-                                            <p class=""> <p class="price"><b>Price </b> - ₹ {info.fld_discountprice} <span><s>₹ {info.fld_price}</s></span></p>
-                                            <p class="discount-price"> You Save ₹ {info.fld_price-info.fld_discountprice} ({info.fld_discountpercent}% )</p></p>}
-                                            </div>
+                                            ) : (
+                                              <p class="">
+                                                {" "}
+                                                <p class="price">
+                                                  <b>Price </b> - ₹ {info.fld_discountprice}{" "}
+                                                  <span>
+                                                    <s>₹ {info.fld_price}</s>
+                                                  </span>
+                                                  {(this.state.ShippingChargeData.find(val=> val.fld_vertical == 'Socks' && val.fld_productid == info.fld_id)) ? <span style={{color : '#507dbe'}}> + ₹{(this.state.ShippingChargeData.filter(val=> val.fld_vertical == 'Socks' && val.fld_productid == info.fld_id)[0].fld_shippingCharges)} shipping charges  </span> : ''}
+                                                </p>
+                                                <p class="discount-price">
+                                                  {" "}
+                                                  You Save ₹{" "}
+                                                  {info.fld_price - info.fld_discountprice} (
+                                                  {info.fld_discountpercent}% )
+                                                </p>
+                                              </p>
+                                            )}
+                                          </div>
                                         </div>
                                         <div class="col-md-2">
                                             <div class="cart-btn">
@@ -2797,12 +2955,34 @@ class CartUpdated extends React.Component
                                                                     </tr>
                                                                     <tr>
                                                                     <td>GST Value</td>
-                                                <td>₹ {parseFloat(this.state.GstValue).toFixed(2)}</td>
+                                                                         <td>₹ {parseFloat(this.state.GstValue).toFixed(2)}</td>
                                                                     </tr>
                                                                     <tr>
-                                                                    <td>Shipping Charges</td>
-                                                                    <td>₹ {(this.state.SubTotal - this.state.Offer) < this.state.ShippingTh ? this.state.ShippingCharge :'0.00'}</td>
-                                                                    </tr>
+                                                                    <td>Shipping Charges
+                                                                    <i class="fa fa-info-circle" aria-hidden="true" 
+                                            
+                                                                    onClick={()=>{
+                                                                      this.setState({
+                                                                        openModel : true
+                                                                      })
+                                                                  }}
+                                            
+                                                                  data-toggle="modal"
+                                                                  
+                                                                  style={{color:'#507dbe',marginLeft:'2px',cursor : 'pointer',
+                                                                display:this.state.ShippingChargeValue==0?'none':''
+                                                                }}></i>
+                                                             
+                                                                    </td>
+                                                                    <td>
+                                                                    
+                                                                    {/* {this.state.Cart.length} */}
+                                                                      {(this.state.SubTotal - this.state.Offer) <
+                                                                      this.state.ShippingTh 
+                                                                        ? ((this.state.ShippingChargeCount == this.state.TotalCartLength ? this.state.ShippingChargeValue : (this.state.ShippingCharge+this.state.ShippingChargeValue)))
+                                                                        : this.state.ShippingChargeValue}
+                                                                    </td>
+                                                                  </tr>
 
                                                                     <tr>
                                                                 <td><input type="checkbox"
@@ -2831,72 +3011,145 @@ class CartUpdated extends React.Component
                                                                     
                                                                         </table>
                                                                         <div class="checkout-methods">
-                                                                            <button 
-                                                                            onClick={()=>{
+                    <button
+                      onClick={() => {
+                        var log = localStorage.getItem("CustomerLoginDetails");
+                        var login = JSON.parse(log);
 
-                                                                                var log = localStorage.getItem(
-                                                                                    "CustomerLoginDetails"
-                                                                                  );
-                                                                                  var login = JSON.parse(log);
-                                          
-                                                                                  if (login != null && login != "") {
+                        if (login != null && login != "") {
+                          const SummaryData = {
+                            OfferCode:
+                              JSON.stringify(this.state.SelectedCouponData) ==
+                              "[]"
+                                ? ""
+                                : this.state.SelectedCouponData.fld_code,
+                            SubTotalAmt: parseFloat(
+                              this.state.SubTotal
+                            ).toFixed(2),
+                            BaseSubTotalAmt: parseFloat(
+                              this.state.BaseSubTotal
+                            ).toFixed(2),
+                            BaseSubTotalAmtForOffer: parseFloat(
+                              this.state.BaseSubTotalForOffer
+                            ).toFixed(2),
+                            MrpSubTotalAmt: parseFloat(
+                              this.state.MrpSubTotal
+                            ).toFixed(2),
+                            GstValue: parseFloat(this.state.GstValue).toFixed(
+                              2
+                            ),
+                            // OfferPercent: JSON.stringify(this.state.SelectedCouponData) != '[]' ? this.state.SelectedCouponData.fld_discount : 0,
+                            OfferPercent: JSON.stringify(this.state.SelectedCouponData) != '[]' ? parseFloat((this.state.Offer*100)/this.state.BaseSubTotalForOffer).toFixed() : 0,
 
-                                                                                const SummaryData ={
+                            YouSaved: parseFloat(this.state.MrpSubTotal -this.state.SubTotal +this.state.Offer ).toFixed(2),
+                            // OfferPercent : '5',
 
-                                                                                    OfferCode : JSON.stringify(this.state.SelectedCouponData) == '[]' ? '' : this.state.SelectedCouponData.fld_code,
-                                                                                    SubTotalAmt : parseFloat(this.state.SubTotal).toFixed(2),
-                                                                                    BaseSubTotalAmt : parseFloat(this.state.BaseSubTotal).toFixed(2),
-                                                                                    BaseSubTotalAmtForOffer: parseFloat(
-                                                                                      this.state.BaseSubTotalForOffer
-                                                                                    ).toFixed(2),
-                                                                                    MrpSubTotalAmt : parseFloat(this.state.MrpSubTotal).toFixed(2),
-                                                                                    GstValue : parseFloat(this.state.GstValue).toFixed(2),
-                                                                                    // OfferPercent : this.state.SelectedCouponData.fld_pricepercent,
+                            
 
-                                                                                     OfferPercent: JSON.stringify(this.state.SelectedCouponData) != '[]' ? parseFloat((this.state.Offer*100)/this.state.BaseSubTotalForOffer).toFixed() : 0,
+                            OfferAmt:
+                              JSON.stringify(this.state.SelectedCouponData) ==
+                              "[]"
+                                ? 0.0
+                                : parseFloat(
+                                   this.state.Offer
+                                  ).toFixed(2),
+                            ShippngAmt:
+                              this.state.SubTotal - this.state.Offer <
+                              this.state.ShippingTh 
+                                ? (((this.state.ShippingChargeCount == this.state.TotalCartLength ? this.state.ShippingChargeValue : (this.state.ShippingCharge+this.state.ShippingChargeValue))))
+                                : this.state.ShippingChargeValue,
+                            CodAmt: this.state.PayCod ? this.state.COD : 0.0,
+                            TotalAmt:
+                              JSON.stringify(this.state.SelectedCouponData) ==
+                              "[]"
+                                ? this.state.SubTotal <
+                                  this.state.ShippingTh
+                                  ? this.state.PayCod
+                                    ? parseFloat(
+                                        this.state.BaseSubTotal +
+                                        (this.state.ShippingChargeCount == this.state.TotalCartLength ? this.state.ShippingChargeValue : (this.state.ShippingCharge+this.state.ShippingChargeValue)) +
+                                          this.state.COD +
+                                          this.state.GstValue
+                                      ).toFixed(2)
+                                    : parseFloat(
+                                        this.state.BaseSubTotal +
+                                        (this.state.ShippingChargeCount == this.state.TotalCartLength ? this.state.ShippingChargeValue : (this.state.ShippingCharge+this.state.ShippingChargeValue)) +
+                                          this.state.GstValue
+                                      ).toFixed(2)
+                                  : this.state.PayCod
+                                  ? parseFloat(
+                                      this.state.BaseSubTotal +
+                                        this.state.COD + this.state.ShippingChargeValue+
+                                        this.state.GstValue
+                                    ).toFixed(2)
+                                  : parseFloat(
+                                      this.state.BaseSubTotal +
+                                        this.state.GstValue + this.state.ShippingChargeValue
+                                    ).toFixed(2)
+                                : this.state.SubTotal-
+                                this.state.Offer <
+                                  this.state.ShippingTh
+                                ? this.state.PayCod
+                                  ? parseFloat(
+                                      this.state.BaseSubTotal -
+                                      this.state.Offer +
+                                      (this.state.ShippingChargeCount == this.state.TotalCartLength ? this.state.ShippingChargeValue : (this.state.ShippingCharge+this.state.ShippingChargeValue))+
+                                        this.state.COD +
+                                        this.state.GstValue
+                                    ).toFixed(2)
+                                  : parseFloat(
+                                      this.state.BaseSubTotal -
+                                      this.state.Offer +
+                                      (this.state.ShippingChargeCount == this.state.TotalCartLength ? this.state.ShippingChargeValue : (this.state.ShippingCharge+this.state.ShippingChargeValue))+
+                                        this.state.GstValue
+                                    ).toFixed(2)
+                                : this.state.PayCod
+                                ? parseFloat(
+                                    this.state.BaseSubTotal -
+                                    this.state.Offer +
+                                      this.state.COD + this.state.ShippingChargeValue +
+                                      this.state.GstValue
+                                  ).toFixed(2)
+                                : parseFloat(
+                                    this.state.BaseSubTotal -
+                                      this.state.Offer +
+                                      this.state.GstValue + this.state.ShippingChargeValue
+                                  ).toFixed(2),
 
+                                  BankOffer : this.state.BankOffer
+                          };
+                          localStorage.setItem(
+                            "CartData",
+                            JSON.stringify(this.state.Cart)
+                          );
+                          localStorage.setItem(
+                            "OfferData",
+                            JSON.stringify(this.state.SelectedCouponData)
+                          );
+                          localStorage.setItem(
+                            "SummaryData",
+                            JSON.stringify(SummaryData)
+                          );
 
-                                                                                    YouSaved : parseFloat((this.state.MrpSubTotal-this.state.SubTotal)+this.state.Offer).toFixed(2),
-                                                                                    // OfferPercent : '5',
-                                                                                    OfferAmt : JSON.stringify(this.state.SelectedCouponData) =="[]" ? 0.0: parseFloat(this.state.Offer).toFixed(2),
-
-                                                                                    ShippngAmt :   this.state.SubTotal - this.state.Offer < this.state.ShippingTh  ? this.state.ShippingCharge : 0.00,
-                                                                                    CodAmt : this.state.PayCod ? this.state.COD : 0.00,
-                                                                                    PayMode : this.state.PayCod ? 'COD' : 'Online',
-
-                                                                                    BankOffer : this.state.BankOffer,
-
-
-                                                                                    TotalAmt :
-                                                                                    JSON.stringify(this.state.SelectedCouponData) == '[]' ? 
-                                                                                    (this.state.SubTotal) < this.state.ShippingTh ? 
-                                                                                    this.state.PayCod ? parseFloat(this.state.BaseSubTotal+this.state.ShippingCharge+this.state.COD+this.state.GstValue).toFixed(2)
-                                                                                    : parseFloat(this.state.BaseSubTotal+this.state.ShippingCharge+this.state.GstValue).toFixed(2) : 
-                                                                                    this.state.PayCod ? parseFloat(this.state.BaseSubTotal+this.state.COD+this.state.GstValue).toFixed(2)
-                                                                                    : parseFloat(this.state.BaseSubTotal+this.state.GstValue).toFixed(2)
-                                                                                    :
-                                                                                    (this.state.SubTotal - this.state.Offer ) < this.state.ShippingTh ? 
-                                                                                    this.state.PayCod ? parseFloat(this.state.BaseSubTotal-  this.state.Offer +this.state.ShippingCharge+this.state.COD+this.state.GstValue).toFixed(2)
-                                                                                    : parseFloat(this.state.BaseSubTotal- this.state.Offer +this.state.ShippingCharge+this.state.GstValue).toFixed(2) : 
-                                                                                    this.state.PayCod ? parseFloat(this.state.BaseSubTotal-  this.state.Offer +this.state.COD+this.state.GstValue).toFixed(2)
-                                                                                    : parseFloat((this.state.BaseSubTotal- this.state.Offer )+this.state.GstValue).toFixed(2)
-                                                                                }
-                                                                                localStorage.setItem('CartData',JSON.stringify(this.state.Cart))
-                                                                                localStorage.setItem('OfferData',JSON.stringify(this.state.SelectedCouponData))
-                                                                                localStorage.setItem('SummaryData',JSON.stringify(SummaryData))
-                                                                                window.location.href = '/selectaddress'
-
-                                                                            }
-                                                                            else{
-                                                                                const path ={
-                                                                                    isCart : true
-                                                                                }
-                                                                                localStorage.setItem('PathCame',JSON.stringify(path))
-                                                                                window.location.href = '/login'
-                                                                            }
-                                                                            }}
-                                                                            class="btn btn-block btn-sm btn-primary">Select Shipping Address</button>
-                                                                            </div>
+                          // console.log(SummaryData)
+                          window.location.href = "/selectaddress";
+                        } else {
+                          const path = {
+                            isCart: true,
+                          };
+                          localStorage.setItem(
+                            "PathCame",
+                            JSON.stringify(path)
+                          );
+                          window.location.href = "/login";
+                        }
+                      }}
+                      class="btn btn-block btn-sm btn-primary"
+                    >
+                      Select Shipping Address
+                    </button>
+                  </div>
+                                                                      
                                                                             </div>
                                                                             <div class="cart-summary cart-box-footer">
                                                                             <table class="footer-table">

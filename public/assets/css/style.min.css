@@ -1001,4 +1001,35 @@ button:focus{
   padding:0 20px;
   margin-top:0px;
 }
+<<<<<<< HEAD
 >>>>>>> gt_orphan
+=======
+
+
+
+.modelcontent2 {
+  /* width: 50%!important; */
+  margin-top: 0px!important;
+    margin-bottom: 0px!important;
+    border-radius: 10px;
+    border: 0;
+}
+.modal-header{
+  background:#507dc0;
+  
+}
+.react-responsive-modal-modal{
+  background: inherit!important;
+  padding: 0!important;
+  box-shadow: none!important;
+  
+}
+
+.react-responsive-modal-closeButton:focus{
+outline: none;
+}
+
+.react-responsive-modal-closeButton{
+  background-color: #c1daff!important;
+}
+>>>>>>> 28_12
