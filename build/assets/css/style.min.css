@@ -751,6 +751,7 @@ button:focus{
 .teasermodal .modal-dialog .modal-content{
   height: 400px;
 }
+
 }
 @media only screen and (max-width:768px){
   .teasermodal .modal-dialog .modal-content{
@@ -901,7 +902,37 @@ button:focus{
 }
 
 }
+@media only screen and (max-width:575px){
+  .navlinks{
+    flex-wrap: nowrap;
+  }
+  .prev{
+    font-size: 13px;
+    padding: 7px 20px;
+  }
+  .navlinkbutton button{
+    font-size:14px;
+  }
+  .quiz-form.text-light .activelinksubmit, .feedback-section .submitbtn .activelinksubmit{
+    font-size: 14px;
+    line-height: initial;
+  }
+  .question-btn{
+    align-items: center;
+  }
+  .prevquestion {
+    margin-right: 5px;
+}
+.correctcomment, .wrongcomment {
+  top: -12px;
+  right: -10px;
+}
+.quiz-form.text-light .form-check .answers{
+  padding:10px 0;
+  font-size:16px;
+}
 
+}
 
 .panel.panel-default:last-child {
   border-bottom: 0px;
@@ -945,7 +976,6 @@ button:focus{
   margin-bottom: 15px;
   padding-bottom: 15px;
 }
-=======
 .testimonial-img
 {
   width:65px;
