@@ -263,15 +263,15 @@ goToNextChapterTopic=()=>{
                                     <div class="homelink">
                                       <a href="/education"><i class="fa fa-home" aria-hidden="true"></i></a>
                                     </div>
-                                      <h3 class="panel-title">Chapter Number {current_chapter_index+1} :{ current_chapter_data.fld_title }</h3>
-                                      <p><span class="topic">{ this.ordinal_suffix_of( current_topic_index + 1 ) }  Topics</span> . <span class="length"></span></p>
+                                      <h3 class="panel-title">Chapter Module {current_chapter_index+1} : { current_chapter_data.fld_title }</h3>
+                                      <p><span class="topic">{ this.ordinal_suffix_of( current_topic_index + 1 ) }  Topic</span>  <span class="length"></span></p>
                                       <p class="coloredsec">{Topic_Details.fld_title}</p>
                                     <div class="course-details-disc">
                                    
                                    { Topic_Details.contents && Topic_Details.contents.length > 0 ?
                                     <>
                                         <div class="col-md-12-sec">
-                                          <h4>Content {this.ordinal_suffix_of(contentIndex+1)}</h4> 
+                                          {/* <h4>Content {this.ordinal_suffix_of(contentIndex+1)}</h4>  */}
                                             <div  dangerouslySetInnerHTML= {{__html: Topic_Details.contents[contentIndex].fld_content ? Topic_Details.contents[contentIndex].fld_content : '' }}></div> 
                                         </div><br/>
                                         <div class="count-sec"><p>{`Page: `+(contentIndex+1)+`/`+Topic_Details.contents.length}</p></div>

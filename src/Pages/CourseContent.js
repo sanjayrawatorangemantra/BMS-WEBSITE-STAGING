@@ -233,7 +233,7 @@ class CourseContentMain extends React.Component {
           });
           chapterData = chapterData.map(function(el , index) {
             var o = Object.assign({}, el);
-            o.chapter_unLock = (index==0 ? true: chapterData[index-1].fld_isQuestionTestCompleted === 1? true : false);
+            o.chapter_unLock = (index==0 ?  (chapterData[index].topics.length>0 && chapterData[index].topics[0].fld_isunlocked === 1? true : false): chapterData[index-1].fld_isQuestionTestCompleted === 1? true : false);
             return o;
           });
           // if(chapterData[0].topics[0].fld_isunlocked === 0){
@@ -437,7 +437,7 @@ class CourseContentMain extends React.Component {
                                  return <div className={"panel panel-default " + (Item.activeClass == true ? 'active' : 'deactive')}>
                                         <div className={"panel-heading "+( Item.chapter_unLock == true ? 'unlockedlockedtitle' : 'lockedtitle')} onClick={()=> this.handleActiveclassName( Item.fld_chapterid ) } >
                                             <h4 className="panel-title">                            
-                                                Chapter Number {chapterIndex+1} : {Item.fld_title}
+                                                Chapter Module {chapterIndex+1} : {Item.fld_title}
                                             </h4>
                                             <p><span className="topic">{Item.topics ? Item.topics.length :0 } Topics</span> . <span className="length">{ Item.fld_duration.includes(':') ? (Item.fld_duration.split(':')[0]+'m '+Item.fld_duration.split(':')[1]+'s') : Item.fld_duration } total length</span></p>
                                         </div>
