@@ -5,7 +5,11 @@
 .pnp.js
 
 # testing
+<<<<<<< HEAD
 /coverage 
+=======
+/coverage
+>>>>>>> c49fc2057e70d35b5e3b63f5362d9df622dc71fc
 
 # misc
 .DS_Store
