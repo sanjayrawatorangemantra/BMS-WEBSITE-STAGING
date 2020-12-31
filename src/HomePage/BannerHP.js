@@ -109,7 +109,7 @@ class BannerHP extends Component {
                   </Slider>
             </div>
 
-            <div class="home-slider-container d-md-none d-sm-block">
+            {/* <div class="home-slider-container d-md-none d-sm-block">
                <Slider {...banner}>
                
                     {this.state.bannerHome&&this.state.bannerHome.map(info=>{
@@ -129,7 +129,7 @@ class BannerHP extends Component {
                   </Slider>
               </div>
          
-         
+          */}
             </div>
 
             </div>
