@@ -2288,6 +2288,8 @@ class CartUpdated extends React.Component
                                            
                                         </div>
                                     </div>
+
+
                                 </div>
                           */}
                             </div>
@@ -3053,6 +3055,7 @@ class CartUpdated extends React.Component
                                 ? (((this.state.ShippingChargeCount == this.state.TotalCartLength ? this.state.ShippingChargeValue : (this.state.ShippingCharge+this.state.ShippingChargeValue))))
                                 : this.state.ShippingChargeValue,
                             CodAmt: this.state.PayCod ? this.state.COD : 0.0,
+                            PayMode:this.state.PayCod ? 'COD' :'Online',
                             TotalAmt:
                               JSON.stringify(this.state.SelectedCouponData) ==
                               "[]"
