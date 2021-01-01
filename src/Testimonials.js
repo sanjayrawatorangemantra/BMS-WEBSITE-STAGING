@@ -57,28 +57,28 @@ class Testimonials extends React.Component {
                     <p class="inner-testimonial-username"><b>{data.fld_name}</b></p>
 
                     {data.fld_rating == 1 ? 
-                                 <p class="testimonial-city">
+                                 <p class="testimonials-city">
                                     <span class="star-rating"><i class="fa fa-star"></i></span>
                                 </p>
                                 :data.fld_rating == 2 ? 
-                                <p class="testimonial-city">
+                                <p class="testimonials-city">
                                  <span class="star-rating"><i class="fa fa-star"></i></span>
                                 <span class="star-rating"><i class="fa fa-star"></i></span>
                                 </p> :
                                 data.fld_rating == 3 ? 
-                                <p class="testimonial-city">
+                                <p class="testimonials-city">
                                       <span class="star-rating"><i class="fa fa-star"></i></span>
                                 <span class="star-rating"><i class="fa fa-star"></i></span>
                                 <span class="star-rating"><i class="fa fa-star"></i></span>
                                 </p> :
                                     data.fld_rating == 4 ? 
-                                    <p class="testimonial-city">
+                                    <p class="testimonials-city">
                                      <span class="star-rating"><i class="fa fa-star"></i></span>
                                 <span class="star-rating"><i class="fa fa-star"></i></span>
                                 <span class="star-rating"><i class="fa fa-star"></i></span>
                                 <span class="star-rating"><i class="fa fa-star"></i></span>
                                     </p> :
-                                       <p class="testimonial-city">
+                                       <p class="testimonials-city">
                                          <span class="star-rating"><i class="fa fa-star"></i></span>
                                 <span class="star-rating"><i class="fa fa-star"></i></span>
                                 <span class="star-rating"><i class="fa fa-star"></i></span>
