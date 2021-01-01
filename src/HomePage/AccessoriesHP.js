@@ -158,7 +158,7 @@ class AccessoriesHP extends Component {
                     <div id="overlay" style={{display : info.fld_availability =='In stock' ? 'none' : ''}}>Out Of Stock</div>
 
                     <img
-                      src={info.Photos.split(',')[0]}
+                      src={info.Photos.split(',')[0]+"/thumbnail"}
                       alt="product"
                       class="footcare-image img-center"
                       onClick={()=>{
