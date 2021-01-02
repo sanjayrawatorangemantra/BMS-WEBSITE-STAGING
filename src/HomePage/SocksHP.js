@@ -273,7 +273,7 @@ class SocksHP extends Component {
                             </div>
 
                             <img
-                              src={info.Photos.split(",")[0]}
+                              src={info.Photos.split(",")[0]+"/thumbnail"}
                               alt="product"
                               class="footcare-image img-center"
                               onClick={() => {

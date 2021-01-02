@@ -71,7 +71,7 @@ class BannerHP extends Component {
     render() {
       const banner = {
         dots: true,
-        infinite: true,
+        infinite: false,
         speed: 500,
         slidesToShow: 1,
         autoplay: true,
