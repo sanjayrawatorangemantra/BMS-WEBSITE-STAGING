@@ -672,7 +672,7 @@ class DiwaliOffersHP extends Component {
 
                             <img
                               class="book-image"
-                              src={info.ProdInfo.Photos.split("#")[0]}
+                              src={info.ProdInfo.Photos.split("#")[0]+"/thumbnail"}
                               onClick={() => {
                              this.OnProductClicked((info))
                               }}
