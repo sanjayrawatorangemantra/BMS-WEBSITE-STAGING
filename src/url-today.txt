@@ -1,0 +1,5 @@
+var data = ['https://bmsbucketforimages.s3.ap-south-1.amazonaws.com/Socks/BMS-DBS-10014-14-0',
+'https://bmsbucketforimages.s3.ap-south-1.amazonaws.com/Socks/BMS-DBS-10017-17-0',
+'https://bmsbucketforimages.s3.ap-south-1.amazonaws.com/Socks/BMS-DBS-10003-3-0',
+'https://bmsbucketforimages.s3.ap-south-1.amazonaws.com/Socks/BMS-DBS-10003-3-3',
+'https://bmsbucketforimages.s3.ap-south-1.amazonaws.com/Socks/BMS-DBS-10003-3-4']

@@ -1,0 +1,27 @@
+USE [bmsdev2]
+GO
+/****** Object:  StoredProcedure [dbo].[UrlGenerate2]    Script Date: 02-01-2021 09:49:34 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER procedure [dbo].[UrlGenerate2]
+
+as begin
+/*
+Select * from [bmsdev2].[dbo].[AccessoriesVariantImage]
+*/
+/*
+Select * from [bmsdev2].[dbo].[CovidEssentialsVariantImage]
+Select * from [bmsdev2].[dbo].[SocksVariantImage]
+Select * from [bmsdev2].[dbo].[FootwearVariantImage](not done)
+[bmsdev2].[dbo].[Article]
+
+*/
+Select * from [bmsdev2].[dbo].[CovidEssentialsVariantImage]
+END
+
+
+
+
+
