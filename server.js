@@ -15,7 +15,7 @@ const urlString = "https://api.beatmysugar.com/BackofficeApi/";
 
 // const urlString = "http://localhost:7000/BackofficeApi/";
 
-// const ImgUrl = 'https://beatmysugar.com/assets/images/BMS-OG.png'
+const ImgUrl = 'https://beatmysugar.com/assets/images/BMS-OG.png'
 
 // const urlString = "https://stagapi.beatmysugar.com/BackofficeApi/";
 

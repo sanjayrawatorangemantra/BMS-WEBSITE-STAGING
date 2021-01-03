@@ -55,7 +55,6 @@ class FootwearHP extends Component {
           }))
           .then((res) => {
             //   console.log(res.data.data)
-  
             this.setState({
               Footwear: res.data.data,
             });
