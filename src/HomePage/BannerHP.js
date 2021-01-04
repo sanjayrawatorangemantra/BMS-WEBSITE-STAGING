@@ -71,7 +71,7 @@ class BannerHP extends Component {
     render() {
       const banner = {
         dots: true,
-        infinite: false,
+        infinite: true,
         speed: 500,
         slidesToShow: 1,
         autoplay: true,
@@ -109,7 +109,7 @@ class BannerHP extends Component {
                   </Slider>
             </div>
 
-            {/* <div class="home-slider-container d-md-none d-sm-block">
+            <div class="home-slider-container d-md-none d-sm-block">
                <Slider {...banner}>
                
                     {this.state.bannerHome&&this.state.bannerHome.map(info=>{
@@ -129,7 +129,7 @@ class BannerHP extends Component {
                   </Slider>
               </div>
          
-          */}
+         
             </div>
 
             </div>
