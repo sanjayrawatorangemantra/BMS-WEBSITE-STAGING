@@ -777,7 +777,7 @@ class Menu extends React.Component {
                                       else if (
                                         this.state.SearchBarCategory[i].fld_page == "search"
                                       ) {
-                                        // localStorage.setItem('SearchText',JSON.stringify(this.state.SearchText))
+                                        localStorage.setItem('SearchText',JSON.stringify(this.state.SearchText))
                                         window.location.href = `/search/${this.state.SearchText.replace(/\W|_/g,"")}`;
                                       } else {
                                         localStorage.setItem(
@@ -912,7 +912,7 @@ class Menu extends React.Component {
                                       this.state.SearchBarCategory[i]
                                         .fld_page == "search"
                                     ) {
-                                      // localStorage.setItem('SearchText',JSON.stringify(this.state.SearchText))
+                                      localStorage.setItem('SearchText',JSON.stringify(this.state.SearchText))
                                       window.location.href = `/search/${this.state.SearchText.replace(/\W|_/g,"")}`;
                                     } else {
                                       localStorage.setItem(
@@ -1198,6 +1198,16 @@ class Menu extends React.Component {
                       </a>{" "}
                     </li>
 
+                     {/* ........Education Module Menu .......... */}
+                     {/* <li class="hvr-overline-from-left">
+                      <a href="/education" class="">
+                        Education
+                        <span class="new-option" >
+                       *New
+                       </span>
+                      </a>
+                    </li> */}
+
                     <li class="hvr-overline-from-left">
                       <a href="javascript: void(0);" class="">
                         Food & Supplements{" "}
@@ -1292,7 +1302,7 @@ class Menu extends React.Component {
                        </span>
                       </a>
                       <ul>
-                        {this.state.CovidCategory.map((cat, index) => (
+                        {Array.isArray(this.state.CovidCategory) && this.state.CovidCategory.map((cat, index) => (
                           <li>
                             <a
                               onClick={() => {
@@ -1321,7 +1331,7 @@ class Menu extends React.Component {
                        </span>
                       </a>
                       <ul>
-                        {this.state.AccessoriesCategory.map((cat, index) => (
+                        { Array.isArray(this.state.AccessoriesCategory) && this.state.AccessoriesCategory.map((cat, index) => (
                           <li>
                             <a
                               onClick={() => {
@@ -1398,6 +1408,7 @@ class Menu extends React.Component {
                         Dietitians
                       </a>
                     </li>
+                   
                  
 
                     {/* <li class="hvr-overline-from-left"><a 
@@ -1467,6 +1478,8 @@ class Menu extends React.Component {
                           if (e.key === "Enter") {
 
                             if(this.state.SearchText!=''){
+                              localStorage.setItem('SearchText',JSON.stringify(this.state.SearchText))
+
                               window.location.href = `/search/${this.state.SearchText.replace(/\W|_/g,"")}`;
                             }
 
@@ -1485,6 +1498,7 @@ class Menu extends React.Component {
                         <button class="search-button-mobile"
                         onClick={()=>{
                           if(this.state.SearchText!=''){
+                                localStorage.setItem('SearchText',JSON.stringify(this.state.SearchText))
                           window.location.href = `/search/${this.state.SearchText.replace(/\W|_/g,"")}`;
                           }
                         }}
@@ -1589,6 +1603,16 @@ class Menu extends React.Component {
                     Health Knowledge
                   </a>{" "}
                 </li>
+
+                 {/* ........Education Module Menu .......... */}
+                 {/* <li class="hvr-overline-from-left">
+                      <a href="/education" class="">
+                        Education
+                        <span class="new-option" >
+                       *New
+                       </span>
+                      </a>
+                    </li> */}
 
                 {/* <li><a href="/allopathy">Allopathy</a></li> */}
 
@@ -1825,7 +1849,7 @@ class Menu extends React.Component {
                     style={{ padding: "0px" }}
                   >
                     <div style={{ padding: "7px 0 9px 20px" }}>
-                      {this.state.CovidCategory.map((cat, index) => (
+                      {Array.isArray(this.state.CovidCategory) && this.state.CovidCategory.map((cat, index) => (
                         <li>
                           <a
                             onClick={() => {
@@ -1905,7 +1929,7 @@ class Menu extends React.Component {
                     style={{ padding: "0px" }}
                   >
                     <div style={{ padding: "7px 0 9px 20px" }}>
-                      {this.state.AccessoriesCategory.map((cat, index) => (
+                      { Array.isArray(this.state.AccessoriesCategory) && this.state.AccessoriesCategory.map((cat, index) => (
                         <li>
                           <a
                             onClick={() => {
@@ -2250,7 +2274,7 @@ class Menu extends React.Component {
                                 this.state.SearchBarCategory[i].fld_page ==
                                 "search"
                               ) {
-                                // localStorage.setItem('SearchText',JSON.stringify(this.state.SearchText))
+                                localStorage.setItem('SearchText',JSON.stringify(this.state.SearchText))
                                 window.location.href = `/search/${this.state.SearchText.replace(/\W|_/g,"")}`;
                               } else {
                                 localStorage.setItem(
@@ -2344,7 +2368,7 @@ class Menu extends React.Component {
                           else if (
                             this.state.SearchBarCategory[i].fld_page == "search"
                           ) {
-                            // localStorage.setItem('SearchText',JSON.stringify(this.state.SearchText))
+                            localStorage.setItem('SearchText',JSON.stringify(this.state.SearchText))
                             window.location.href = `/search/${this.state.SearchText.replace(/\W|_/g,"")}`;
                           } else {
                             localStorage.setItem(

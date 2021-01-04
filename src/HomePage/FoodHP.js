@@ -65,6 +65,7 @@ class FoodHP extends Component {
                 //   dtar.splice(dtar[i])
               }
             }
+            debugger
             console.log(dtar)
             this.setState({
               Food: dtar,
@@ -291,7 +292,7 @@ class FoodHP extends Component {
                             <img
                               class="book-image"
                               src={
-                                info.SelectedVar.split("@")[0].split("$")[1]
+                                info.SelectedVar.split("@")[0].split("$")[1]+"/thumbnail"
                               }
                               onClick={() => {
                                 // console.log(info)

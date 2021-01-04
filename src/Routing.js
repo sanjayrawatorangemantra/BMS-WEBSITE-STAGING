@@ -91,6 +91,14 @@ import AccessoriesDetails from "./AccessoriesDetails";
 import CovidListing from "./CovidListing";
 import CovidDetails from "./CovidDetails";
 import Testimonials from "./Testimonials";
+//.......... Education module ...................//
+import Education from "./Pages/Education";
+import CourseContentMain from './Pages/CourseContent';
+import TopicContentMain from './Pages/TopicNew';
+import Questions from './Pages/Questions';
+import Answers from "./Pages/Answers";
+import Feedback from "./Pages/Feedback";
+import CourseTopicContentMain from './Pages/CourseTopicContent';
 
 class Routing extends Component {
   render() {
@@ -411,6 +419,16 @@ class Routing extends Component {
 
 <Route exact path={"/covidessentials/:id/:category"} component={CovidListing} />
 <Route exact path={"/covidessentials/:category/:covidid/:varid/:covidname"} component={CovidDetails} />
+
+        {/* Education Module */}
+        <Route exact path={"/educationDesign"} component={Education} />
+        <Route exact path={"/education"} component={CourseContentMain} />
+        <Route exact path={"/topicDesign"} component={TopicContentMain} />
+        <Route exact path={"/education-topic"} component={CourseTopicContentMain} />
+        
+        <Route exact path={"/questions"} component={Questions} />
+        <Route exact path={"/answers"} component={Answers} />
+        <Route exact path={"/feedback"} component={Feedback} />
 
       </BrowserRouter>
     );

@@ -50,14 +50,18 @@ class BannerHP extends Component {
         }
         ,"Get_AdBannerWebsite").then(resultdes =>
         resultdes.json().then(obj => {
-          console.log(obj.data)
+          // console.log(obj.data)
           if(obj.data){
             obj.data.map(singledata=>{
-             images.push( singledata.fld_image)
+             images.push(singledata.fld_image)
             })
           }
+          var sortedimages = obj.data.sort((a, b) =>
+            a.fld_order - b.fld_order
+          )
+          // console.log(dtfl)
             this.setState({
-              bannerHome:obj.data,
+              bannerHome:sortedimages,
               images:images
             }) 
           }))
@@ -67,7 +71,7 @@ class BannerHP extends Component {
     render() {
       const banner = {
         dots: true,
-        infinite: true,
+        infinite: false,
         speed: 500,
         slidesToShow: 1,
         autoplay: true,
@@ -84,7 +88,7 @@ class BannerHP extends Component {
          
             <div class="home-slider-container d-none d-sm-none d-md-block">
                   <Slider {...banner}>
-                    {console.log(this.state.bannerHome)}
+           
                     {this.state.bannerHome&&this.state.bannerHome.map(info=>{
                       image.push(info.fld_image)
                     return  <div>
@@ -105,9 +109,9 @@ class BannerHP extends Component {
                   </Slider>
             </div>
 
-            <div class="home-slider-container d-md-none d-sm-block">
+            {/* <div class="home-slider-container d-md-none d-sm-block">
                <Slider {...banner}>
-                    {console.log(this.state.bannerHome)}
+               
                     {this.state.bannerHome&&this.state.bannerHome.map(info=>{
                       image.push(info.fld_mobileimage)
                     return  <div>
@@ -125,7 +129,7 @@ class BannerHP extends Component {
                   </Slider>
               </div>
          
-         
+          */}
             </div>
 
             </div>

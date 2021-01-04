@@ -165,7 +165,7 @@ class PrivacyPolicy extends React.Component {
      <p>13.1.	 In case of non-compliance with rules and regulations, user agreement and privacy policy of the Website, We have the right to immediately terminate the access or usage rights of the Users and remove any non-compliant information.</p>
 
      <p><b>14.	CONTACT INFORMATION</b></p>
-     <p>14.1.	If you have any queries/issues related to this Policy, please contact our Grievance Officer, Akanksha, at wecare@beatmysugar.com.</p>
+     <p>14.1.	If you have any queries/issues related to this Policy, please contact our Grievance Officer, Sukhvinder, at wecare@beatmysugar.com.</p>
 
 
 

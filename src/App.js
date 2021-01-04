@@ -235,7 +235,7 @@ class App extends React.Component {
                               <p class="user-name"> {data.fld_name}</p>
                               <p class="testimonial-city">
                                
-                               {data.fld_rating == 1 ? 
+                               {/* {data.fld_rating == 1 ? 
                                  <p class="testimonial-city">
                                 <i class="fa fa-star" aria-hidden="true" style={{color:'#FF9529'}}></i>
                                 </p>
@@ -264,7 +264,7 @@ class App extends React.Component {
                                        <i class="fa fa-star" aria-hidden="true" style={{color:'#FF9529'}}></i>
                                        <i class="fa fa-star" aria-hidden="true" style={{color:'#FF9529'}}></i>
                                        </p>
-                               }
+                               } */}
                            
                               
                              

@@ -8,7 +8,7 @@ import PostApiCall from "./Api";
 import Notiflix from "notiflix-react";
 import GetApiCall from "./GetApi";
 import moment from "moment";
-
+import imageConfig from './Api/imageApi';
 
 
 class Returnorder extends React.Component {
@@ -31,7 +31,7 @@ class Returnorder extends React.Component {
             ProductUrl : '',
             ProductImageData : [],
             LoginData:[],
-            ImageApiUrl: "https://images.beatmysugar.com/api/Image/SaveImage",
+            ImageApiUrl :imageConfig.ImageApiUrl,
         }
     }
     componentDidMount() {
@@ -95,7 +95,8 @@ class Returnorder extends React.Component {
           PostApiCall.postRequest(
            {
          orderdetailid : this.state.ReturnOrderData.fld_orderdetailid,
-         productphoto : "https://images.beatmysugar.com/images/CustomerReturn/" + res.data.Message.split(",")[2].split("=")[1].trim(),
+         productphoto : res.data.Message.img_url,
+        //  productphoto : "https://images.beatmysugar.com/images/CustomerReturn/" + res.data.Message.split(",")[2].split("=")[1].trim(),
          reasonforreturn : this.state.SelectReturn,
          comment : this.state.Comments,
          returnrequestedon : moment().format("lll"),

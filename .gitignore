@@ -5,7 +5,7 @@
 .pnp.js
 
 # testing
-/coverage
+/coverage 
 
 # misc
 .DS_Store
@@ -17,10 +17,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-<<<<<<< HEAD
+ 
 node_modules/
 .history/
-=======
-node_modules/
->>>>>>> 882ef90a1227eff0a1b430714109d80f487fdaa2
+ 
