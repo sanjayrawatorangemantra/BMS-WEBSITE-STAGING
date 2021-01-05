@@ -90,6 +90,7 @@ import AccessoriesListing from "./AccessoriesListing";
 import AccessoriesDetails from "./AccessoriesDetails";
 import CovidListing from "./CovidListing";
 import CovidDetails from "./CovidDetails";
+import Testimonials from "./Testimonials";
 //.......... Education module ...................//
 import Education from "./Pages/Education";
 import CourseContentMain from './Pages/CourseContent';
@@ -100,7 +101,7 @@ import Feedback from "./Pages/Feedback";
 import CourseTopicContentMain from './Pages/CourseTopicContent';
 import VerifyEducationEmailSuccess from "./VerifyEducationEmailSuccess";
 import EducationTeaser from './Pages/EducationTeaser';
-import Testimonials from "./Testimonials";
+
 
 class Routing extends Component {
   render() {

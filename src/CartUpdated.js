@@ -381,6 +381,9 @@ class CartUpdated extends React.Component
 
 
                                                         Notiflix.Loading.Remove()
+                                                        this.props.setcartitemcount(this.state.Cart.length)
+                                                        this.props.setcartamount(subt)
+                                                        // Notiflix.Loading.Remove()
                                                     }
                                              
                                                 }
@@ -884,6 +887,7 @@ class CartUpdated extends React.Component
 
       for (var k = 0;k <Object.keys(this.state.Cart).length;  k++  ) {
         cc1++
+        cc=0
         for (var j = 0; j < Object.keys(this.state.Cart[k]).length; j++) {
           // console.log(this.state.Cart[i][j].fld_productcategory)
      
@@ -965,6 +969,7 @@ class CartUpdated extends React.Component
 
 
     AllVerticalOfferApplied(i){
+      console.log('All Vertical')
       var gstvl = 0;
       var bse = 0;
       var bsettl = 0;
@@ -975,6 +980,7 @@ class CartUpdated extends React.Component
 
       for (var k = 0;k <Object.keys(this.state.Cart).length;  k++  ) {
         cc1++
+        cc=0
         for (var j = 0; j < Object.keys(this.state.Cart[k]).length; j++) {
           // console.log(this.state.Cart[i][j].fld_productcategory)
      
@@ -989,7 +995,7 @@ class CartUpdated extends React.Component
 
           
        
-          if( cc1 == Object.keys(this.state.Cart).length)
+          if( cc1 == Object.keys(this.state.Cart).length  && cc==Object.keys(this.state.Cart[k]).length)
           {
           // console.log(gstvl)
           if (ttl >=this.state.OfferData[i].fld_minimumamount && (ttl<=this.state.OfferData[i].fld_maximumamount || this.state.OfferData[i].fld_maximumamount == 0)) {
@@ -1038,6 +1044,7 @@ class CartUpdated extends React.Component
 
 
     AllFoodOfferApplied(i){
+     
       var gstvl = 0;
       var bse = 0;
       var bsettl = 0;
@@ -1048,6 +1055,7 @@ class CartUpdated extends React.Component
 
       for (var k = 0;k <Object.keys(this.state.Cart).length;  k++  ) {
         cc1++
+        cc=0
         for (var j = 0; j < Object.keys(this.state.Cart[k]).length; j++) {
           // console.log(this.state.Cart[i][j].fld_productcategory)
           if(this.state.Cart[k][j].fld_productcategory == 'Food'){
@@ -1074,7 +1082,7 @@ class CartUpdated extends React.Component
 
           
        
-          if( cc1 == Object.keys(this.state.Cart).length)
+          if( cc1 == Object.keys(this.state.Cart).length && cc==Object.keys(this.state.Cart[k]).length)
           {
           // console.log(gstvl)
           if (ttl >=this.state.OfferData[i].fld_minimumamount && (ttl<=this.state.OfferData[i].fld_maximumamount || this.state.OfferData[i].fld_maximumamount == 0) ) {
@@ -1126,6 +1134,7 @@ class CartUpdated extends React.Component
 
       for (var k = 0;k <Object.keys(this.state.Cart).length;  k++  ) {
         cc1++
+        cc=0
         for (var j = 0; j < Object.keys(this.state.Cart[k]).length; j++) {
           // console.log(this.state.Cart[i][j].fld_productcategory)
           if(this.state.Cart[k][j].fld_productcategory == 'Footwear'){
@@ -1152,7 +1161,7 @@ class CartUpdated extends React.Component
 
           
        
-          if( cc1 == Object.keys(this.state.Cart).length)
+          if( cc1 == Object.keys(this.state.Cart).length && cc==Object.keys(this.state.Cart[k]).length)
           {
           console.log(gstvl)
           if (ttl >=this.state.OfferData[i].fld_minimumamount && (ttl<=this.state.OfferData[i].fld_maximumamount || this.state.OfferData[i].fld_maximumamount == 0)) {
@@ -1203,6 +1212,7 @@ class CartUpdated extends React.Component
 
       for (var k = 0;k <Object.keys(this.state.Cart).length;  k++  ) {
         cc1++
+        cc=0
         for (var j = 0; j < Object.keys(this.state.Cart[k]).length; j++) {
           // console.log(this.state.Cart[i][j].fld_productcategory)
           if(this.state.Cart[k][j].fld_productcategory == 'Socks'){
@@ -1229,7 +1239,7 @@ class CartUpdated extends React.Component
 
           
        
-          if( cc1 == Object.keys(this.state.Cart).length)
+          if( cc1 == Object.keys(this.state.Cart).length && cc==Object.keys(this.state.Cart[k]).length)
           {
           console.log(gstvl)
           if (ttl >=this.state.OfferData[i].fld_minimumamount && (ttl<=this.state.OfferData[i].fld_maximumamount || this.state.OfferData[i].fld_maximumamount == 0)) {
@@ -1281,6 +1291,7 @@ class CartUpdated extends React.Component
 
       for (var k = 0;k <Object.keys(this.state.Cart).length;  k++  ) {
         cc1++
+        cc=0
         for (var j = 0; j < Object.keys(this.state.Cart[k]).length; j++) {
           // console.log(this.state.Cart[i][j].fld_productcategory)
           if(this.state.Cart[k][j].fld_productcategory == 'Covid'){
@@ -1307,7 +1318,7 @@ class CartUpdated extends React.Component
 
           
        
-          if( cc1 == Object.keys(this.state.Cart).length)
+          if( cc1 == Object.keys(this.state.Cart).length && cc==Object.keys(this.state.Cart[k]).length)
           {
           console.log(gstvl)
           if (ttl >=this.state.OfferData[i].fld_minimumamount && (ttl<=this.state.OfferData[i].fld_maximumamount || this.state.OfferData[i].fld_maximumamount == 0)) {
@@ -1358,6 +1369,7 @@ class CartUpdated extends React.Component
 
       for (var k = 0;k <Object.keys(this.state.Cart).length;  k++  ) {
         cc1++
+        cc=0
         for (var j = 0; j < Object.keys(this.state.Cart[k]).length; j++) {
           // console.log(this.state.Cart[i][j].fld_productcategory)
           if(this.state.Cart[k][j].fld_productcategory == 'Accessories'){
@@ -1384,7 +1396,7 @@ class CartUpdated extends React.Component
 
           
        
-          if( cc1 == Object.keys(this.state.Cart).length)
+          if( cc1 == Object.keys(this.state.Cart).length && cc==Object.keys(this.state.Cart[k]).length)
           {
           console.log(gstvl)
           if (ttl >=this.state.OfferData[i].fld_minimumamount && (ttl<=this.state.OfferData[i].fld_maximumamount || this.state.OfferData[i].fld_maximumamount == 0)) {
@@ -1435,6 +1447,7 @@ class CartUpdated extends React.Component
 
       for (var k = 0;k <Object.keys(this.state.Cart).length;  k++  ) {
         cc1++
+        cc=0
         for (var j = 0; j < Object.keys(this.state.Cart[k]).length; j++) {
           // console.log(this.state.Cart[i][j].fld_productcategory)
           if(this.state.Cart[k][j].fld_productcategory == 'Books'){
@@ -1461,7 +1474,7 @@ class CartUpdated extends React.Component
 
           
        
-          if( cc1 == Object.keys(this.state.Cart).length)
+          if( cc1 == Object.keys(this.state.Cart).length && cc==Object.keys(this.state.Cart[k]).length)
           {
           console.log(gstvl)
           if (ttl >=this.state.OfferData[i].fld_minimumamount && (ttl<=this.state.OfferData[i].fld_maximumamount || this.state.OfferData[i].fld_maximumamount == 0)) {
@@ -1512,6 +1525,7 @@ class CartUpdated extends React.Component
 
       for (var k = 0;k <Object.keys(this.state.Cart).length;  k++  ) {
         cc1++
+        cc=0
         for (var j = 0; j < Object.keys(this.state.Cart[k]).length; j++) {
           // console.log(this.state.Cart[i][j].fld_productcategory)
           if(this.state.Cart[k][j].fld_productcategory == 'Food' && this.state.Cart[k][j].fld_category == this.state.OfferData[i].fld_categoryname){
@@ -1538,7 +1552,7 @@ class CartUpdated extends React.Component
 
           
        
-          if( cc1 == Object.keys(this.state.Cart).length)
+          if( cc1 == Object.keys(this.state.Cart).length && cc==Object.keys(this.state.Cart[k]).length)
           {
           // console.log(gstvl)
           if (ttl >=this.state.OfferData[i].fld_minimumamount && (ttl<=this.state.OfferData[i].fld_maximumamount || this.state.OfferData[i].fld_maximumamount == 0) ) {
@@ -1590,6 +1604,7 @@ class CartUpdated extends React.Component
 
       for (var k = 0;k <Object.keys(this.state.Cart).length;  k++  ) {
         cc1++
+        cc=0
         for (var j = 0; j < Object.keys(this.state.Cart[k]).length; j++) {
           // console.log(this.state.Cart[i][j].fld_productcategory)
           if(this.state.Cart[k][j].fld_productcategory == 'Covid' && this.state.Cart[k][j].fld_category == this.state.OfferData[i].fld_categoryname){
@@ -1616,7 +1631,7 @@ class CartUpdated extends React.Component
 
           
        
-          if( cc1 == Object.keys(this.state.Cart).length)
+          if( cc1 == Object.keys(this.state.Cart).length && cc==Object.keys(this.state.Cart[k]).length)
           {
           console.log(gstvl)
           if (ttl >=this.state.OfferData[i].fld_minimumamount && (ttl<=this.state.OfferData[i].fld_maximumamount || this.state.OfferData[i].fld_maximumamount == 0)) {
@@ -1668,6 +1683,7 @@ class CartUpdated extends React.Component
 
       for (var k = 0;k <Object.keys(this.state.Cart).length;  k++  ) {
         cc1++
+        cc=0
         for (var j = 0; j < Object.keys(this.state.Cart[k]).length; j++) {
           // console.log(this.state.Cart[i][j].fld_productcategory)
           if(this.state.Cart[k][j].fld_productcategory == 'Accessories'&& this.state.Cart[k][j].fld_category == this.state.OfferData[i].fld_categoryname){
@@ -1694,7 +1710,7 @@ class CartUpdated extends React.Component
 
           
        
-          if( cc1 == Object.keys(this.state.Cart).length)
+          if( cc1 == Object.keys(this.state.Cart).length && cc==Object.keys(this.state.Cart[k]).length)
           {
           console.log(gstvl)
           if (ttl >=this.state.OfferData[i].fld_minimumamount && (ttl<=this.state.OfferData[i].fld_maximumamount || this.state.OfferData[i].fld_maximumamount == 0)) {
@@ -1745,6 +1761,7 @@ class CartUpdated extends React.Component
 
       for (var k = 0;k <Object.keys(this.state.Cart).length;  k++  ) {
         cc1++
+        cc=0
         for (var j = 0; j < Object.keys(this.state.Cart[k]).length; j++) {
           // console.log(this.state.Cart[i][j].fld_productcategory)
           if(this.state.Cart[k][j].fld_productcategory == 'Books'&& this.state.Cart[k][j].fld_category == this.state.OfferData[i].fld_categoryname){
@@ -1771,7 +1788,7 @@ class CartUpdated extends React.Component
 
           
        
-          if( cc1 == Object.keys(this.state.Cart).length)
+          if( cc1 == Object.keys(this.state.Cart).length && cc==Object.keys(this.state.Cart[k]).length)
           {
           console.log(gstvl)
           if (ttl >=this.state.OfferData[i].fld_minimumamount && (ttl<=this.state.OfferData[i].fld_maximumamount || this.state.OfferData[i].fld_maximumamount == 0)) {
@@ -1882,11 +1899,13 @@ class CartUpdated extends React.Component
             })
           }
 
-          // console.log(this.state.OfferData[i].fld_vertical)
+          console.log(this.state.OfferData[i].fld_vertical)
 
           if(this.state.OfferData[i].fld_vertical != 'All'){
 
             if(this.state.OfferData[i].fld_vertical == 'Food'){
+
+              
 
               if(this.state.OfferData[i].fld_categoryid == 0){
 
@@ -1912,6 +1931,8 @@ class CartUpdated extends React.Component
               this.AllSocksOfferApplied(i)
           
 
+                             
+                                  Notiflix.Loading.Remove()
 
             }else if(this.state.OfferData[i].fld_vertical == 'Books'){
 

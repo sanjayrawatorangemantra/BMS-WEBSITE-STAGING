@@ -70,6 +70,7 @@ class FoodHP extends Component {
                 //   dtar.splice(dtar[i])
               }
             }
+            debugger
             console.log(dtar)
             sessionStorage.setItem('bms-home-food-api', JSON.stringify(dtar));
             this.setState({
@@ -299,7 +300,7 @@ class FoodHP extends Component {
                             <img
                               class="book-image"
                               src={
-                                info.SelectedVar.split("@")[0].split("$")[1]
+                                info.SelectedVar.split("@")[0].split("$")[1]+"/thumbnail"
                               }
                               onClick={() => {
                                 // console.log(info)

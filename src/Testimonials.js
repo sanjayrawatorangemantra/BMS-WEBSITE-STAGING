@@ -56,8 +56,8 @@ class Testimonials extends React.Component {
                     <p class="inner-testimonial-text">{data.fld_feedback}</p>
                     <p class="inner-testimonial-username"><b>{data.fld_name}</b></p>
 
-                    {data.fld_rating == 1 ? 
-                                 <p class="testimonials-city">
+                    {/* {data.fld_rating == 1 ? 
+                                 <p class="testimonial-city">
                                     <span class="star-rating"><i class="fa fa-star"></i></span>
                                 </p>
                                 :data.fld_rating == 2 ? 
@@ -85,7 +85,7 @@ class Testimonials extends React.Component {
                                 <span class="star-rating"><i class="fa fa-star"></i></span>
                                 <span class="star-rating"><i class="fa fa-star"></i></span>
                                        </p>
-                               }
+                               } */}
 
                              
                             </div>

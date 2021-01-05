@@ -30,8 +30,10 @@ class Orderplace extends React.Component {
       UrlRegex: /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/,
 
       TxnId: "",
-      MerKey: "4dl2G3",
-      MerSalt: "Y8YsVhof",
+      // MerKey: "4dl2G3",
+      // MerSalt: "Y8YsVhof",
+      MerKey:"a6JOJL",
+      MerSalt:"cri53U9i",
       CustomerLoginData: [],
       CustomerHash: "",
 
@@ -1007,7 +1009,7 @@ class Orderplace extends React.Component {
               </table>
             </div>
             <form
-              action="https://secure.payu.in/_payment"
+              action="https://test.payu.in/_payment"
               id="payment_form"
               method="Post"
             >
@@ -1018,19 +1020,19 @@ class Orderplace extends React.Component {
                   type="hidden"
                   id="surl"
                   name="surl"
-                  value="https://api.beatmysugar.com/BackofficeApi/Response"
+                  value="https://stagapi.beatmysugar.com/BackofficeApi/Response"
                 />
                 <input
                   type="hidden"
                   id="furl"
                   name="furl"
-                  value="https://api.beatmysugar.com/BackofficeApi/Response"
+                  value="https://stagapi.beatmysugar.com/BackofficeApi/Response"
                 />
                 <input
                   type="hidden"
                   id="curl"
                   name="curl"
-                  value="https://api.beatmysugar.com/BackofficeApi/Response"
+                  value="https://stagapi.beatmysugar.com/BackofficeApi/Response"
                 />
                 <input
                   type="hidden"
