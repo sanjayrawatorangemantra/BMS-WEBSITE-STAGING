@@ -16,7 +16,7 @@ const axios = require('axios')
 
 const ImgUrl = 'https://beatmysugar.com/assets/images/BMS-OG.png'
 
-// const urlString = "https://stagapi.beatmysugar.com/BackofficeApi/";
+const urlString = "https://stagapi.beatmysugar.com/BackofficeApi/";
 
 // var urlString = "http://localhost:8080/BackofficeApi/";
 
