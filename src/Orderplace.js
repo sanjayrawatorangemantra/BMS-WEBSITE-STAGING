@@ -52,6 +52,7 @@ class Orderplace extends React.Component {
     var BillingAddress = JSON.parse(
       localStorage.getItem("CustomerBillingAddress")
     );
+    // console.log(OfferData)
 
     this.setState({
       ShippingAddress: ShippingAddress,
@@ -132,7 +133,7 @@ class Orderplace extends React.Component {
 
     PostApiCall.postRequest(
       {
-        offerid: this.state.OfferData.fld_offerid,
+        offerid: this.state.OfferData.fld_newofferid,
         offeramount: this.state.SummaryData.OfferAmt,
         offerpercent: this.state.SummaryData.OfferPercent,
         shippingcharges: this.state.SummaryData.ShippngAmt,
