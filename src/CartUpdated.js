@@ -1960,6 +1960,7 @@ for (var k = 0;k <Object.keys(this.state.Cart).length;  k++  ) {
       // Offer :  bsettl * (dt.fld_discount / 100),
       Offer :  bsettl * (dt.fld_discount / 100) > this.state.UniquePromo[i].fld_maximumdiscountprice && this.state.UniquePromo[i].fld_maximumdiscountprice > 0 ? this.state.UniquePromo[i].fld_maximumdiscountprice : bsettl * (dt.fld_discount / 100),
       BaseSubTotalForOffer : parseFloat(bsettl).toFixed(2),
+      UniquePromoCodeType:this.state.Couponcode
     });
     Notiflix.Report.Success(
       "Congratulations!",
@@ -3367,6 +3368,11 @@ for (var k = 0;k <Object.keys(this.state.Cart).length;  k++  ) {
                           localStorage.setItem(
                             "SummaryData",
                             JSON.stringify(SummaryData)
+                          );
+
+                          localStorage.setItem(
+                            "UniqueData",
+                            JSON.stringify(this.state.UniquePromoCodeType)
                           );
 
                           // console.log(SummaryData)
