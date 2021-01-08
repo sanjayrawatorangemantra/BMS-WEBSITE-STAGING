@@ -1474,11 +1474,11 @@ class Menu extends React.Component {
                         Dietitians
                       </a>
                     </li>
-                    <li class="hvr-overline-from-left">
+                    {/* <li class="hvr-overline-from-left">
                       <a onClick={()=>{this.goto1mg() }} class="">
                         1mg
                       </a>
-                    </li>
+                    </li> */}
                  
 
                     {/* <li class="hvr-overline-from-left"><a 
@@ -2074,11 +2074,11 @@ class Menu extends React.Component {
                     Dietitians
                   </a>
                 </li>
-                <li class="hvr-overline-from-left">
+                {/* <li class="hvr-overline-from-left">
                   <a onClick={()=>{this.goto1mg() }} class="">
                     1mg
                   </a>
-                </li>
+                </li> */}
                 {/* 
                 <li class="hvr-overline-from-left" style={{borderTop:"1px solid  #e6e6e6"}}>
                   <a href="/Login" class="">
