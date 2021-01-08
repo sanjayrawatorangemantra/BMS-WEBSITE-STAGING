@@ -1265,14 +1265,14 @@ class Menu extends React.Component {
                     </li>
 
                      {/* ........Education Module Menu .......... */}
-                     <li class="hvr-overline-from-left">
+                     {/* <li class="hvr-overline-from-left">
                       <Link to="/education-teaser" class="">
                         Education
                         <span class="new-option" >
                        *New
                        </span>
                       </Link>
-                    </li>
+                    </li> */}
 
                     <li class="hvr-overline-from-left">
                       <a href="javascript: void(0);" class="">
@@ -1675,14 +1675,14 @@ class Menu extends React.Component {
                 </li>
 
                  {/* ........Education Module Menu .......... */}
-                 <li class="hvr-overline-from-left">
+                 {/* <li class="hvr-overline-from-left">
                       <Link to="/education-teaser" class="">
                         Education
                         <span class="new-option" >
                        *New
                        </span>
                       </Link>
-                    </li>
+                    </li> */}
 
                 {/* <li><a href="/allopathy">Allopathy</a></li> */}
 
