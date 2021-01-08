@@ -1172,26 +1172,3 @@ outline: none;
   background-color: #c1daff!important;
 }
 
-.col-md-12-sec table td {
-  width: 50%;
-}
-
-.col-md-12-sec table td:last-child {
-  text-align: right;
-}
-
-.col-md-12-sec table td:last-child img {
-  display: inline-block;
-}
-
-.col-md-12-sec table {
-  border: none;
-  border-color: transparent;
-}
-
-@media only screen and (max-width:768px){
- .col-md-12-sec table td{
-     width:100%;
-     display:block;
- }
-}
