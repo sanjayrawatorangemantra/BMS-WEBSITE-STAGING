@@ -264,7 +264,7 @@ goToNextChapterTopic=()=>{
                                       <a href="/education"><i class="fa fa-home" aria-hidden="true"></i></a>
                                     </div>
                                       <h3 class="panel-title">Chapter Module {current_chapter_index+1} : { current_chapter_data.fld_title }</h3>
-                                      <p><span class="topic">{ this.ordinal_suffix_of( current_topic_index + 1 ) }  Topic</span>  <span class="length"></span></p>
+                                      {/* <p><span class="topic">{ this.ordinal_suffix_of( current_topic_index + 1 ) }  Topic</span>  <span class="length"></span></p> */}
                                       <p class="coloredsec">{Topic_Details.fld_title}</p>
                                     <div class="course-details-disc">
                                    

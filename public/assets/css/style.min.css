@@ -55,9 +55,7 @@
 }
 
 
-<<<<<<< HEAD
 
-=======
 .testimonial-img
 {
   width:65px;
@@ -139,8 +137,8 @@ outline: none;
 }
 
 .react-responsive-modal-closeButton{
-  background-color: #c1daff!important;
->>>>>>> production_update
+  background-color: #c1daff!important;}
+  
 img.new-option{width:15px;display:inline-block}
 .new-option
 {
@@ -1016,4 +1014,161 @@ button:focus{
   top: 10px;
   right: 20px;
 }
+
 }
+@media only screen and (max-width:575px){
+  .navlinks{
+    flex-wrap: nowrap;
+  }
+  .prev{
+    font-size: 13px;
+    padding: 7px 20px;
+  }
+  .navlinkbutton button{
+    font-size:14px;
+  }
+  .quiz-form.text-light .activelinksubmit, .feedback-section .submitbtn .activelinksubmit{
+    font-size: 14px;
+    line-height: initial;
+  }
+  .question-btn{
+    align-items: center;
+  }
+  .prevquestion {
+    margin-right: 5px;
+}
+.correctcomment, .wrongcomment {
+  top: -12px;
+  right: -10px;
+}
+.quiz-form.text-light .form-check .answers{
+  padding:10px 0;
+  font-size:16px;
+}
+
+}
+
+.panel.panel-default:last-child {
+  border-bottom: 0px;
+}
+
+.navlinkbutton  button {
+  -webkit-box-shadow: -1px 1px 6px 2px rgba(80,125,190,0.47); 
+  box-shadow: -1px 1px 6px 2px rgba(80,125,190,0.47);
+}
+ .prevquestion button {
+  -webkit-box-shadow: -1px 1px 6px 2px rgb(162 162 162 / 47%);; 
+  box-shadow: -1px 1px 6px 2px rgb(162 162 162 / 47%);;
+}
+.navlinkbutton  button span img{
+  animation: slide1 1s ease-in-out infinite;
+}
+@keyframes slide1 {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(10px, 0);
+  }
+}
+.question-btn {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px 0;
+}
+.question-btn .submitbtn {
+  padding: 0px !important;
+}
+.question-btn .submitbtn span img{
+  width: auto !important;
+  animation: slide1 1s ease-in-out infinite;
+}
+.answers.prans {
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+}
+.testimonial-img
+{
+  width:65px;
+  height:65px;
+  margin-right:auto;
+  margin-left:auto;
+  border-radius: 50%;
+}
+.testimonials-section
+{
+  background:#fff;
+  padding:30px 30px; 
+  margin-top:40px;
+}
+.inner-testimonials-img
+{
+ 
+
+  border-radius:50%;
+ 
+}
+.inner-testimonial-text
+{
+  color: #757575;
+    font: 500 15px/1.35 Rajdhani, Helvetica Neue, Verdana, Arial, sans-serif;
+}
+.inner-testimonial-username
+{
+  margin-bottom:-2px;
+  font: 600 15px/1.35 Rajdhani, Helvetica Neue, Verdana, Arial, sans-serif;
+}
+.star-rating 
+{
+  color:#FF9529;
+}
+.testimonial-inner
+{
+  padding: 10px;
+  padding-bottom: 20px;
+  /* border-bottom: 1px dashed #f2f2f2; */
+  padding-top:20px;
+}
+
+.testimonial1
+{
+  padding: 10px;
+  padding-bottom: 20px;
+  border-bottom: 1px dashed #f2f2f2;
+  padding-top:20px;
+}
+.testimonial-title
+{
+  padding:0 20px;
+  margin-top:0px;
+}
+
+.modelcontent2 {
+  /* width: 50%!important; */
+  margin-top: 0px!important;
+    margin-bottom: 0px!important;
+    border-radius: 10px;
+    border: 0;
+}
+.modal-header{
+  background:#507dc0;
+  
+}
+.react-responsive-modal-modal{
+  background: inherit!important;
+  padding: 0!important;
+  box-shadow: none!important;
+  
+}
+
+.react-responsive-modal-closeButton:focus{
+outline: none;
+}
+
+.react-responsive-modal-closeButton{
+  background-color: #c1daff!important;
+}
+
