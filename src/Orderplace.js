@@ -32,8 +32,8 @@ class Orderplace extends React.Component {
       TxnId: "",
       // MerKey: "4dl2G3",
       // MerSalt: "Y8YsVhof",
-      MerKey:"gtKFFx",
-      MerSalt:"eCwWELxi",
+      MerKey:"a6JOJL",
+      MerSalt:"cri53U9i",
       CustomerLoginData: [],
       CustomerHash: "",
 
@@ -1020,19 +1020,19 @@ class Orderplace extends React.Component {
                   type="hidden"
                   id="surl"
                   name="surl"
-                  value="https://apidemo.beatmysugar.com/BackofficeApi/Response"
+                  value="https://stagapi.beatmysugar.com/BackofficeApi/Response"
                 />
                 <input
                   type="hidden"
                   id="furl"
                   name="furl"
-                  value="https://apidemo.beatmysugar.com/BackofficeApi/Response"
+                  value="https://stagapi.beatmysugar.com/BackofficeApi/Response"
                 />
                 <input
                   type="hidden"
                   id="curl"
                   name="curl"
-                  value="https://apidemo.beatmysugar.com/BackofficeApi/Response"
+                  value="https://stagapi.beatmysugar.com/BackofficeApi/Response"
                 />
                 <input
                   type="hidden"
