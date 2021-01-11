@@ -37,7 +37,7 @@ class Orderplace extends React.Component {
       CustomerLoginData: [],
       CustomerHash: "",
 
-
+      UniqueDataCode:'',
       BankOffer : []
     };
   }
@@ -54,12 +54,16 @@ class Orderplace extends React.Component {
     var BillingAddress = JSON.parse(
       localStorage.getItem("CustomerBillingAddress")
     );
+    
+    var UniqueDataCode=JSON.parse(localStorage.getItem("UniqueData"))
+
 
     this.setState({
       ShippingAddress: ShippingAddress,
       BillingAddress: BillingAddress,
       SummaryData: SummaryData,
       OfferData: OfferData,
+      UniqueDataCode:UniqueDataCode
     });
 
     var crdt = [];
@@ -118,7 +122,7 @@ class Orderplace extends React.Component {
             },
             () => {
               // Notiflix.Loading.Remove();
-              this.PlaceOrder();
+              this.PlaceOrder(uniquecode);
             }
           );
         }
@@ -126,7 +130,7 @@ class Orderplace extends React.Component {
     );
   }
 
-  PlaceOrder() {
+  PlaceOrder(uniquecode) {
     var log = localStorage.getItem("CustomerLoginDetails");
     var login = JSON.parse(log);
 
@@ -134,7 +138,7 @@ class Orderplace extends React.Component {
 
     PostApiCall.postRequest(
       {
-        offerid: this.state.OfferData.fld_offerid,
+        offerid: this.state.OfferData.fld_newofferid,
         offeramount: this.state.SummaryData.OfferAmt,
         offerpercent: this.state.SummaryData.OfferPercent,
         shippingcharges: this.state.SummaryData.ShippngAmt,
@@ -168,7 +172,7 @@ class Orderplace extends React.Component {
         billingpincode: this.state.BillingAddress.fld_pincode,
         billingmobile: this.state.BillingAddress.fld_mobile,
         txnid: this.state.TxnId,
-        offercode: this.state.SummaryData.OfferCode,
+        offercode: uniquecode||this.state.OfferData.fld_code,
         yousave: this.state.SummaryData.YouSaved,
       },
       "AddOrder"

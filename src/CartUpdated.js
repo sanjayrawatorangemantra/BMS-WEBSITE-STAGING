@@ -119,6 +119,69 @@ class CartUpdated extends React.Component
               );
 
 
+              // -----------UniquePromoCode===================
+              
+    GetApiCall.getRequest("GetCodMaster").then((resultdes) =>
+    resultdes.json().then((obj) => {
+      // console.log(obj.data)
+      this.setState({
+        CodMasterData: obj.data[0],
+        COD: obj.data[0].fld_amount,
+      });
+    })
+  );
+
+  GetApiCall.getRequest("Get_UniquePromoCodeList_website").then((resultdes) =>
+  resultdes.json().then((obj) => {
+
+    var newpro = [...obj.data]
+
+    this.setState({
+      UniquePromo: obj.data,
+     
+    });
+    for(var i=0;i<obj.data.length;i++){
+    
+
+      newpro[i].UOfferCodes = []
+
+      PostApiCall.postRequest(
+        {
+          id: obj.data[i].fld_promocodeid,
+        },
+        "Get_UniquePromoCouponList_website"
+      ).then((results1) =>
+        results1.json().then((obj1) => {
+          if (results1.status == 200 || results1.status == 201) {
+  
+
+            
+       for(var j=0;j<obj.data.length;j++){
+         if(obj1.data[0]!=undefined){
+         if(obj.data[j].fld_promocodeid == obj1.data[0].fld_couponid){
+          
+
+          newpro[j].UOfferCodes = obj1.data
+         }
+        }
+       }
+            
+          //  console.log(newpro)
+            this.setState({
+             UniqueData: obj1.data,
+         
+             UniquePromo : newpro
+            });
+           
+          }
+        }))
+
+    }
+  })
+);
+
+
+
 
               var log = localStorage.getItem("CustomerLoginDetails");
               var login = JSON.parse(log);
@@ -1163,7 +1226,7 @@ class CartUpdated extends React.Component
        
           if( cc1 == Object.keys(this.state.Cart).length && cc==Object.keys(this.state.Cart[k]).length)
           {
-          console.log(gstvl)
+          // console.log(gstvl)
           if (ttl >=this.state.OfferData[i].fld_minimumamount && (ttl<=this.state.OfferData[i].fld_maximumamount || this.state.OfferData[i].fld_maximumamount == 0)) {
             this.setState({
               SelectedCouponData: this.state.OfferData[i],
@@ -1828,6 +1891,153 @@ class CartUpdated extends React.Component
       }
     }
 
+
+    
+  applyuniquecode(){
+
+
+    var cncf = 0
+    var cncf2 = 0
+    var found = 0
+
+    for (var i = 0;i < this.state.UniquePromo.length;i++) {
+
+      cncf2++
+      cncf = 0
+      for (var s = 0;s < this.state.UniquePromo[i].UOfferCodes.length;s++) {
+
+        if(this.state.UniquePromo[i].UOfferCodes[s].fld_code == this.state.Couponcode)
+        {
+          cncf ++
+          found = 1
+
+    
+
+            var ont = this.state.CustomerPrevOrders.find(val=> this.state.UniquePromo[i].UOfferCodes[s].fld_code != null &&  val.fld_offercode == this.state.UniquePromo[i].UOfferCodes[s].fld_code)
+  
+            if(ont != undefined || ont){
+  
+              Notiflix.Notify.Failure('Offer can be applied to once.')
+              // return; 
+              
+  
+            }else
+            {
+
+
+var gstvl = 0;
+var bse = 0;
+var bsettl = 0;
+var ttl = 0;
+var cc = 0
+var cc1 = 0
+var dt = this.state.UniquePromo[i]
+
+for (var k = 0;k <Object.keys(this.state.Cart).length;  k++  ) {
+  cc1++
+  cc=0
+  for (var j = 0; j < Object.keys(this.state.Cart[k]).length; j++) {
+
+
+      bse = (this.state.Cart[k][j].fld_discountprice /(1 +this.state.Cart[k][j].fld_gstpercent / 100)) *this.state.Cart[k][j].fld_quantity;
+      bsettl = bsettl + bse
+      gstvl =gstvl +(bse -(bse * dt.fld_discount) /100) *(this.state.Cart[k][j].fld_gstpercent /100);
+
+      ttl = ttl + this.state.Cart[k][j].fld_discountprice*this.state.Cart[k][j].fld_quantity
+
+      cc++
+  
+    if(cc1 == Object.keys(this.state.Cart).length && cc==Object.keys(this.state.Cart[k]).length)
+    {
+    if (ttl >=this.state.UniquePromo[i].fld_minimumamount && (ttl<=this.state.UniquePromo[i].fld_maximumamount || this.state.UniquePromo[i].fld_maximumamount == 0)) {
+
+      if(moment().format() >= moment(this.state.UniquePromo[i].fld_startdate).format() && moment().format() <= moment(this.state.UniquePromo[i].fld_enddate).format()){
+
+      this.setState({
+        SelectedCouponData: this.state.UniquePromo[i],
+      });
+    
+
+    this.setState({
+      GstValue: gstvl,
+      // Offer :  bsettl * (dt.fld_discount / 100),
+      Offer :  bsettl * (dt.fld_discount / 100) > this.state.UniquePromo[i].fld_maximumdiscountprice && this.state.UniquePromo[i].fld_maximumdiscountprice > 0 ? this.state.UniquePromo[i].fld_maximumdiscountprice : bsettl * (dt.fld_discount / 100),
+      BaseSubTotalForOffer : parseFloat(bsettl).toFixed(2),
+      UniquePromoCodeType:this.state.Couponcode
+    });
+    Notiflix.Report.Success(
+      "Congratulations!",
+      "You" + "'" + "ve got a discount.",
+      "Ok"
+    );
+    this.setState({
+      showoffer: false,
+    });
+
+  }else
+  {
+
+    this.setState({
+      showoffer: false,
+    });
+    
+    Notiflix.Report.Failure(
+      "Oops!",
+      "Offer got expired, please enter a valid offer code.",
+      "Ok"
+    );
+
+  }
+
+  }else{
+
+    this.setState({
+      showoffer: false,
+    });
+
+    Notiflix.Report.Failure(
+      "Oops!",
+      "Offer can only be applied above ₹" +
+      this.state.UniquePromo[i].fld_minimumamount +
+         " and below ₹"+this.state.UniquePromo[i].fld_maximumamount+".",
+        ".",
+      "Ok"
+    );
+  }
+}
+
+   
+  }
+}
+
+
+
+            }
+  
+    
+
+
+        }
+        else{
+ 
+      cncf++
+     
+      if(cncf == this.state.UniquePromo[i].UOfferCodes.length && cncf2 == this.state.UniquePromo.length)
+      {
+        if(found == 0){
+          Notiflix.Notify.Failure('Offer code invalid.')
+        }
+
+      }
+    
+    }
+
+      }
+
+    }
+  }
+
+
   ApplyOfferFunction(){
 
     // console.log(this.state.Couponcode)
@@ -1837,6 +2047,10 @@ class CartUpdated extends React.Component
 
   var cncf = 0
   var found = 0
+
+  
+  if(this.state.OfferData.length>0)
+  {
 
     for (var i = 0;i < this.state.OfferData.length;i++) {
     
@@ -1982,13 +2196,19 @@ class CartUpdated extends React.Component
         }
       
       }
-    }else
+    }
+    else
     {
+    
+     
+
       cncf++
       if(cncf == this.state.OfferData.length)
       {
         if(found == 0){
-          Notiflix.Notify.Failure('Offer code invalid.')
+
+
+          this.applyuniquecode()
         }
 
       }
@@ -1998,6 +2218,12 @@ class CartUpdated extends React.Component
 
   
     }
+  }
+  else
+  {
+    this.applyuniquecode()
+  }
+      count = count + 1;
 
   }
 
@@ -3147,6 +3373,11 @@ class CartUpdated extends React.Component
                           localStorage.setItem(
                             "SummaryData",
                             JSON.stringify(SummaryData)
+                          );
+
+                          localStorage.setItem(
+                            "UniqueData",
+                            JSON.stringify(this.state.UniquePromoCodeType)
                           );
 
                           // console.log(SummaryData)
