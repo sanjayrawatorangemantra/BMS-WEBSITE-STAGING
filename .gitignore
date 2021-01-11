@@ -5,8 +5,12 @@
 .pnp.js
 
 # testing
+<<<<<<< HEAD
 
 /coverage 
+=======
+/coverage
+>>>>>>> ab10712fe23151fdd17186791af72507998425a7
 
 # misc
 .DS_Store
@@ -19,5 +23,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+<<<<<<< HEAD
 node_modules/
 .history/
+=======
+node_modules/
+>>>>>>> ab10712fe23151fdd17186791af72507998425a7
