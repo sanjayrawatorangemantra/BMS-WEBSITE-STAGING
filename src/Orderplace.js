@@ -122,7 +122,7 @@ class Orderplace extends React.Component {
             },
             () => {
               // Notiflix.Loading.Remove();
-              this.PlaceOrder(uniquecode);
+              this.PlaceOrder(UniqueDataCode);
             }
           );
         }
@@ -130,7 +130,7 @@ class Orderplace extends React.Component {
     );
   }
 
-  PlaceOrder(uniquecode) {
+  PlaceOrder(UniqueDataCode) {
     var log = localStorage.getItem("CustomerLoginDetails");
     var login = JSON.parse(log);
 
@@ -172,7 +172,7 @@ class Orderplace extends React.Component {
         billingpincode: this.state.BillingAddress.fld_pincode,
         billingmobile: this.state.BillingAddress.fld_mobile,
         txnid: this.state.TxnId,
-        offercode: uniquecode||this.state.OfferData.fld_code,
+        offercode: UniqueDataCode||this.state.OfferData.fld_code,
         yousave: this.state.SummaryData.YouSaved,
       },
       "AddOrder"
