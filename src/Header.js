@@ -597,53 +597,41 @@ class Menu extends React.Component {
     // console.log(this.state.CategorySelect)
   }
 
-  goto1mg(){
+  goto1mg =()=>{
     var log = localStorage.getItem("CustomerLoginDetails");
     var login = JSON.parse(log);
     if(login != null && login != ""){
-      debugger;
-      console.log(login);
-      //var myHeaders = new Headers();
-      var myHeaders = {
-        'Accept': 'application/json',
-        'Access-Control-Allow-Origin':'*',
-        'Access-Control-Allow-Headers' : '*'
-      }
-      // myHeaders.append("Cookie", "__cfduid=de877c01d732f1e6207eee89d211d35c61608553085",{ mode:'no-cors'});
-      
-      var formdata = new FormData();
-      formdata.append("api_key", "5f8a4806-27fc-4448-87e4-b82c4a155183");
-      formdata.append("user_id", login.fld_userid);
-      formdata.append("name", login.fld_name);
-      formdata.append("redirect_url", "https://stag.1mg.com/ ");
-      formdata.append("source", "youfirst");
-      formdata.append("email", login.fld_email);
-      
-      var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: formdata,
-        
-      };
-      
-      fetch("https://stagapi.1mg.com/webservices/merchants/generate-merchant-hash", requestOptions)
-        .then(response => response.text())
-        .then(result =>
-          {debugger;
-          console.log(result)
+      Notiflix.Loading.Init({
+        svgColor: "#507dc0",
+        //  #507dc0'
+      });
+  
+      Notiflix.Loading.Dots("");
+    
           // if(result && result.hash){
           //   const url = 'https://stag.1mg.com?_source=mdindia&merchant_token='+result.hash
           //   window.open( 
           //     url, "_blank"); 
           // }
+          PostApiCall.postRequest(
+            {
+              "name":login.fld_name,
+              "email":login.fld_email,
+              "userid":login.fld_userid
+            },
+            "1mgSignup"
+          ).then((results) =>
+            results.json().then((obj) => {
+              if (results.status == 200 || results.status == 201) {
+                const url = 'https://stag.1mg.com?_source=mdindia&merchant_token='+obj.data.hash
+                  window.open( 
+                    url, "_blank"); 
+            }else{
+              Notiflix.Notify.Failure( "Something went wrong, try again later.");
+            }
+            Notiflix.Loading.Remove(); 
+          }));
         }
-          )
-        .catch(error => console.log('error', error));
-
-
-    }else{
-      this.props.history.push('/Login')
-    }
   }
 
   render() {
@@ -1265,14 +1253,14 @@ class Menu extends React.Component {
                     </li>
 
                      {/* ........Education Module Menu .......... */}
-                     {/* <li class="hvr-overline-from-left">
+                     <li class="hvr-overline-from-left">
                       <Link to="/education-teaser" class="">
                         Education
                         <span class="new-option" >
                        *New
                        </span>
                       </Link>
-                    </li> */}
+                    </li>
 
                     <li class="hvr-overline-from-left">
                       <a href="javascript: void(0);" class="">
@@ -1474,11 +1462,18 @@ class Menu extends React.Component {
                         Dietitians
                       </a>
                     </li>
-                    {/* <li class="hvr-overline-from-left">
-                      <a onClick={()=>{this.goto1mg() }} class="">
+                    <li class="hvr-overline-from-left">
+                      <a onClick={()=>{ var log = localStorage.getItem("CustomerLoginDetails");
+    var login = JSON.parse(log);
+    if(login != null && login != ""){
+      this.goto1mg();
+     }else{
+      window.location.href = `/Login`; 
+    }
+    }} class="">
                         1mg
                       </a>
-                    </li> */}
+                    </li>
                  
 
                     {/* <li class="hvr-overline-from-left"><a 
@@ -1675,14 +1670,14 @@ class Menu extends React.Component {
                 </li>
 
                  {/* ........Education Module Menu .......... */}
-                 {/* <li class="hvr-overline-from-left">
+                 <li class="hvr-overline-from-left">
                       <Link to="/education-teaser" class="">
                         Education
                         <span class="new-option" >
                        *New
                        </span>
                       </Link>
-                    </li> */}
+                    </li>
 
                 {/* <li><a href="/allopathy">Allopathy</a></li> */}
 
@@ -2074,11 +2069,11 @@ class Menu extends React.Component {
                     Dietitians
                   </a>
                 </li>
-                {/* <li class="hvr-overline-from-left">
+                <li class="hvr-overline-from-left">
                   <a onClick={()=>{this.goto1mg() }} class="">
                     1mg
                   </a>
-                </li> */}
+                </li>
                 {/* 
                 <li class="hvr-overline-from-left" style={{borderTop:"1px solid  #e6e6e6"}}>
                   <a href="/Login" class="">
