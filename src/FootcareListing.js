@@ -53,6 +53,7 @@ class FootcareListing extends React.Component {
       SearchDataRef : [],
 
       bannerfood : [],
+      show_notfound : false,
     };
   }
 
@@ -127,6 +128,10 @@ class FootcareListing extends React.Component {
               FootRef : res.data.data,
               
             });
+          }
+
+          if(res.data.data.length===0){
+            this.setState({show_notfound : true})
           }
           
           Notiflix.Loading.Remove(); 
@@ -931,7 +936,7 @@ src={info.fld_image}/>
             </aside>
             <div class="col-lg-10 col-md-12 col-sm-12">
               <div class="row">
-                  {this.state.FootDetails.length ==0 && this.state.done ?  
+                  {this.state.FootDetails.length ==0 && this.state.done && this.state.show_notfound?  
                   <div class="col-md-12">
                         <img src="/assets/images/No-product-Found.png" style={{    margin: 'auto'}}/>
                       </div>

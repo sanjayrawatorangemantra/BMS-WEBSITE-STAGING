@@ -191,7 +191,7 @@ BlogCategory : obj.data
                                     </span> */}
                        <div class="blog-masonry-textbox content-box">
                          <a onClick={()=>{this.onBlogView(blog)}}>  <h3 class="blog-masonry-title" style={{overflow : 'hidden'}}>{blog.fld_title}</h3></a>
-                           <p class="name-title"><span>By</span> {blog.fld_writtenby}</p>
+                           <p class="name-title"><span>By</span> {blog.fld_reviewedby !=null ?  blog.fld_reviewedby :blog.fld_writtenby}</p>
                            <p class="border-btm blog-desc-short">
                               
                            {Parser(((blog.fld_shortdescription).replace(/font-family/g, '')

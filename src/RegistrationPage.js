@@ -627,8 +627,7 @@ class RegistrationPage extends React.Component {
                           <div class="col-md-12">
                             {/* <div id={'recaptcha-container'}/> */}
                             <p class="disclaimer-text">
-                              By clicking 'Send OTP', you agree to BeatMySugar POLICIES ( mentioned at the bottom of the page ). 
-                              You would receive SMS notifications from us.
+                            By clicking 'Send OTP', you consent for sharing information with us & our affiliated third parties & agree to BeatMySugar POLICIES (mentioned at the bottom of the page).
                             </p>
                           </div>
                         </div>

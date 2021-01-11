@@ -247,7 +247,7 @@ class AboutUs extends React.Component {
                                   <div class="overlay-1">
                                     <div class="parallax-box">
                                 <h4>Vision</h4>
-                                <p>Diabetic controlled world is what we envisage and strive to achieve.</p>
+                                <p>Diabetes controlled world is what we envisage and strive to achieve.</p>
                                 </div>
                                 </div>
                                 </div>
